@@ -16,6 +16,7 @@ syntax: glob
 cookielib
 
 #folders to ignore
+bin/*
 target/*
 exploded-archives/*
 test-build/*
