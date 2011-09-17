@@ -1,0 +1,25 @@
+#files ignored by mercurial
+syntax: glob
+
+#.hiddenfiles
+.metadata/*
+.classpath
+
+#ending with
+*.orig
+*~
+*.swp
+*.class
+*.pyc
+*.spdia
+*.log
+cookielib
+
+#folders to ignore
+target/*
+exploded-archives/*
+test-build/*
+classes/*
+test-report/*
+test-output/*
+dist/*
