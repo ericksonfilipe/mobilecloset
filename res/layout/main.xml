@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="fill_parent"
-    android:layout_width="wrap_content" android:orientation="horizontal"
-    android:background="@drawable/menu">
-    <Button android:id="@+id/buttonEscolherRoupas" android:layout_height="wrap_content" android:layout_width="match_parent" android:text="Escolher Roupas"></Button>
+    android:layout_width="wrap_content" 
+    android:orientation="horizontal"
+    android:background="@drawable/menu"
+    android:scrollX="-13sp"
+    android:scrollY="-110sp">
+    <Button 
+    	android:id="@+id/buttonEscolherRoupas" 
+    	android:layout_height="wrap_content" 
+    	android:layout_width="match_parent" 
+    	android:text="Exemplo de botão"
+    	android:background="#00000000"
+    	android:height="30sp"
+    	android:width="148sp">
+    </Button>
 </LinearLayout>
