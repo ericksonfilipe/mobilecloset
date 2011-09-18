@@ -8,22 +8,26 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class MobileclosetActivity extends Activity implements OnClickListener {
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        Button bEscolher = (Button) findViewById(R.id.buttonEscolherRoupas);
-        bEscolher.setOnClickListener(this);
-    }
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+		Button bEscolher = (Button) findViewById(R.id.buttonEscolherRoupas);
+		bEscolher.setOnClickListener(this);
+	}
 
 	@Override
 	public void onClick(View v) {
-		switch(v.getId()) {
+		switch (v.getId()) {
 		case R.id.buttonEscolherRoupas:
 			Intent i = new Intent(v.getContext(), EscolherRoupasActivity.class);
 			startActivity(i);
+			break;
+		case R.id.sair_button:
+			finish();
+			break;
 		}
-		
+
 	}
 }
