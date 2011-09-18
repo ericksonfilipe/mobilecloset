@@ -15,19 +15,27 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.main);
 		Button bEscolher = (Button) findViewById(R.id.buttonEscolherRoupas);
 		bEscolher.setOnClickListener(this);
+		Button bSair = (Button) findViewById(R.id.button_sair);
+		bSair.setOnClickListener(this);
+		Button bCreditos = (Button) findViewById(R.id.button_sobre);
+		bCreditos.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
+		Intent i;
 		switch (v.getId()) {
 		case R.id.buttonEscolherRoupas:
-			Intent i = new Intent(v.getContext(), EscolherRoupasActivity.class);
+			i = new Intent(v.getContext(), EscolherRoupasActivity.class);
 			startActivity(i);
 			break;
-		case R.id.sair_button:
+		case R.id.button_sobre:
+			i = new Intent(v.getContext(), SobreActivity.class);
+			startActivity(i);
+			break;
+		case R.id.button_sair:
 			finish();
 			break;
 		}
-
 	}
 }
