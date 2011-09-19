@@ -1,34 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_height="fill_parent" android:layout_width="fill_parent"
-	android:orientation="vertical">
-	<TextView android:layout_height="wrap_content"
-		android:layout_width="wrap_content" android:id="@+id/textView1"
-		android:text="Sobre" android:textAppearance="?android:attr/textAppearanceLarge"
-		android:layout_gravity="center_horizontal" android:paddingBottom="10px">
-	</TextView>
-	<TextView android:layout_height="wrap_content" android:id="@+id/textView2"
-		android:layout_gravity="center_horizontal" android:layout_width="wrap_content"
-		android:text="Desenvolvedores:" android:textStyle="bold" android:paddingBottom="5px">
-	</TextView>
-	<TextView android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceSmall" android:id="@+id/textView3"
-		android:layout_width="wrap_content" android:text="Erickson Santos"
-		android:layout_gravity="center_horizontal">
-	</TextView>
-	<TextView android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceSmall" android:id="@+id/textView4"
-		android:layout_width="wrap_content" android:text="Izabela Vanessa"
-		android:layout_gravity="center_horizontal">
-	</TextView>
-	<TextView android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceSmall" android:id="@+id/textView5"
-		android:layout_width="wrap_content" android:text="Janderson Jason"
-		android:layout_gravity="center_horizontal">
-	</TextView>
-	<TextView android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceSmall" android:id="@+id/textView6"
-		android:layout_width="wrap_content" android:text="Savyo Nobrega"
-		android:layout_gravity="center_horizontal">
-	</TextView>
+	android:orientation="horizontal"
+	android:background="@drawable/menu" android:weightSum="1">
+
+	<LinearLayout android:layout_weight="1" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_gravity="center">
+        <Button android:width="148sp" android:height="30sp" android:id="@+id/nada" android:text="" android:background="#00000000" android:layout_width="match_parent" android:layout_height="50dp" android:layout_gravity="bottom"></Button>
+    	<Button android:width="148sp" android:height="30sp" android:id="@+id/nada" android:text="" android:background="#00000000" android:layout_width="match_parent" android:layout_height="50dp" android:layout_gravity="bottom"></Button>
+    	
+        <Button android:width="148sp" android:height="30sp" android:id="@+id/button_instrucoes" android:text="Instruções" android:background="@drawable/gaveta" android:layout_width="match_parent" android:layout_height="50dp" android:layout_gravity="bottom"></Button>
+    	<Button android:width="148sp" android:height="30sp" android:id="@+id/button_creditos" android:text="Créditos" android:background="@drawable/gaveta" android:layout_width="match_parent" android:layout_height="50dp" android:layout_gravity="bottom"></Button>
+    
+    </LinearLayout>
 </LinearLayout>
