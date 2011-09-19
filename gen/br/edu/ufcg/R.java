@@ -15,7 +15,6 @@ public final class R {
         public static final int gaveta=0x7f020001;
         public static final int icon=0x7f020002;
         public static final int menu=0x7f020003;
-        public static final int partedebaixo=0x7f020004;
     }
     public static final class id {
         public static final int buttonEscolherRoupas=0x7f050006;
