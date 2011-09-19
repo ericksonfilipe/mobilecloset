@@ -13,10 +13,13 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+
 		Button bEscolher = (Button) findViewById(R.id.buttonEscolherRoupas);
 		bEscolher.setOnClickListener(this);
+
 		Button bSair = (Button) findViewById(R.id.button_sair);
 		bSair.setOnClickListener(this);
+
 		Button bCreditos = (Button) findViewById(R.id.button_sobre);
 		bCreditos.setOnClickListener(this);
 	}
