@@ -13,8 +13,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SobreActivity" />
+        <activity android:name=".SobreActivity"/>
+        
         <activity android:name=".EscolherRoupasActivity" />
+        
+        <activity android:name=".Creditos" android:theme="@android:style/Theme.Dialog" ></activity>
         
     </application>
 </manifest>

@@ -20,8 +20,8 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 		Button bSair = (Button) findViewById(R.id.button_sair);
 		bSair.setOnClickListener(this);
 
-		Button bCreditos = (Button) findViewById(R.id.button_sobre);
-		bCreditos.setOnClickListener(this);
+		Button bSobre = (Button) findViewById(R.id.button_sobre);
+		bSobre.setOnClickListener(this);
 	}
 
 	@Override

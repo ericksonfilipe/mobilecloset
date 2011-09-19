@@ -15,23 +15,28 @@ public final class R {
         public static final int gaveta=0x7f020001;
         public static final int icon=0x7f020002;
         public static final int menu=0x7f020003;
+        public static final int partedebaixo=0x7f020004;
     }
     public static final class id {
-        public static final int buttonEscolherRoupas=0x7f050001;
-        public static final int button_compartilhar=0x7f050002;
-        public static final int button_sair=0x7f050004;
-        public static final int button_sobre=0x7f050003;
-        public static final int textView1=0x7f050000;
-        public static final int textView2=0x7f050005;
-        public static final int textView3=0x7f050006;
-        public static final int textView4=0x7f050007;
-        public static final int textView5=0x7f050008;
-        public static final int textView6=0x7f050009;
+        public static final int buttonEscolherRoupas=0x7f050006;
+        public static final int button_compartilhar=0x7f050007;
+        public static final int button_creditos=0x7f05000c;
+        public static final int button_instrucoes=0x7f05000b;
+        public static final int button_sair=0x7f050009;
+        public static final int button_sobre=0x7f050008;
+        public static final int nada=0x7f05000a;
+        public static final int textView1=0x7f050005;
+        public static final int textView2=0x7f050000;
+        public static final int textView3=0x7f050001;
+        public static final int textView4=0x7f050002;
+        public static final int textView5=0x7f050003;
+        public static final int textView6=0x7f050004;
     }
     public static final class layout {
-        public static final int escolherroupas=0x7f030000;
-        public static final int main=0x7f030001;
-        public static final int sobre=0x7f030002;
+        public static final int creditos=0x7f030000;
+        public static final int escolherroupas=0x7f030001;
+        public static final int main=0x7f030002;
+        public static final int sobre=0x7f030003;
     }
     public static final class string {
         public static final int app_name=0x7f040000;
