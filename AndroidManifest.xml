@@ -13,7 +13,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SobreActivity"/>
+        <activity android:name=".SobreActivity" android:theme="@android:style/Theme.Dialog"/>
         
         <activity android:name=".EscolherRoupasActivity" />
         
