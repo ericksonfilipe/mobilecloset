@@ -22,6 +22,9 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 
 		Button bSobre = (Button) findViewById(R.id.button_sobre);
 		bSobre.setOnClickListener(this);
+		
+		Button bCreditos = (Button) findViewById(R.id.button_creditos);
+		bCreditos.setOnClickListener(this);
 	}
 
 	@Override
@@ -30,6 +33,10 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.buttonEscolherRoupas:
 			i = new Intent(v.getContext(), EscolherRoupasActivity.class);
+			startActivity(i);
+			break;
+		case R.id.button_creditos:
+			i = new Intent(v.getContext(), Creditos.class);
 			startActivity(i);
 			break;
 		case R.id.button_sobre:
