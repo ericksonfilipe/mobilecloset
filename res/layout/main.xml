@@ -8,24 +8,24 @@
 		android:layout_height="wrap_content" android:orientation="vertical">
 		<Button android:width="148sp" android:height="30sp"
 			android:id="@+id/buttonEscolherRoupas" android:text="My Closet"
-			android:background="@drawable/gaveta" android:layout_width="match_parent"
+			android:background="@drawable/buttonhighlight" android:layout_width="match_parent"
 			android:layout_height="50dp" android:layout_gravity="bottom">
 		</Button>
 		<Button android:width="148sp" android:height="30sp"
 			android:id="@+id/button_compartilhar" android:text="Bluetooth"
-			android:background="@drawable/gaveta" android:layout_gravity="center"
+			android:background="@drawable/buttonhighlight" android:layout_gravity="center"
 			android:layout_width="match_parent" android:layout_height="50dp"></Button>
 		<Button android:width="148sp" android:height="30sp"
 			android:id="@+id/button_sobre" android:text="Instruções"
-			android:background="@drawable/gaveta" android:layout_gravity="center"
+			android:background="@drawable/buttonhighlight" android:layout_gravity="center"
 			android:layout_width="match_parent" android:layout_height="50dp"></Button>
 		<Button android:width="148sp" android:height="30sp"
 			android:id="@+id/button_creditos" android:text="Créditos"
-			android:background="@drawable/gaveta" android:layout_width="match_parent"
+			android:background="@drawable/buttonhighlight" android:layout_width="match_parent"
 			android:layout_height="50dp" android:layout_gravity="bottom"></Button>
 
 		<Button android:width="148sp" android:height="30sp" android:id="@+id/button_sair"
-			android:text="Sair" android:background="@drawable/gaveta"
+			android:text="Sair" android:background="@drawable/buttonhighlight"
 			android:layout_gravity="center" android:layout_width="match_parent"
 			android:layout_height="50dp"></Button>
 
