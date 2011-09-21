@@ -6,7 +6,7 @@
 	<item
 		android:state_focused="true"
 		android:state_pressed="false"
-		android:drawable="@drawable/botao_sair_aberto" />
+		android:drawable="@drawable/botao_sair" />
 
 	// Button Focused Pressed
 	<item

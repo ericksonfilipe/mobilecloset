@@ -1,34 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="fill_parent" android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:layout_width="fill_parent"
 	android:orientation="vertical" 
 	android:background="@drawable/background"
 	android:weightSum="1">
-		
-	
 	
 	<LinearLayout android:width="300sp"  
 	android:layout_width="wrap_content" 
 	android:layout_gravity="bottom" 
-	android:layout_height="268dp"
-	android:height="210sp" 
+	android:layout_height="240dp"
+	android:height="250sp" 
 	android:orientation="horizontal" 
 	android:weightSum="1">
 			<Button android:layout_gravity="bottom" 
 			android:background="@drawable/button_meuguardaroupa" 
 			android:width="300dp"
 			android:height="60sp" 
-			android:id="@+id/buttonEscolherRoupas" android:layout_height="60dp" android:layout_width="320dp">
+			android:id="@+id/buttonEscolherRoupas"
+			android:layout_height="60dp"
+			android:layout_width="320dp">
 			</Button>
 	</LinearLayout>
-	
 	
 	<LinearLayout android:layout_gravity="bottom" 
 	android:orientation="horizontal" 
 	android:weightSum="1" 
 	android:layout_width="wrap_content"
-	android:layout_height="65dp">
-	
+	android:layout_height="60dp">
 			<Button android:layout_gravity="bottom" 
 			android:background="@drawable/button_bluetooth" 
 			android:height="30sp" 
@@ -36,7 +35,6 @@
 			android:layout_height="60dp"
 			android:layout_width="160dp">
 			</Button>
-			
 			<Button android:layout_gravity="bottom" 
 			android:background="@drawable/button_instrucoes" 
 			android:height="30sp"
@@ -44,16 +42,13 @@
 			android:layout_height="60dp"
 			android:layout_width="160dp">
 			</Button>
-	
 	</LinearLayout>
-	
 	
 	<LinearLayout android:layout_gravity="bottom" 
 	android:orientation="horizontal" 
 	android:layout_width="wrap_content" 
 	android:weightSum="1"
 	android:layout_height="60dp">
-	
 		<Button android:layout_gravity="bottom" 
 		android:background="@drawable/button_creditos" 
 		android:height="30sp" 
@@ -61,21 +56,13 @@
 		android:layout_height="60dp"
 		android:layout_width="160dp">
 		</Button>
-				
 		<Button android:layout_gravity="bottom" 
 		android:background="@drawable/button_sair" 
 		android:height="30sp" 
 		android:id="@+id/button_sair" 
 		android:layout_height="60dp"
 		android:layout_width="160dp">
-		
-		
-		
-		
 		</Button>
 	</LinearLayout>	
-
-
-
 	
 </LinearLayout>
