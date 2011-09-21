@@ -12,12 +12,24 @@ public final class R {
     }
     public static final class drawable {
         public static final int background=0x7f020000;
-        public static final int buttonhighlight=0x7f020001;
-        public static final int cabide=0x7f020002;
-        public static final int creditos=0x7f020003;
-        public static final int gaveta=0x7f020004;
-        public static final int gaveta_aberta=0x7f020005;
-        public static final int icon=0x7f020006;
+        public static final int botao_bluetooth=0x7f020001;
+        public static final int botao_bluetooth_aberto=0x7f020002;
+        public static final int botao_creditos=0x7f020003;
+        public static final int botao_creditos_aberto=0x7f020004;
+        public static final int botao_instrucoes=0x7f020005;
+        public static final int botao_instrucoes_aberto=0x7f020006;
+        public static final int botao_meuguardaroupa=0x7f020007;
+        public static final int botao_meuguardaroupa_aberto=0x7f020008;
+        public static final int botao_sair=0x7f020009;
+        public static final int botao_sair_aberto=0x7f02000a;
+        public static final int button_bluetooth=0x7f02000b;
+        public static final int button_creditos=0x7f02000c;
+        public static final int button_instrucoes=0x7f02000d;
+        public static final int button_meuguardaroupa=0x7f02000e;
+        public static final int button_sair=0x7f02000f;
+        public static final int cabide=0x7f020010;
+        public static final int creditos=0x7f020011;
+        public static final int icon=0x7f020012;
     }
     public static final class id {
         public static final int buttonEscolherRoupas=0x7f050001;
