@@ -27,7 +27,7 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 		bCreditos.setOnClickListener(this);
 	}
 
-	@Override
+	//@Override
 	public void onClick(View v) {
 		Intent i;
 		switch (v.getId()) {
