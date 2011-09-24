@@ -32,7 +32,7 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 		Intent i;
 		switch (v.getId()) {
 		case R.id.buttonEscolherRoupas:
-			i = new Intent(v.getContext(), EscolherRoupasActivity.class);
+			i = new Intent(v.getContext(), CapturaFoto.class);
 			startActivity(i);
 			break;
 		case R.id.button_creditos:
