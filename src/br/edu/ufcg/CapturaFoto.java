@@ -35,7 +35,6 @@ public class CapturaFoto extends Activity implements SurfaceHolder.Callback, OnC
 
 		Log.e(TAG, "onCreate");
 
-		Bundle extras = getIntent().getExtras();
 		getWindow().setFormat(PixelFormat.TRANSLUCENT);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -133,7 +132,6 @@ public class CapturaFoto extends Activity implements SurfaceHolder.Callback, OnC
 
         File sdImageMainDirectory = new File("/sdcard");
 		FileOutputStream fileOutputStream = null;
-		String nameFile;
 		try {
 
 			BitmapFactory.Options options=new BitmapFactory.Options();
