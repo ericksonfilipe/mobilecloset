@@ -21,6 +21,8 @@
         
         <activity android:name=".CapturaFoto" ></activity>
         
+        <activity android:name=".Closet" ></activity>
+        
     </application>
     <uses-permission android:name="android.permission.CAMERA" />
 	<uses-feature android:name="android.hardware.camera" />
