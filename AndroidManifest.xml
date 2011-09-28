@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="br.edu.ufcg"
+      android:versionCode="1"
+      android:versionName="1.0">
+    <uses-sdk android:minSdkVersion="8" />
+
+    <application android:icon="@drawable/cabide" android:label="@string/app_name">
+        <activity android:name=".MobileclosetActivity"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".SobreActivity" android:theme="@android:style/Theme.Dialog"/>
+        
+        <activity android:name=".EscolherRoupasActivity" />
+        
+        <activity android:name=".Creditos" android:theme="@android:style/Theme.Dialog" ></activity>
+        
+        <activity android:name=".TirarFotoActivity" ></activity>
+        
+        <activity android:name=".Closet" ></activity>
+        
+    </application>
+    
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.CAMERA" />
+	<uses-feature android:name="android.hardware.camera" />
+       
+</manifest>
