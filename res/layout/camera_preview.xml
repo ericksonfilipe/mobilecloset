@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
   android:layout_width="match_parent"
-  android:layout_height="match_parent" android:weightSum="1">
+  android:gravity="bottom"
+  android:layout_height="match_parent" android:weightSum="1" android:orientation="vertical">
     <ImageView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/imageView1"></ImageView>
   
         <br.edu.ufcg.CameraView android:id="@+id/imagem_camera"
                 android:layout_height="fill_parent" android:layout_width="fill_parent">
         </br.edu.ufcg.CameraView>
+        <Button android:id="@+id/button_camera" android:text="Tirar" android:layout_width="60dp" android:layout_height="50dp" android:layout_gravity="center"></Button>
 </LinearLayout>

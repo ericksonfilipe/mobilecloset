@@ -126,7 +126,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         parameters.setAntibanding(Parameters.ANTIBANDING_60HZ);
         parameters.setColorEffect(Parameters.EFFECT_NONE);
         parameters.setFocusMode(Parameters.FOCUS_MODE_AUTO);
-        parameters.setSceneMode(Parameters.SCENE_MODE_LANDSCAPE);
+        parameters.setSceneMode(Parameters.SCENE_MODE_PORTRAIT);
         parameters.setWhiteBalance(Parameters.WHITE_BALANCE_FLUORESCENT);
         List<Size> sizes = parameters.getSupportedPreviewSizes();
 //        for (Size it:sizes)
