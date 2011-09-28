@@ -6,9 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
+import java.util.List;
+import android.util.Log;
 
 public class MobileclosetActivity extends Activity implements OnClickListener {
 	/** Called when the activity is first created. */
+	
+	private TextView output;
+	private DataHelper dh;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,6 +32,27 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 		
 		Button bCreditos = (Button) findViewById(R.id.button_creditos);
 		bCreditos.setOnClickListener(this);
+		
+		//código util para BD; lembrar de descomentar no main.xml para testar
+//		output = (TextView) findViewById(R.id.out_text);
+//
+//        this.dh = new DataHelper(this);
+//        this.dh.deleteAll();
+//        this.dh.insert("Porky Pig");
+//        this.dh.insert("Foghorn Leghorn");
+//        this.dh.insert("Yosemite Sam");
+//        List<String> names = this.dh.selectAll();
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("Names in database:\n");
+//        for (String name : names) {
+//           sb.append(name + "\n");
+//        }
+//
+//        Log.d("EXAMPLE", "names size - " + names.size());
+//
+//        output.setText(sb.toString());		
+		
+		
 	}
 
 	//@Override
