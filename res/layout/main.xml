@@ -3,7 +3,9 @@
 	android:layout_height="fill_parent" android:layout_width="fill_parent"
 	android:orientation="vertical" android:background="@drawable/background"
 	android:weightSum="1">
-	<LinearLayout android:weightSum="1" android:layout_width="fill_parent"
+	<!--<TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/hello" /> -->
+    <!--<TextView android:id="@+id/out_text" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="" /> -->
+  	<LinearLayout android:weightSum="1" android:layout_width="fill_parent"
 		android:layout_height="236dp" android:orientation="horizontal">
 		<LinearLayout android:weightSum="1"
 			android:layout_gravity="bottom" android:layout_width="fill_parent"
