@@ -9,6 +9,7 @@ import android.widget.Button;
 public class TirarFotoActivity extends Activity implements ImageListener, OnClickListener {
 
 	private CameraView mPreview;
+	private DataHelper dh;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -20,6 +21,9 @@ public class TirarFotoActivity extends Activity implements ImageListener, OnClic
 		
 		Button tiraFoto = (Button) findViewById(R.id.button_camera);
 		tiraFoto.setOnClickListener(this);
+		
+		this.dh = new DataHelper(this);
+		
 	}
 
 	public void takeImage(byte[] image) { 
@@ -27,6 +31,8 @@ public class TirarFotoActivity extends Activity implements ImageListener, OnClic
 		 System.gc(); 
 		 mPreview.setVisibility(View.INVISIBLE);
 		 mPreview.freezeCamera();
+		 
+		 this.dh.insert(image);
 
 		 //try {
 		 //	OutputStream fos = openFileOutput(File.separator + "var" + File.separator + "mobileCloset" + File.separator + "imagem.jpg", Context.MODE_WORLD_READABLE);
