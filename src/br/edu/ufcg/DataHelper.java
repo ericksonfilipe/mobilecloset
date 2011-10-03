@@ -30,8 +30,8 @@ public class DataHelper {
       this.insertStmt = this.db.compileStatement(INSERT);
    }
 
-   public long insert(String name) {
-      this.insertStmt.bindString(1, name);
+   public long insert(byte[] name) {
+      this.insertStmt.bindBlob(1, name);
       return this.insertStmt.executeInsert();
    }
 
@@ -39,13 +39,13 @@ public class DataHelper {
       this.db.delete(TABLE_NAME, null, null);
    }
 
-   public List<String> selectAll() {
-      List<String> list = new ArrayList<String>();
+   public List<byte[]> selectAll() {
+      List<byte[]> list = new ArrayList<byte[]>();
       Cursor cursor = this.db.query(TABLE_NAME, new String[] { "name" },
         null, null, null, null, "name desc");
       if (cursor.moveToFirst()) {
          do {
-            list.add(cursor.getString(0));
+            list.add(cursor.getBlob(0));
          } while (cursor.moveToNext());
       }
       if (cursor != null && !cursor.isClosed()) {
@@ -62,7 +62,7 @@ public class DataHelper {
 
       @Override
       public void onCreate(SQLiteDatabase db) {
-         db.execSQL("CREATE TABLE " + TABLE_NAME + "(id INTEGER PRIMARY KEY, name TEXT)");
+         db.execSQL("CREATE TABLE " + TABLE_NAME + "(id INTEGER PRIMARY KEY, name BINARY)");
       }
 
       @Override
