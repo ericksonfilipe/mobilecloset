@@ -1,5 +1,6 @@
 package br.edu.ufcg;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,6 +115,19 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
             mCamera = null;
         }
     }
+    
+    protected void setDisplayOrientation(Camera camera, int angle){
+        Method downPolymorphic;
+        try
+        {
+            downPolymorphic = camera.getClass().getMethod("setDisplayOrientation", new Class[] { int.class });
+            if (downPolymorphic != null)
+                downPolymorphic.invoke(camera, new Object[] { angle });
+        }
+        catch (Exception e1)
+        {
+        }
+    }
 
     /**
      * Callback chamado quando o surface é modificado
@@ -126,8 +140,12 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         parameters.setAntibanding(Parameters.ANTIBANDING_60HZ);
         parameters.setColorEffect(Parameters.EFFECT_NONE);
         parameters.setFocusMode(Parameters.FOCUS_MODE_AUTO);
-        parameters.setSceneMode(Parameters.SCENE_MODE_PORTRAIT);
+        //parameters.setSceneMode(Parameters.SCENE_MODE_PORTRAIT);
         parameters.setWhiteBalance(Parameters.WHITE_BALANCE_FLUORESCENT);
+        setDisplayOrientation(mCamera, 90);
+        
+        
+        
         List<Size> sizes = parameters.getSupportedPreviewSizes();
 //        for (Size it:sizes)
 //        	System.out.println("size: " + it.width + ", " + it.height);
