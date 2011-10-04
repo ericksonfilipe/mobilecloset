@@ -41,6 +41,8 @@ public final class R {
         public static final int icon=0x7f02001b;
     }
     public static final class id {
+        public static final int ImageManequim=0x7f05000e;
+        public static final int LinearLayoutImg=0x7f05000d;
         public static final int buttonEscolherRoupas=0x7f050007;
         public static final int button_camera=0x7f050002;
         public static final int button_creditos=0x7f05000b;
@@ -54,7 +56,7 @@ public final class R {
         public static final int linearLayout1=0x7f050008;
         public static final int linearLayout2=0x7f05000a;
         public static final int textView1=0x7f050006;
-        public static final int textView2=0x7f05000d;
+        public static final int textView2=0x7f05000f;
     }
     public static final class layout {
         public static final int camera_preview=0x7f030000;
@@ -62,7 +64,8 @@ public final class R {
         public static final int creditos=0x7f030002;
         public static final int escolherroupas=0x7f030003;
         public static final int main=0x7f030004;
-        public static final int sobre=0x7f030005;
+        public static final int provar=0x7f030005;
+        public static final int sobre=0x7f030006;
     }
     public static final class string {
         public static final int app_name=0x7f040000;

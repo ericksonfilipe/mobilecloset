@@ -40,8 +40,8 @@ public class Closet extends Activity implements OnClickListener {
 			//startActivity(i);
 			break;
 		case R.id.button_provar:
-			//i = new Intent(v.getContext(), CapturaFoto.class);
-			//startActivity(i);
+			i = new Intent(v.getContext(), Provar.class);
+			startActivity(i);
 			break;
 		}
 		
