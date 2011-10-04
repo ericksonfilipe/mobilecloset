@@ -2,13 +2,12 @@ package br.edu.ufcg;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import java.util.List;
-import android.util.Log;
 
 public class MobileclosetActivity extends Activity implements OnClickListener {
 	/** Called when the activity is first created. */
@@ -32,6 +31,8 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 		
 		Button bCreditos = (Button) findViewById(R.id.button_creditos);
 		bCreditos.setOnClickListener(this);
+		
+		 this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		
 		//código util para BD; lembrar de descomentar no main.xml para testar
 //		output = (TextView) findViewById(R.id.out_text);
