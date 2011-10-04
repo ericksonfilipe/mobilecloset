@@ -21,6 +21,8 @@ public class TirarFotoActivity extends Activity implements ImageListener, OnClic
 		
 		Button tiraFoto = (Button) findViewById(R.id.button_camera);
 		tiraFoto.setOnClickListener(this);
+      
+      this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		
 		this.dh = new DataHelper(this);
 		
