@@ -1,6 +1,7 @@
 package br.edu.ufcg;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,6 +22,8 @@ public class TirarFotoActivity extends Activity implements ImageListener, OnClic
 		
 		Button tiraFoto = (Button) findViewById(R.id.button_camera);
 		tiraFoto.setOnClickListener(this);
+		
+		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		
 		this.dh = new DataHelper(this);
 		
