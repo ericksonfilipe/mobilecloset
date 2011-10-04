@@ -23,6 +23,8 @@
         
         <activity android:name=".Closet" ></activity>
         
+        <activity android:name=".Provar" ></activity>
+        
     </application>
     
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
