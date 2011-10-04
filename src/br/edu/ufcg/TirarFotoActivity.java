@@ -1,14 +1,10 @@
 package br.edu.ufcg;
 
 import android.app.Activity;
-import android.content.pm.ActivityInfo;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
 public class TirarFotoActivity extends Activity implements ImageListener, OnClickListener {
 
@@ -23,14 +19,8 @@ public class TirarFotoActivity extends Activity implements ImageListener, OnClic
 		mPreview = (CameraView) findViewById(R.id.imagem_camera);
 		mPreview.addImageListener(this);
 		
-		LinearLayout layout = new LinearLayout(this);
-		layout.setBackgroundResource(R.drawable.cabide);
-		addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-		
 		Button tiraFoto = (Button) findViewById(R.id.button_camera);
 		tiraFoto.setOnClickListener(this);
-		
-		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		
 		this.dh = new DataHelper(this);
 		
@@ -42,7 +32,8 @@ public class TirarFotoActivity extends Activity implements ImageListener, OnClic
 		 mPreview.setVisibility(View.INVISIBLE);
 		 mPreview.freezeCamera();
 		 
-		 this.dh.insert(image);
+		 this.dh.salvarImagemMemoriaExterna(image);
+		 System.out.println("xxxxxxxxxxxxxxxxx FOI");
 
 		 //try {
 		 //	OutputStream fos = openFileOutput(File.separator + "var" + File.separator + "mobileCloset" + File.separator + "imagem.jpg", Context.MODE_WORLD_READABLE);

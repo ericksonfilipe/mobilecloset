@@ -5,8 +5,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +31,9 @@ public class DataHelper {
    private static final String INSERT = "insert into "
       + TABLE_NAME + "(name) values (?)";
 
+   private boolean mExternalStorageAvailable = false;
+   private boolean mExternalStorageWriteable = false;
+   
    public DataHelper(Context context) {
       this.context = context;
       OpenHelper openHelper = new OpenHelper(this.context);
@@ -72,4 +83,32 @@ public class DataHelper {
          onCreate(db);
       }
    }
+   
+   public void salvarImagemMemoriaExterna(byte[] imageData) {
+	   
+	   File path = Environment.getExternalStoragePublicDirectory(
+	            Environment.DIRECTORY_PICTURES);
+	   File file = new File (path,"image.jpg");
+
+	    try {
+	        //InputStream is = this.context.getResources().openRawResource(R.drawable.botao_provar);
+	        OutputStream os = new FileOutputStream(file);
+	        byte[] data = imageData;
+	        //is.read(data);
+	        os.write(data);
+	        //is.close();
+	        os.close();
+
+	        // verifica se ele foi criado com sucesso
+	        MediaScannerConnection.scanFile(this.context, new String[] { file.toString() }, null,
+	                new MediaScannerConnection.OnScanCompletedListener() {
+	        	public void onScanCompleted(String path, Uri uri) {
+	                Log.i("ExternalStorage", "Scanned " + path + ":");
+	                Log.i("ExternalStorage", "-> uri=" + uri);
+	            }
+	        });
+	    } catch (IOException e) {
+	        Log.w("ExternalStorage", "Error writing " + file, e);
+	    }
+	}
 }
