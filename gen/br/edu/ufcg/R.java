@@ -39,6 +39,7 @@ public final class R {
         public static final int cabide=0x7f020019;
         public static final int creditos=0x7f02001a;
         public static final int icon=0x7f02001b;
+        public static final int tracejado=0x7f02001c;
     }
     public static final class id {
         public static final int ImageManequim=0x7f05000e;
