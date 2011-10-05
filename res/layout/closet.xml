@@ -4,7 +4,7 @@
 	android:orientation="vertical" android:background="@drawable/background"
 	android:weightSum="1">
 	<LinearLayout android:weightSum="1" android:layout_width="fill_parent"
-		android:layout_height="236dp" android:orientation="horizontal">
+		android:layout_height="210dp" android:orientation="horizontal">
 		<LinearLayout android:weightSum="1"
 			android:layout_gravity="bottom" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:orientation="vertical">
@@ -15,7 +15,7 @@
 	</LinearLayout>
 
 	<LinearLayout android:weightSum="1" android:layout_width="fill_parent"
-		android:layout_height="55dp" android:orientation="horizontal">
+		android:layout_height="48dp" android:orientation="horizontal">
 		<LinearLayout android:weightSum="1"
 			android:layout_gravity="bottom" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:orientation="vertical">
@@ -26,7 +26,7 @@
 	</LinearLayout>
 	
 	<LinearLayout android:weightSum="1" android:layout_width="fill_parent"
-		android:layout_height="55dp" android:orientation="horizontal">
+		android:layout_height="48dp" android:orientation="horizontal">
 		<LinearLayout android:weightSum="1"
 			android:layout_gravity="bottom" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:orientation="vertical">
