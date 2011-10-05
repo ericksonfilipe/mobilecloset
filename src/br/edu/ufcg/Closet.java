@@ -32,7 +32,7 @@ public class Closet extends Activity implements OnClickListener {
 		Intent i;
 		switch (v.getId()) {
 		case R.id.button_manequim:
-			i = new Intent(v.getContext(), TirarFotoActivity.class);
+			i = new Intent(v.getContext(), ManequimActivity.class);
 			startActivity(i);
 			break;
 		case R.id.button_roupas:
