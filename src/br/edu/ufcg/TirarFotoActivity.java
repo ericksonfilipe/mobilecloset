@@ -9,11 +9,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import br.edu.ufcg.BD.BDAdapter;
 
 public class TirarFotoActivity extends Activity implements ImageListener, OnClickListener {
 
 	private CameraView mPreview;
-	private DataHelper dh;
+	private BDAdapter dh;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -34,7 +35,7 @@ public class TirarFotoActivity extends Activity implements ImageListener, OnClic
 
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-		this.dh = new DataHelper(this);
+		this.dh = new BDAdapter(this);
 
 	}
 

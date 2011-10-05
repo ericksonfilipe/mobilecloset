@@ -8,12 +8,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import br.edu.ufcg.BD.BDAdapter;
 
 public class MobileclosetActivity extends Activity implements OnClickListener {
 	/** Called when the activity is first created. */
 	
 	private TextView output;
-	private DataHelper dh;
+	private BDAdapter dh;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
