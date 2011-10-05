@@ -6,26 +6,22 @@
 	<!--<TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/hello" /> -->
     <!--<TextView android:id="@+id/out_text" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="" /> -->
   	<LinearLayout android:weightSum="1" android:layout_width="fill_parent"
-		android:layout_height="236dp" android:orientation="horizontal">
+		android:orientation="horizontal" android:layout_height="209dp">
 		<LinearLayout android:weightSum="1"
 			android:layout_gravity="bottom" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:orientation="vertical">
-			<Button android:background="@drawable/button_meuguardaroupa"
-				android:layout_height="46dp" android:layout_width="300dp"
-				android:id="@+id/buttonEscolherRoupas" android:layout_gravity="center_horizontal"></Button>
+			<Button android:background="@drawable/button_meuguardaroupa" android:layout_gravity="center_horizontal" android:layout_width="300dp" android:id="@+id/buttonEscolherRoupas" android:layout_height="46dp"></Button>
 		</LinearLayout>
 	</LinearLayout>
 	<LinearLayout android:id="@+id/linearLayout1"
-		android:layout_width="match_parent" android:layout_height="55dp">
+		android:layout_width="match_parent" android:layout_height="48dp">
 		<LinearLayout
 			android:layout_width="156dp" android:layout_height="fill_parent"
 			android:orientation="horizontal">
 			<LinearLayout
 				android:layout_width="fill_parent" android:layout_height="wrap_content"
 				android:orientation="vertical" android:layout_gravity="bottom">
-				<Button android:background="@drawable/button_bluetooth"
-					android:layout_height="47dp" android:layout_width="146dp"
-					android:layout_gravity="right"></Button>
+				<Button android:background="@drawable/button_bluetooth" android:layout_gravity="right" android:layout_width="146dp" android:layout_height="47dp"></Button>
 			</LinearLayout>
 		</LinearLayout>
 		<LinearLayout
@@ -42,7 +38,7 @@
 		</LinearLayout>
 	</LinearLayout>
 	<LinearLayout android:id="@+id/linearLayout2"
-		android:layout_width="match_parent" android:layout_height="55dp">
+		android:layout_width="match_parent" android:layout_height="48dp">
 		<LinearLayout
 			android:layout_width="156dp" android:layout_height="fill_parent"
 			android:orientation="horizontal">
