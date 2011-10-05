@@ -2,6 +2,7 @@ package br.edu.ufcg;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,11 +24,13 @@ public class TirarFotoActivity extends Activity implements ImageListener, OnClic
 		mPreview.addImageListener(this);
 		
 		LinearLayout layout = new LinearLayout(this);
-		layout.setBackgroundResource(R.drawable.tracejado);
+		layout.setBackgroundResource(R.drawable.tracejado2);
 		addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 
-		Button tiraFoto = (Button) findViewById(R.id.button_camera);
+		Button tiraFoto = new Button(this);
+		tiraFoto.setBackgroundColor(Color.TRANSPARENT);
 		tiraFoto.setOnClickListener(this);
+		addContentView(tiraFoto, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 

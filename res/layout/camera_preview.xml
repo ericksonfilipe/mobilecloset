@@ -9,5 +9,4 @@
         <br.edu.ufcg.CameraView android:id="@+id/imagem_camera"
                 android:layout_height="fill_parent" android:layout_width="fill_parent">
         </br.edu.ufcg.CameraView>
-        <Button android:id="@+id/button_camera" android:text="Capturar" android:background="#00000000" android:textColor="#FFFFFF" android:layout_height="50dp" android:layout_gravity="center" android:layout_width="92dp"></Button>
 </LinearLayout>
