@@ -15,7 +15,7 @@
         </activity>
         <activity android:name=".SobreActivity" android:theme="@android:style/Theme.Dialog"/>
         
-        <activity android:name=".EscolherRoupasActivity" />
+        <activity android:name=".EscolherManequimActivity" />
         
         <activity android:name=".Creditos" android:theme="@android:style/Theme.Dialog" ></activity>
         
@@ -24,6 +24,8 @@
         <activity android:name=".Closet" ></activity>
         
         <activity android:name=".Provar" ></activity>
+        
+        <activity android:name=".ManequimActivity" ></activity>
         
     </application>
     
