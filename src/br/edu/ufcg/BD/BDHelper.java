@@ -9,10 +9,9 @@ public class BDHelper extends SQLiteOpenHelper{
 
 	private static final String NOME_DB = "mobileCloset";
 
-	private static final int VERSAO_DB = 1;
+	private static final int VERSAO_DB = 2;
 
-
-	private static final String SQL_CRIA_MANEQUIM = "CREATE TABLE manequim (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+	private static final String SQL_CRIA_MANEQUIM = "CREATE TABLE manequim (id INTEGER PRIMARY KEY AUTOINCREMENT, "
 		+ "path TEXT NOT NULL);";
 
 
@@ -27,7 +26,8 @@ public class BDHelper extends SQLiteOpenHelper{
 
 	@Override
 	public void onUpgrade(SQLiteDatabase bd, int oldVersion, int newVersion) {
-		// TODO
+		bd.execSQL("DROP TABLE IF EXISTS manequim;");
+		this.onCreate(bd);
 	}
 
 }
