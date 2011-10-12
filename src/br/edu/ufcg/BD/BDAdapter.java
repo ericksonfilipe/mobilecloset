@@ -26,10 +26,6 @@ public class BDAdapter {
 		this.bdHelper = new BDHelper(context);
 	}
 
-	public void close() {
-		bdHelper.close();
-	}
-
 	public void inserirManequim(String path) {
 		SQLiteDatabase banco = bdHelper.getWritableDatabase();
 		String sql = String.format("INSERT INTO manequim(path) VALUES('%s');", path);
@@ -90,6 +86,18 @@ public class BDAdapter {
 		return manequins.get(manequins.size()-1).getId();
 	}
 
+	/**
+	 * deleta o antigo manequim padrão e salva o manequim passado por parâmetro como padrão.
+	 */
+	public void inserirManequimPadrao(Manequim manequim) {
+		SQLiteDatabase banco = bdHelper.getWritableDatabase();
+		banco.execSQL("DELETE FROM manequim_padrao;");
+		String sql = String.format("INSERT INTO manequim_padrao VALUES('%s');", manequim.getPath());
+		banco.execSQL(sql);
+		banco.close();
+	}
+
+	//TODO deixar o método abaixo flexível, para que possa salvar qualquer imagem.
 	/**
 	 * Método responsável por salvar imagens no cartão de memória.
 	 * @param imageData
