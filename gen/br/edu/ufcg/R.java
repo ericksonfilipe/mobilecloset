@@ -43,10 +43,11 @@ public final class R {
         public static final int button_sair=0x7f02001d;
         public static final int button_tirar_foto=0x7f02001e;
         public static final int cabide=0x7f02001f;
-        public static final int closet2gavetas=0x7f020020;
-        public static final int creditos=0x7f020021;
-        public static final int icon=0x7f020022;
-        public static final int tracejado2=0x7f020023;
+        public static final int camisa=0x7f020020;
+        public static final int closet2gavetas=0x7f020021;
+        public static final int creditos=0x7f020022;
+        public static final int icon=0x7f020023;
+        public static final int tracejado2=0x7f020024;
     }
     public static final class id {
         public static final int buttonEscolherRoupas=0x7f050007;
