@@ -14,7 +14,9 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
+import br.edu.ufcg.model.Categoria;
 import br.edu.ufcg.model.Manequim;
+import br.edu.ufcg.model.Roupa;
 
 public class BDAdapter {
 
@@ -26,16 +28,16 @@ public class BDAdapter {
 		this.bdHelper = new BDHelper(context);
 	}
 
-	public void inserirManequim(String path) {
+	public void inserirManequim(String caminho_imagem) {
 		SQLiteDatabase banco = bdHelper.getWritableDatabase();
-		String sql = String.format("INSERT INTO manequim(path) VALUES('%s');", path);
+		String sql = String.format("INSERT INTO manequim(caminho_imagem) VALUES('%s');", caminho_imagem);
 		banco.execSQL(sql);
 		banco.close();
 	}
 
-	public boolean deletarManequim(String path) {
+	public boolean deletarManequim(String caminho_imagem) {
 		SQLiteDatabase banco = bdHelper.getWritableDatabase();
-		boolean b = banco.delete("manequim", "path IS '" + path + "' ", null) > 0;
+		boolean b = banco.delete("manequim", "caminho_imagem IS '" + caminho_imagem + "' ", null) > 0;
 		banco.close();
 		return b;
 	}
@@ -57,9 +59,9 @@ public class BDAdapter {
 		SQLiteDatabase banco = bdHelper.getWritableDatabase();
 		List<Manequim> manequins = new ArrayList<Manequim>();
 		Cursor c = banco.query("manequim", 
-				new String[] {"id", "path"}, null, null, null, null, "id");
+				new String[] {"id", "caminho_imagem"}, null, null, null, null, "id");
 		while(c.moveToNext()) {
-			manequins.add(new Manequim(c.getInt(c.getColumnIndex("id")), c.getString(c.getColumnIndex("path"))));
+			manequins.add(new Manequim(c.getInt(c.getColumnIndex("id")), c.getString(c.getColumnIndex("caminho_imagem"))));
 		}
 		c.close();
 		banco.close();
@@ -92,9 +94,40 @@ public class BDAdapter {
 	public void inserirManequimPadrao(Manequim manequim) {
 		SQLiteDatabase banco = bdHelper.getWritableDatabase();
 		banco.execSQL("DELETE FROM manequim_padrao;");
-		String sql = String.format("INSERT INTO manequim_padrao VALUES('%s');", manequim.getPath());
+		String sql = String.format("INSERT INTO manequim_padrao VALUES('%s');", manequim.getCaminhoImagem());
 		banco.execSQL(sql);
 		banco.close();
+	}
+
+	public void inserirRoupa(Roupa roupa) {
+		SQLiteDatabase banco = bdHelper.getWritableDatabase();
+		String sql = String.format("INSERT INTO roupa(caminho_imagem, categoria) VALUES('%s,%s');", roupa.getCaminhoImagem(), roupa.getCategoria());
+		banco.execSQL(sql);
+		banco.close();
+	}
+
+	public void deleteRoupa(Roupa roupa) {
+		SQLiteDatabase banco = bdHelper.getWritableDatabase();
+		String sql = String.format("DELETE FROM roupa WHERE caminho_imagem IS '%s';", roupa.getCaminhoImagem());
+		banco.execSQL(sql);
+		banco.close();
+	}
+
+	public List<Roupa> getAllRoupas() {
+		SQLiteDatabase banco = bdHelper.getWritableDatabase();
+		List<Roupa> roupas = new ArrayList<Roupa>();
+		Cursor c = banco.query("manequim", 
+				new String[] {"id", "caminho_imagem"}, null, null, null, null, "id");
+		while(c.moveToNext()) {
+			String cat = c.getString(c.getColumnIndex("categoria"));
+			Categoria categoria = Categoria.valueOf(cat);
+			Roupa roupa = new Roupa(c.getString(c.getColumnIndex("caminho_imagem")), categoria);
+			roupa.setId(c.getInt(c.getColumnIndex("id")));
+			roupas.add(roupa);
+		}
+		c.close();
+		banco.close();
+		return roupas;
 	}
 
 	//TODO deixar o método abaixo flexível, para que possa salvar qualquer imagem.

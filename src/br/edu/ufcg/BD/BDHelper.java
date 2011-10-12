@@ -6,15 +6,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class BDHelper extends SQLiteOpenHelper{
 
-
 	private static final String NOME_DB = "mobileCloset";
-
-	private static final int VERSAO_DB = 3;
-
-	private final String SQL_CRIA_MANEQUIM = "CREATE TABLE manequim (id INTEGER PRIMARY KEY AUTOINCREMENT, "
-		+ "path TEXT NOT NULL);";
+	private static final int VERSAO_DB = 4;
+	private final String SQL_CRIA_MANEQUIM = "CREATE TABLE manequim (id INTEGER PRIMARY KEY AUTOINCREMENT, caminho_imagem TEXT NOT NULL);";
 	private final String SQL_CRIA_MANEQUIM_PADRAO = "CREATE TABLE manequim_padrao (caminho_manequim TEXT PRIMARY KEY);";
-
+	private final String SQL_CRIA_ROUPA	= "CREATE TABLE roupa (id INTEGER PRIMARY KEY AUTOINCREMENT, path TEXT NOT NULL, categoria TEXT NOT NULL);";
 
 	public BDHelper(Context context) {
 		super(context, NOME_DB, null, VERSAO_DB);
@@ -24,12 +20,14 @@ public class BDHelper extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase bd) {
 		bd.execSQL(SQL_CRIA_MANEQUIM);
 		bd.execSQL(SQL_CRIA_MANEQUIM_PADRAO);
+		bd.execSQL(SQL_CRIA_ROUPA);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase bd, int oldVersion, int newVersion) {
 		bd.execSQL("DROP TABLE IF EXISTS manequim_padrao;");
 		bd.execSQL("DROP TABLE IF EXISTS manequim;");
+		bd.execSQL("DROP TABLE IF EXISTS roupa;");
 		this.onCreate(bd);
 	}
 }
