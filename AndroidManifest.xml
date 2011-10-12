@@ -31,6 +31,8 @@
         
         <activity android:name=".ManequimActivity" ></activity>
         
+        <activity android:name=".CalibragemRoupasActivity" ></activity>
+        
     </application>
     
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>

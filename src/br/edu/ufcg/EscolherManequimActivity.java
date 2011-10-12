@@ -9,6 +9,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -41,7 +42,10 @@ public class EscolherManequimActivity extends Activity {
 
 	    gallery.setOnItemClickListener(new OnItemClickListener() {
 	        public void onItemClick(AdapterView parent, View v, int position, long id) {
-	            Toast.makeText(EscolherManequimActivity.this, "" + position, Toast.LENGTH_SHORT).show();
+	            Toast.makeText(EscolherManequimActivity.this, "" + position, Toast.LENGTH_SHORT);
+	            
+				startActivity(new Intent(EscolherManequimActivity.this, CalibragemRoupasActivity.class));
+				
 	        }
 	    });
 	    
