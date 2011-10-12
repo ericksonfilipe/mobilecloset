@@ -25,6 +25,10 @@
         
         <activity android:name=".Provar" ></activity>
         
+        <activity android:name=".RoupasActivity" ></activity>
+        
+        <activity android:name=".TirarFotoRoupaActivity" ></activity>
+        
         <activity android:name=".ManequimActivity" ></activity>
         
     </application>
