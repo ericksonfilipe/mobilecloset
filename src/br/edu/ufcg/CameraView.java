@@ -7,7 +7,6 @@ import java.util.List;
 import android.content.Context;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
-import android.hardware.Camera.Size;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -146,7 +145,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         
         
         
-        List<Size> sizes = parameters.getSupportedPreviewSizes();
+//        List<Size> sizes = parameters.getSupportedPreviewSizes();
 //        for (Size it:sizes)
 //        	System.out.println("size: " + it.width + ", " + it.height);
         parameters.setPreviewSize(w, h);

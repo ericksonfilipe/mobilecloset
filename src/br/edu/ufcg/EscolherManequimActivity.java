@@ -4,7 +4,6 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -111,7 +110,7 @@ public class EscolherManequimActivity extends Activity {
 			List<Manequim> manequins = bd.getAllManequins();
 			imagens = new String[manequins.size()];
 			for (int i = 0; i < manequins.size(); i++) {
-				imagens[i] = manequins.get(i).getPath();
+				imagens[i] = manequins.get(i).getCaminhoImagem();
 			}
 		}
 	}

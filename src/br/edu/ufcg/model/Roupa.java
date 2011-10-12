@@ -1,17 +1,24 @@
 package br.edu.ufcg.model;
 
-public class Roupa implements Storable {
+public class Roupa implements Armazenavel {
 
 	private int id;
-	private String path;
+	private String caminhoImagem;
 	private Categoria categoria;
 
-	public String getPath() {
-		return this.path;
+	public Roupa() {}
+
+	public Roupa(String caminhoImagem, Categoria categoria) {
+		this.caminhoImagem = caminhoImagem;
+		this.categoria = categoria;
 	}
 
-	public void setPath(String path) {
-		this.path = path;
+	public String getCaminhoImagem() {
+		return this.caminhoImagem;
+	}
+
+	public void setCaminhoImagem(String path) {
+		this.caminhoImagem = path;
 	}
 
 	public int getId() {
@@ -32,7 +39,7 @@ public class Roupa implements Storable {
 
 	@Override
 	public String toString() {
-		return String.format("Roupa [id = %d, path = %s, categoria = %s]", this.id, this.path, this.categoria);
+		return String.format("Roupa [id = %d, path = %s, categoria = %s]", this.id, this.caminhoImagem, this.categoria);
 	}
 
 }
