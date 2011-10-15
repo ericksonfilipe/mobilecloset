@@ -90,6 +90,24 @@ public class BDAdapter {
 		}
 		return manequins.get(manequins.size()-1).getId();
 	}
+	
+	/**
+	 * Método que recupera o manequim padrão
+	 * @return manequim padrão
+	 */
+	public Manequim getManequimPadrao() {
+		SQLiteDatabase banco = bdHelper.getReadableDatabase();
+		Manequim manequim;
+		Cursor c = banco
+				.query("manequim_padrao", new String[] { "caminho_manequim" },
+						null, null, null, null, null);
+		c.moveToFirst();
+		manequim = (new Manequim(0,
+				c.getString(c.getColumnIndex("caminho_manequim"))));
+		c.close();
+		banco.close();
+		return manequim;
+	}
 
 	/**
 	 * deleta o antigo manequim padrão e salva o manequim passado por parâmetro como padrão.

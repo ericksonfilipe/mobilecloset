@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -26,6 +27,9 @@ import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Manequim;
 
 public class EscolherManequimActivity extends Activity {
+	
+	Gallery gallery;
+	private BDAdapter dh;
        
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,15 +37,16 @@ public class EscolherManequimActivity extends Activity {
         setContentView(R.layout.escolher_manequim);
         
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        
-        
-        
-        Gallery gallery = (Gallery) findViewById(R.id.gallery);
+        this.dh = new BDAdapter(this);     
+                
+        gallery = (Gallery) findViewById(R.id.gallery);
 	    gallery.setAdapter(new ImageAdapter(this));
 
 	    gallery.setOnItemClickListener(new OnItemClickListener() {
 	        public void onItemClick(AdapterView parent, View v, int position, long id) {
 	            Toast.makeText(EscolherManequimActivity.this, "" + position, Toast.LENGTH_SHORT);
+	            Manequim manequimEscolhido = (Manequim) gallery.getAdapter().getItem(position);
+	            dh.inserirManequimPadrao(manequimEscolhido);
 	            
 				startActivity(new Intent(EscolherManequimActivity.this, CalibragemRoupasActivity.class));
 				
@@ -84,8 +89,10 @@ public class EscolherManequimActivity extends Activity {
 	        return imagens.length;
 	    }
 
-	    public Object getItem(int position) {
-	        return position;
+	    public Manequim getItem(int position) {
+	    	BDAdapter bd = new BDAdapter(EscolherManequimActivity.this);
+			List<Manequim> manequins = bd.getAllManequins();
+	        return manequins.get(position);
 	    }
 
 	    public long getItemId(int position) {
@@ -98,7 +105,7 @@ public class EscolherManequimActivity extends Activity {
 	        Drawable drawable = carregarImagem(Environment.getExternalStoragePublicDirectory(
 	        		Environment.DIRECTORY_PICTURES) + File.separator + imagens[position]);
 	        imageView.setImageDrawable(drawable);
-	        imageView.setLayoutParams(new Gallery.LayoutParams(150, 100));
+	        imageView.setLayoutParams(new Gallery.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 	        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
 	        imageView.setBackgroundResource(mGalleryItemBackground);
 

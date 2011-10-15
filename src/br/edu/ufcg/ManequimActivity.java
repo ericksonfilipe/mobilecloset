@@ -33,8 +33,8 @@ public class ManequimActivity extends Activity implements OnClickListener {
 			startActivity(i);
 			break;
 		case R.id.button_escolher_manequim:
-			i = new Intent(v.getContext(), CalibragemRoupasActivity.class);
-			//i = new Intent(v.getContext(), EscolherManequimActivity.class);
+			//i = new Intent(v.getContext(), CalibragemRoupasActivity.class);
+			i = new Intent(v.getContext(), EscolherManequimActivity.class);
 			startActivity(i);
 			break;
 		}
