@@ -91,7 +91,7 @@ public class EscolherManequimActivity extends Activity {
 
 	    public Manequim getItem(int position) {
 	    	BDAdapter bd = new BDAdapter(EscolherManequimActivity.this);
-			List<Manequim> manequins = bd.getAllManequins();
+			List<Manequim> manequins = bd.getManequins();
 	        return manequins.get(position);
 	    }
 
