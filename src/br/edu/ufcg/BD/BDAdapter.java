@@ -5,7 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -14,6 +16,7 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
+import br.edu.ufcg.model.Calibragem;
 import br.edu.ufcg.model.Categoria;
 import br.edu.ufcg.model.Manequim;
 import br.edu.ufcg.model.Roupa;
@@ -45,7 +48,7 @@ public class BDAdapter {
 	/**
 	 * deleta todos os manequins do banco de dados.
 	 */
-	public void deleteAllManequins() {
+	public void deleteManequins() {
 		SQLiteDatabase banco = bdHelper.getWritableDatabase();
 		banco.delete("manequim", "1", null);
 		banco.close();
@@ -55,7 +58,7 @@ public class BDAdapter {
 	 * Retorna todos os manequins cadastrados, ordenados por id.
 	 * @return List<Manequim>
 	 */
-	public List<Manequim> getAllManequins() {
+	public List<Manequim> getManequins() {
 		SQLiteDatabase banco = bdHelper.getWritableDatabase();
 		List<Manequim> manequins = new ArrayList<Manequim>();
 		Cursor c = banco.query("manequim", 
@@ -72,7 +75,7 @@ public class BDAdapter {
 	 * Retorna a quantidade de manequins cadastrados
 	 */
 	public int getNumManequins() {
-		return getAllManequins().size();
+		return getManequins().size();
 	}
 
 	/**
@@ -81,7 +84,7 @@ public class BDAdapter {
 	 * @return o inteiro representando o maior indice da tabela de manequins.
 	 */
 	public int getNextIndexManequim() {
-		List<Manequim> manequins = getAllManequins();
+		List<Manequim> manequins = getManequins();
 		if (manequins.isEmpty()) {
 			return 0;
 		}
@@ -101,7 +104,7 @@ public class BDAdapter {
 
 	public void inserirRoupa(Roupa roupa) {
 		SQLiteDatabase banco = bdHelper.getWritableDatabase();
-		String sql = String.format("INSERT INTO roupa(caminho_imagem, categoria) VALUES('%s,%s');", roupa.getCaminhoImagem(), roupa.getCategoria());
+		String sql = String.format("INSERT INTO roupa(caminho_imagem, categoria) VALUES('%s,%s');", roupa.getCaminhoImagem(), roupa.getCategoria().name());
 		banco.execSQL(sql);
 		banco.close();
 	}
@@ -113,12 +116,12 @@ public class BDAdapter {
 		banco.close();
 	}
 
-	public List<Roupa> getAllRoupas() {
-		SQLiteDatabase banco = bdHelper.getWritableDatabase();
+	public List<Roupa> getRoupas() {
+		SQLiteDatabase banco = bdHelper.getReadableDatabase();
 		List<Roupa> roupas = new ArrayList<Roupa>();
 		Cursor c = banco.query("manequim", 
 				new String[] {"id", "caminho_imagem"}, null, null, null, null, "id");
-		while(c.moveToNext()) {
+		while (c.moveToNext()) {
 			String cat = c.getString(c.getColumnIndex("categoria"));
 			Categoria categoria = Categoria.valueOf(cat);
 			Roupa roupa = new Roupa(c.getString(c.getColumnIndex("caminho_imagem")), categoria);
@@ -128,6 +131,31 @@ public class BDAdapter {
 		c.close();
 		banco.close();
 		return roupas;
+	}
+
+	public Map<Categoria, Calibragem> getCalibragens() {
+		SQLiteDatabase banco = bdHelper.getReadableDatabase();
+		Map<Categoria, Calibragem> calibragens = new HashMap<Categoria, Calibragem>();
+		Cursor c = banco.query("calibragem", new String[] {"categoria", "pos_x", "pos_y", "altura", "largura"}, null, null, null, null, null);
+		while (c.moveToNext()) {
+			String cat = c.getString(c.getColumnIndex("categoria"));
+			Categoria categoria = Categoria.valueOf(cat);
+			Calibragem calibragem = new Calibragem(categoria, c.getDouble(c.getColumnIndex("pos_x")), c.getDouble(c.getColumnIndex("pos_y")), c.getDouble(c.getColumnIndex("altura")), c.getDouble(c.getColumnIndex("largura")));
+			calibragens.put(categoria, calibragem);
+		}
+		return calibragens;
+	}
+
+	public void insertCalibragem(Calibragem calibragem) {
+		SQLiteDatabase banco = bdHelper.getWritableDatabase();
+		String sql = String.format("INSERT INTO calibragem(categoria, pos_x, pos_y, altura, largura) VALUES('%s', ", calibragem.getCategoria().name())
+		+ calibragem.getPosicaoX() + ", " + calibragem.getPosicaoY() + ", " + calibragem.getAltura() + ", " + calibragem.getLargura() + ");";
+		banco.execSQL(sql);
+	}
+
+	public void deleteCalibragens() {
+		SQLiteDatabase banco = bdHelper.getWritableDatabase();
+		banco.execSQL("DELETE FROM calibragem;");
 	}
 
 	//TODO deixar o método abaixo flexível, para que possa salvar qualquer imagem.
