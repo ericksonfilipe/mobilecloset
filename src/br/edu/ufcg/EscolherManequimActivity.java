@@ -107,7 +107,7 @@ public class EscolherManequimActivity extends Activity {
 	    
 	    private void carregaArrayImagens() {
 			BDAdapter bd = new BDAdapter(EscolherManequimActivity.this);
-			List<Manequim> manequins = bd.getAllManequins();
+			List<Manequim> manequins = bd.getManequins();
 			imagens = new String[manequins.size()];
 			for (int i = 0; i < manequins.size(); i++) {
 				imagens[i] = manequins.get(i).getCaminhoImagem();
