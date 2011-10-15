@@ -7,8 +7,9 @@ public class Manequim implements Armazenavel {
 
 	public Manequim() {}
 
-	public Manequim(int id, String path) {
+	public Manequim(int id, String caminhoImagem) {
 		this.id = id;
+		this.caminhoImagem = caminhoImagem;
 	}
 
 	public int getId() {
