@@ -11,9 +11,6 @@ import android.widget.Button;
 public class MobileclosetActivity extends Activity implements OnClickListener {
 	/** Called when the activity is first created. */
 	
-//	private TextView output;
-//	private BDAdapter dh;
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,27 +29,6 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 		bCreditos.setOnClickListener(this);
 		
 		 this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		
-		//código util para BD; lembrar de descomentar no main.xml para testar
-//		output = (TextView) findViewById(R.id.out_text);
-//
-//        this.dh = new DataHelper(this);
-//        this.dh.deleteAll();
-//        this.dh.insert("Porky Pig");
-//        this.dh.insert("Foghorn Leghorn");
-//        this.dh.insert("Yosemite Sam");
-//        List<String> names = this.dh.selectAll();
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("Names in database:\n");
-//        for (String name : names) {
-//           sb.append(name + "\n");
-//        }
-//
-//        Log.d("EXAMPLE", "names size - " + names.size());
-//
-//        output.setText(sb.toString());		
-		
-		
 	}
 
 	//@Override
