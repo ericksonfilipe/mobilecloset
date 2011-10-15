@@ -33,6 +33,14 @@
         
         <activity android:name=".CalibragemRoupasActivity" ></activity>
         
+        <activity android:name=".VerRoupasActivity" ></activity>
+        
+        <activity android:name=".VerCamisasActivity" ></activity>
+        
+        <activity android:name=".CadastrarRoupasActivity" ></activity>
+        
+        <activity android:name=".CadastrarCamisasActivity" ></activity>
+        
     </application>
     
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>

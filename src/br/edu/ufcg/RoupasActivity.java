@@ -30,12 +30,12 @@ public class RoupasActivity extends Activity implements OnClickListener {
 		Intent i;
 		switch (v.getId()) {
 		case R.id.button_cadastrar_roupa:
-			i = new Intent(v.getContext(), TirarFotoRoupaActivity.class);
+			i = new Intent(v.getContext(), CadastrarRoupasActivity.class);
 			startActivity(i);
 			break;
 		case R.id.button_ver_roupas:
-			//i = new Intent(v.getContext(), CapturaFoto.class);
-			//startActivity(i);
+			i = new Intent(v.getContext(), VerRoupasActivity.class);
+			startActivity(i);
 			break;
 		}
 		

@@ -8,7 +8,7 @@
 		<LinearLayout android:weightSum="1"
 			android:layout_gravity="bottom" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:orientation="vertical">
-			<Button android:text="Cadastrar roupa"
+			<Button android:background="@drawable/button_cadastrar_roupa"
 				android:layout_height="46dp" android:layout_width="300dp"
 				android:id="@+id/button_cadastrar_roupa" android:layout_gravity="center_horizontal"></Button>
 		</LinearLayout>
@@ -19,12 +19,10 @@
 		<LinearLayout android:weightSum="1"
 			android:layout_gravity="bottom" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:orientation="vertical">
-			<Button android:text="Ver roupas"
+			<Button android:background="@drawable/button_ver_roupas"
 				android:layout_height="47dp" android:layout_width="300dp"
 				android:id="@+id/button_ver_roupas" android:layout_gravity="center_horizontal"></Button>
 		</LinearLayout>
 	</LinearLayout>
-
 	
-
 </LinearLayout>
