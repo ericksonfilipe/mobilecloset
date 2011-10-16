@@ -45,7 +45,7 @@ public class TirarFotoActivity extends Activity implements ImageListener, OnClic
 		mPreview.setVisibility(View.INVISIBLE);
 		mPreview.freezeCamera();
 
-		this.dh.salvarImagemMemoriaExterna(image);
+		this.dh.salvarManequimMemoriaExterna(image);
 		System.out.println("xxxxxxxxxxxxxxxxx FOI");
 
 		//try {

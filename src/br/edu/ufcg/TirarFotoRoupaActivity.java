@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import br.edu.ufcg.BD.BDAdapter;
+import br.edu.ufcg.model.Categoria;
 
 public class TirarFotoRoupaActivity extends Activity implements ImageListener, OnClickListener {
 
@@ -40,7 +41,10 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener, O
 		mPreview.setVisibility(View.INVISIBLE);
 		mPreview.freezeCamera();
 
-		this.dh.salvarImagemMemoriaExterna(image);
+		Bundle params = getIntent().getExtras();
+		Categoria categoria = (Categoria) params.get("categoria");
+		
+		this.dh.salvarRoupaMemoriaExterna(image, categoria);
 		System.out.println("xxxxxxxxxxxxxxxxx FOI");
 
 		//try {
