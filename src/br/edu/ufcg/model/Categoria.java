@@ -1,9 +1,11 @@
 package br.edu.ufcg.model;
 
+import java.io.Serializable;
+
 /**
  * Enumeração das categorias das roupas
  */
-public enum Categoria {
+public enum Categoria implements Serializable {
 
 	BERMUDA("Bermuda"),
 	CALCA("Calça"),
@@ -11,6 +13,7 @@ public enum Categoria {
 	CAMISA_MANGA_LONGA("Camisa manga longa"),
 	CAMISETA("Camiseta"),
 	SAIA("Saia"),
+	SHORT("Short"),
 	VESTIDO("Vestido");
 
 	private String nome;

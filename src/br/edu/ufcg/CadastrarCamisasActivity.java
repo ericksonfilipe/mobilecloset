@@ -1,5 +1,8 @@
 package br.edu.ufcg;
 
+import java.io.Serializable;
+
+import br.edu.ufcg.model.Categoria;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -32,16 +35,19 @@ public class CadastrarCamisasActivity extends Activity implements OnClickListene
 		Intent i;
 		switch (v.getId()) {
 		case R.id.button_camisas_manga_comprida:
-			//i = new Intent(v.getContext(), TirarFotoRoupaActivity.class);
-			//startActivity(i);
+			i = new Intent(v.getContext(), TirarFotoRoupaActivity.class);
+			i.putExtra("categoria", (Serializable) Categoria.CAMISA_MANGA_LONGA);
+			startActivity(i);
 			break;
 		case R.id.button_camisas_manga_curta:
-			//i = new Intent(v.getContext(), TirarFotoRoupaActivity.class);
-			//startActivity(i);
+			i = new Intent(v.getContext(), TirarFotoRoupaActivity.class);
+			i.putExtra("categoria", (Serializable) Categoria.CAMISA);
+			startActivity(i);
 			break;
 		case R.id.button_camisas_sem_manga:
-			//i = new Intent(v.getContext(), TirarFotoRoupaActivity.class);
-			//startActivity(i);
+			i = new Intent(v.getContext(), TirarFotoRoupaActivity.class);
+			i.putExtra("categoria", (Serializable) Categoria.CAMISETA);
+			startActivity(i);
 			break;
 		}
 		

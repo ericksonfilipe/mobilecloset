@@ -80,7 +80,7 @@ public class BDAdapter {
 
 	/**
 	 * Método que recupera o maior id da tabela de manequins.
-	 * Utilizado pelo método salvarImagemMemoriaExterna.
+	 * Utilizado pelo método salvarManequimMemoriaExterna.
 	 * @return o inteiro representando o maior indice da tabela de manequins.
 	 */
 	public int getNextIndexManequim() {
@@ -90,6 +90,19 @@ public class BDAdapter {
 		}
 		return manequins.get(manequins.size()-1).getId();
 	}
+	
+	/**
+	 * Método que recupera o maior id da tabela de roupas.
+	 * Utilizado pelo método salvarRoupaMemoriaExterna.
+	 * @return o inteiro representando o maior indice da tabela de manequins.
+	 */
+	public int getNextIndexRoupa() {
+		List<Roupa> roupas = getRoupas();
+		if (roupas.isEmpty()) {
+			return 0;
+		}
+		return roupas.get(roupas.size()-1).getId();
+	}	
 	
 	/**
 	 * Método que recupera o manequim padrão
@@ -122,7 +135,7 @@ public class BDAdapter {
 
 	public void inserirRoupa(Roupa roupa) {
 		SQLiteDatabase banco = bdHelper.getWritableDatabase();
-		String sql = String.format("INSERT INTO roupa(caminho_imagem, categoria) VALUES('%s,%s');", roupa.getCaminhoImagem(), roupa.getCategoria().name());
+		String sql = String.format("INSERT INTO roupa(caminho_imagem, categoria) VALUES('%s','%s');", roupa.getCaminhoImagem(), roupa.getCategoria().name());
 		banco.execSQL(sql);
 		banco.close();
 	}
@@ -135,13 +148,19 @@ public class BDAdapter {
 	}
 
 	public List<Roupa> getRoupas() {
+		return getRoupas(null);
+	}
+	
+	public List<Roupa> getRoupas(Categoria categoria) {
 		SQLiteDatabase banco = bdHelper.getReadableDatabase();
 		List<Roupa> roupas = new ArrayList<Roupa>();
 		Cursor c = banco.query("manequim", 
 				new String[] {"id", "caminho_imagem"}, null, null, null, null, "id");
 		while (c.moveToNext()) {
-			String cat = c.getString(c.getColumnIndex("categoria"));
-			Categoria categoria = Categoria.valueOf(cat);
+			if (categoria == null) {
+				String cat = c.getString(c.getColumnIndex("categoria"));
+				categoria = Categoria.valueOf(cat);
+			}
 			Roupa roupa = new Roupa(c.getString(c.getColumnIndex("caminho_imagem")), categoria);
 			roupa.setId(c.getInt(c.getColumnIndex("id")));
 			roupas.add(roupa);
@@ -149,7 +168,7 @@ public class BDAdapter {
 		c.close();
 		banco.close();
 		return roupas;
-	}
+	}	
 
 	public Map<Categoria, Calibragem> getCalibragens() {
 		SQLiteDatabase banco = bdHelper.getReadableDatabase();
@@ -181,7 +200,7 @@ public class BDAdapter {
 	 * Método responsável por salvar imagens no cartão de memória.
 	 * @param imageData
 	 */
-	public void salvarImagemMemoriaExterna(byte[] imageData) {
+	public void salvarManequimMemoriaExterna(byte[] imageData) {
 
 		File path = Environment.getExternalStoragePublicDirectory(
 				Environment.DIRECTORY_PICTURES);
@@ -209,6 +228,43 @@ public class BDAdapter {
 			Log.w("ExternalStorage", "Error writing " + file, e);
 		}
 		inserirManequim(nomeImagem);
+	}
+	
+	//TODO deixar o método abaixo flexível, para que possa salvar qualquer imagem.
+	/**
+	 * Método responsável por salvar imagens no cartão de memória.
+	 * @param imageData
+	 */
+	public void salvarRoupaMemoriaExterna(byte[] imageData, Categoria categoria) {
+
+		File path = Environment.getExternalStoragePublicDirectory(
+				Environment.DIRECTORY_PICTURES);
+		String nomeImagem = String.format("roupa%d.jpg", getNextIndexRoupa() + 1);
+		File file = new File (path, nomeImagem);
+		
+		try {
+			//InputStream is = this.context.getResources().openRawResource(R.drawable.botao_provar);
+			OutputStream os = new FileOutputStream(file);
+			byte[] data = imageData;
+			//is.read(data);
+			os.write(data);
+			//is.close();
+			os.close();
+
+			// verifica se ele foi criado com sucesso
+			MediaScannerConnection.scanFile(this.context, new String[] { file.toString() }, null,
+					new MediaScannerConnection.OnScanCompletedListener() {
+				public void onScanCompleted(String path, Uri uri) {
+					Log.i("ExternalStorage", "Scanned " + path + ":");
+					Log.i("ExternalStorage", "-> uri=" + uri);
+				}
+			});
+		} catch (IOException e) {
+			Log.w("ExternalStorage", "Error writing " + file, e);
+		}
+
+		Roupa roupa = new Roupa(nomeImagem, categoria);
+		inserirRoupa(roupa);
 	}
 
 }
