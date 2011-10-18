@@ -1,5 +1,8 @@
 package br.edu.ufcg;
 
+import java.io.Serializable;
+
+import br.edu.ufcg.model.Categoria;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -32,16 +35,19 @@ public class VerCamisasActivity extends Activity implements OnClickListener {
 		Intent i;
 		switch (v.getId()) {
 		case R.id.button_camisas_manga_comprida:
-			//i = new Intent(v.getContext(), ManequimActivity.class);
-			//startActivity(i);
+			i = new Intent(v.getContext(), VisualizacaoDeRoupas.class);
+			i.putExtra("categoria", (Serializable) Categoria.CAMISA_MANGA_LONGA);
+			startActivity(i);
 			break;
 		case R.id.button_camisas_manga_curta:
-			//i = new Intent(v.getContext(), RoupasActivity.class);
-			//startActivity(i);
+			i = new Intent(v.getContext(), VisualizacaoDeRoupas.class);
+			i.putExtra("categoria", (Serializable) Categoria.CAMISA);
+			startActivity(i);
 			break;
 		case R.id.button_camisas_sem_manga:
-			//i = new Intent(v.getContext(), Provar.class);
-			//startActivity(i);
+			i = new Intent(v.getContext(), VisualizacaoDeRoupas.class);
+			i.putExtra("categoria", (Serializable) Categoria.CAMISETA);
+			startActivity(i);
 			break;
 		}
 		

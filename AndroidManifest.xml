@@ -41,6 +41,8 @@
         
         <activity android:name=".CadastrarCamisasActivity" ></activity>
         
+        <activity android:name=".VisualizacaoDeRoupas" ></activity>
+        
     </application>
     
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
