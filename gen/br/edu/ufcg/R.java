@@ -128,6 +128,7 @@ public final class R {
         public static final int sobre=0x7f03000a;
         public static final int ver_camisas=0x7f03000b;
         public static final int ver_roupas=0x7f03000c;
+        public static final int visualizacao_roupas=0x7f03000d;
     }
     public static final class string {
         public static final int app_name=0x7f040000;
