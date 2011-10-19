@@ -8,7 +8,8 @@ public class Roupa implements Armazenavel {
 
 	public Roupa() {}
 
-	public Roupa(String caminhoImagem, Categoria categoria) {
+	public Roupa(int id, String caminhoImagem, Categoria categoria) {
+		this.id = id;
 		this.caminhoImagem = caminhoImagem;
 		this.categoria = categoria;
 	}
