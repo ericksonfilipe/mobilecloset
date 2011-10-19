@@ -11,6 +11,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
@@ -104,10 +107,22 @@ public class EscolherManequimActivity extends Activity {
 
 	        Drawable drawable = carregarImagem(Environment.getExternalStoragePublicDirectory(
 	        		Environment.DIRECTORY_PICTURES) + File.separator + imagens[position]);
-	        imageView.setImageDrawable(drawable);
+	        imageView.setImageDrawable(drawable);	        
 	        imageView.setLayoutParams(new Gallery.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 	        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
 	        imageView.setBackgroundResource(mGalleryItemBackground);
+	        
+//	        Bitmap bmpOriginal = BitmapFactory.decodeResource(getResources(), R.id.ImageManequim);
+//			System.out.println("width: "+bmpOriginal.getWidth());
+//			System.out.println("height: "+bmpOriginal.getHeight());
+//	        Bitmap bmResult = Bitmap.createBitmap(bmpOriginal.getWidth(), bmpOriginal.getHeight(), Bitmap.Config.ARGB_8888);
+//			Canvas tempCanvas = new Canvas(bmResult); 
+//			tempCanvas.drawBitmap(bmpOriginal, 0, 0, null);
+//			//tempCanvas.rotate(90);
+//			tempCanvas.restore();
+//			imageView.setImageBitmap(bmResult);
+//			drawable.draw(tempCanvas);
+//			imageView.setImageDrawable(drawable);
 
 	        return imageView;
 	    }

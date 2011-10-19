@@ -3,6 +3,8 @@ package br.edu.ufcg;
 import android.app.Activity;
 import android.os.Bundle;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.view.KeyEvent;
@@ -26,6 +28,8 @@ public class CalibragemRoupasActivity  extends Activity{
 		{
 			super(context);
 			image=context.getResources().getDrawable(R.drawable.icon);
+			
+			
 			setFocusable(true);
 
 		}
@@ -33,9 +37,15 @@ public class CalibragemRoupasActivity  extends Activity{
 		protected void onDraw(Canvas canvas) {
 			// TODO Auto-generated method stub
 			super.onDraw(canvas);
+			
 			//here u can control the width and height of the images........ this line is very important
 			image.setBounds((getWidth()/2)-zoomControler_w, (getHeight()/2)-zoomControler_h, (getWidth()/2)+zoomControler_w, (getHeight()/2)+zoomControler_h);
+			
+//			canvas.save();
 			image.draw(canvas);
+//			canvas.rotate(90);
+//			canvas.restore();
+			
 		}
 		@Override
 		public boolean onKeyDown(int keyCode, KeyEvent event) {
