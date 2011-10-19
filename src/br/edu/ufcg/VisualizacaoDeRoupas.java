@@ -14,6 +14,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -44,16 +45,16 @@ public class VisualizacaoDeRoupas extends Activity {
         gallery = (Gallery) findViewById(R.id.gallery);
 	    gallery.setAdapter(new ImageAdapter(this));
 
-//	    gallery.setOnItemClickListener(new OnItemClickListener() {
-//	        public void onItemClick(AdapterView parent, View v, int position, long id) {
+	    gallery.setOnItemClickListener(new OnItemClickListener() {
+	        public void onItemClick(AdapterView parent, View v, int position, long id) {
 //	            Toast.makeText(VisualizacaoDeRoupas.this, "" + position, Toast.LENGTH_SHORT);
 //	            Roupa roupaEscolhida = (Roupa) gallery.getAdapter().getItem(position);
 //	            dh.inserirRoupa(roupaEscolhida);
 //	            
 //				startActivity(new Intent(VisualizacaoDeRoupas.this, CalibragemRoupasActivity.class));
-//				
-//	        }
-//	    });
+				
+	        }
+	    });
 
         
     }
@@ -82,9 +83,9 @@ public class VisualizacaoDeRoupas extends Activity {
 	    	BDAdapter bd = new BDAdapter(VisualizacaoDeRoupas.this);
 	    	
 	    	Bundle params = getIntent().getExtras();
-			Categoria categoria = (Categoria) params.get("categoria");
+			Categoria categoria = (Categoria) params.get("categoria"); //aparentemente n util aqui
 			List<Roupa> roupas = bd.getRoupas(categoria);
-			
+			Log.e("getItem", "roupas.get(position): " + roupas.get(position)+ "  position: " + position); //TIRAR
 	        return roupas.get(position);
 	    }
 
@@ -111,10 +112,11 @@ public class VisualizacaoDeRoupas extends Activity {
 			Bundle params = getIntent().getExtras();
 			Categoria categoria = (Categoria) params.get("categoria"); //aparentemente nao faz efeito aqui
 			
-			List<Roupa> roupas = bd.getRoupas(categoria);
+			List<Roupa> roupas = bd.getRoupas(categoria); //ta retornando tudo, ate manequim
 			imagens = new String[roupas.size()];
 			for (int i = 0; i < roupas.size(); i++) {
 				imagens[i] = roupas.get(i).getCaminhoImagem();
+				Log.e("categoria no for", "img="+imagens[i]+"  cat="+roupas.get(i).getCategoria()); //TIRAR
 			}
 		}
 	}

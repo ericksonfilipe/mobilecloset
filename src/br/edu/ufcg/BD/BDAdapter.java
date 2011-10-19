@@ -161,9 +161,11 @@ public class BDAdapter {
 				String cat = c.getString(c.getColumnIndex("categoria"));
 				categoria = Categoria.valueOf(cat);
 			}
-			Roupa roupa = new Roupa(c.getString(c.getColumnIndex("caminho_imagem")), categoria);
-			roupa.setId(c.getInt(c.getColumnIndex("id")));
-			roupas.add(roupa);
+//			Roupa roupa = new Roupa(c.getString(c.getColumnIndex("caminho_imagem")), categoria);
+//			roupa.setId(c.getInt(c.getColumnIndex("id")));
+//			roupas.add(roupa);
+			
+			roupas.add(new Roupa(c.getInt(c.getColumnIndex("id")), c.getString(c.getColumnIndex("caminho_imagem")),categoria));
 		}
 		c.close();
 		banco.close();
@@ -263,7 +265,7 @@ public class BDAdapter {
 			Log.w("ExternalStorage", "Error writing " + file, e);
 		}
 
-		Roupa roupa = new Roupa(nomeImagem, categoria);
+		Roupa roupa = new Roupa(getNextIndexRoupa(), nomeImagem, categoria);
 		inserirRoupa(roupa);
 	}
 
