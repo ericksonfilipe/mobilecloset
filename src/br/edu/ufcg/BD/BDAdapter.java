@@ -21,6 +21,8 @@ import br.edu.ufcg.model.Categoria;
 import br.edu.ufcg.model.Manequim;
 import br.edu.ufcg.model.Roupa;
 
+//link util: http://www.codeproject.com/KB/android/AndroidSQLite.aspx
+
 public class BDAdapter {
 
 	private Context context;
@@ -154,17 +156,23 @@ public class BDAdapter {
 	public List<Roupa> getRoupas(Categoria categoria) {
 		SQLiteDatabase banco = bdHelper.getReadableDatabase();
 		List<Roupa> roupas = new ArrayList<Roupa>();
-		Cursor c = banco.query("roupa", 
-				new String[] {"id", "caminho_imagem", "categoria"}, null, null, null, null, "id"); //dizer a categoria
+		
+		Cursor c;
+		
+//		if (categoria == null) {
+			c = banco.query("roupa", 
+                    new String[] {"id", "caminho_imagem", "categoria"}, null, null, null, null, "id");
+//		} else {
+//			c = banco.query("roupa", //tabela
+//					new String[] {"id", "caminho_imagem", "categoria"}, //colunas
+//					"categoria=?", //String WHERE clause: where clause, if none pass null
+//					new String[] {categoria.getNome()},//String [ ] selection args: The parameters of the WHERE clause
+//					null,//groupby
+//					null,//having
+//					"id"); //order by
+//			c = banco.rawQuery("SELECT id, caminho_imagem, categoria FROM roupa WHERE categoria=?", new String[] {categoria.getNome()});
+//		}
 		while (c.moveToNext()) {
-			if (categoria == null) {
-				String cat = c.getString(c.getColumnIndex("categoria"));
-				categoria = Categoria.valueOf(cat);
-			}
-//			Roupa roupa = new Roupa(c.getString(c.getColumnIndex("caminho_imagem")), categoria);
-//			roupa.setId(c.getInt(c.getColumnIndex("id")));
-//			roupas.add(roupa);
-			
 			roupas.add(new Roupa(c.getInt(c.getColumnIndex("id")), c.getString(c.getColumnIndex("caminho_imagem")),categoria));
 		}
 		c.close();
