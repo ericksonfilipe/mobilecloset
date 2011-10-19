@@ -155,7 +155,7 @@ public class BDAdapter {
 		SQLiteDatabase banco = bdHelper.getReadableDatabase();
 		List<Roupa> roupas = new ArrayList<Roupa>();
 		Cursor c = banco.query("roupa", 
-				new String[] {"id", "caminho_imagem", "categoria"}, null, null, null, null, "id");
+				new String[] {"id", "caminho_imagem", "categoria"}, null, null, null, null, "id"); //dizer a categoria
 		while (c.moveToNext()) {
 			if (categoria == null) {
 				String cat = c.getString(c.getColumnIndex("categoria"));

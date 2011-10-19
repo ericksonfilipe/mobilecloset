@@ -80,7 +80,13 @@ public final class R {
         public static final int closet2gavetas=0x7f020042;
         public static final int creditos=0x7f020043;
         public static final int icon=0x7f020044;
-        public static final int tracejado2=0x7f020045;
+        public static final int molde_calca=0x7f020045;
+        public static final int molde_camisa=0x7f020046;
+        public static final int molde_camisao=0x7f020047;
+        public static final int molde_camiseta=0x7f020048;
+        public static final int molde_saia=0x7f020049;
+        public static final int molde_short=0x7f02004a;
+        public static final int tracejado2=0x7f02004b;
     }
     public static final class id {
         public static final int ImageManequim=0x7f050001;
