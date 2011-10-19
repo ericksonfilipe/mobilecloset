@@ -112,7 +112,7 @@ public class VisualizacaoDeRoupas extends Activity {
 			Bundle params = getIntent().getExtras();
 			Categoria categoria = (Categoria) params.get("categoria"); //aparentemente nao faz efeito aqui
 			
-			List<Roupa> roupas = bd.getRoupas(categoria); //ta retornando tudo, ate manequim
+			List<Roupa> roupas = bd.getRoupas(categoria); //ta retornando tudo
 			imagens = new String[roupas.size()];
 			for (int i = 0; i < roupas.size(); i++) {
 				imagens[i] = roupas.get(i).getCaminhoImagem();
