@@ -8,13 +8,11 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -23,10 +21,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
-import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Categoria;
-import br.edu.ufcg.model.Manequim;
 import br.edu.ufcg.model.Roupa;
 
 public class VisualizacaoDeRoupas extends Activity {
@@ -81,11 +77,7 @@ public class VisualizacaoDeRoupas extends Activity {
 
 	    public Roupa getItem(int position) {
 	    	BDAdapter bd = new BDAdapter(VisualizacaoDeRoupas.this);
-	    	
-	    	Bundle params = getIntent().getExtras();
-			Categoria categoria = (Categoria) params.get("categoria"); //aparentemente n util aqui
-			List<Roupa> roupas = bd.getRoupas(categoria);
-			Log.e("getItem", "roupas.get(position): " + roupas.get(position)+ "  position: " + position); //TIRAR
+			List<Roupa> roupas = bd.getRoupas();
 	        return roupas.get(position);
 	    }
 
@@ -110,13 +102,11 @@ public class VisualizacaoDeRoupas extends Activity {
 			BDAdapter bd = new BDAdapter(VisualizacaoDeRoupas.this);
 			
 			Bundle params = getIntent().getExtras();
-			Categoria categoria = (Categoria) params.get("categoria"); //aparentemente nao faz efeito aqui
-			
-			List<Roupa> roupas = bd.getRoupas(categoria); //ta retornando tudo
+			Categoria categoria = (Categoria) params.get("categoria");
+			List<Roupa> roupas = bd.getRoupas(categoria);
 			imagens = new String[roupas.size()];
 			for (int i = 0; i < roupas.size(); i++) {
 				imagens[i] = roupas.get(i).getCaminhoImagem();
-				Log.e("categoria no for", "img="+imagens[i]+"  cat="+roupas.get(i).getCategoria()); //TIRAR
 			}
 		}
 	}

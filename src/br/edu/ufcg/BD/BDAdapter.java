@@ -21,7 +21,6 @@ import br.edu.ufcg.model.Categoria;
 import br.edu.ufcg.model.Manequim;
 import br.edu.ufcg.model.Roupa;
 
-//link util: http://www.codeproject.com/KB/android/AndroidSQLite.aspx
 
 public class BDAdapter {
 
@@ -159,22 +158,18 @@ public class BDAdapter {
 		
 		Cursor c;
 		
-//		if (categoria == null) {
+		if (categoria == null) {
 			c = banco.query("roupa", 
                     new String[] {"id", "caminho_imagem", "categoria"}, null, null, null, null, "id");
-//		} else {
-//			c = banco.query("roupa", //tabela
-//					new String[] {"id", "caminho_imagem", "categoria"}, //colunas
-//					"categoria=?", //String WHERE clause: where clause, if none pass null
-//					new String[] {categoria.getNome()},//String [ ] selection args: The parameters of the WHERE clause
-//					null,//groupby
-//					null,//having
-//					"id"); //order by
-//			c = banco.rawQuery("SELECT id, caminho_imagem, categoria FROM roupa WHERE categoria=?", new String[] {categoria.getNome()});
-//		}
-		while (c.moveToNext()) {
-			roupas.add(new Roupa(c.getInt(c.getColumnIndex("id")), c.getString(c.getColumnIndex("caminho_imagem")),categoria));
+		} else {
+			c = banco.rawQuery("SELECT r.* FROM roupa r WHERE r.categoria LIKE '%"+categoria.getNome()+"%'", null); //isso funciona?
 		}
+		while (c.moveToNext()) {
+			Roupa roupa = new Roupa(c.getInt(c.getColumnIndex("id")), c.getString(c.getColumnIndex("caminho_imagem")),Categoria.valueOf(c.getString(c.getColumnIndex("categoria"))));
+			roupas.add(roupa);
+			Log.e("RoupaRetornada", roupa.toString()); //tirar
+		}
+		Log.e("QtdRoupas", "qtd de roupas na categoria: "+(roupas.size()));
 		c.close();
 		banco.close();
 		return roupas;
@@ -275,6 +270,7 @@ public class BDAdapter {
 		}
 
 		Roupa roupa = new Roupa(getNextIndexRoupa(), nomeImagem, categoria);
+		Log.e("insereRoupa", nomeImagem+" categoria:"+categoria);
 		inserirRoupa(roupa);
 	}
 
