@@ -208,11 +208,12 @@ public class BDAdapter {
 				Environment.DIRECTORY_PICTURES);
 		String nomeImagem = String.format("manequim%d.jpg", getNextIndexManequim() + 1);
 		File file = new File (path, nomeImagem);
-
+		
 		try {
 			//InputStream is = this.context.getResources().openRawResource(R.drawable.botao_provar);
 			OutputStream os = new FileOutputStream(file);
 			byte[] data = imageData;
+			
 			//is.read(data);
 			os.write(data);
 			//is.close();

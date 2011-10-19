@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import br.edu.ufcg.BD.BDAdapter;
@@ -33,6 +35,8 @@ public class CalibragemRoupasActivity  extends Activity{
 	        //------pegando o manequim ------------------------------------
 	        // DESCOMENTAR ISSO DEPOIS
 	        ImageView imgView =(ImageView) findViewById(R.id.ImageManequim);
+	        //Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(this, R.anim.hyperspace_jump);
+	        //imgView.startAnimation(hyperspaceJumpAnimation);
 	        dh = new BDAdapter(this);
 	        
 	        //por enquanto, pegando ultimo manequim 
