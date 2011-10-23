@@ -11,9 +11,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,7 +22,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
-import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Manequim;
 
@@ -47,12 +43,11 @@ public class EscolherManequimActivity extends Activity {
 
 	    gallery.setOnItemClickListener(new OnItemClickListener() {
 	        public void onItemClick(AdapterView parent, View v, int position, long id) {
-	            Toast.makeText(EscolherManequimActivity.this, "" + position, Toast.LENGTH_SHORT);
 	            Manequim manequimEscolhido = (Manequim) gallery.getAdapter().getItem(position);
 	            dh.inserirManequimPadrao(manequimEscolhido);
-	            
-				startActivity(new Intent(EscolherManequimActivity.this, CalibragemRoupasActivity.class));
-				
+	            Intent i = new Intent(EscolherManequimActivity.this, CalibragemRoupasActivity.class);
+	            i.putExtra("background", manequimEscolhido.getCaminhoImagem());
+				startActivity(i);
 	        }
 	    });
 	    
@@ -105,8 +100,7 @@ public class EscolherManequimActivity extends Activity {
 	    public View getView(int position, View convertView, ViewGroup parent) {
 	        ImageView imageView = new ImageView(mContext);
 
-	        Drawable drawable = carregarImagem(Environment.getExternalStoragePublicDirectory(
-	        		Environment.DIRECTORY_PICTURES) + File.separator + imagens[position]);
+	        Drawable drawable = carregarImagem(imagens[position]);
 	        imageView.setImageDrawable(drawable);	        
 	        imageView.setLayoutParams(new Gallery.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 	        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -139,7 +133,8 @@ public class EscolherManequimActivity extends Activity {
     
 	private Drawable carregarImagem(String src) {
 	      try {
-	          InputStream is = new BufferedInputStream(new FileInputStream(src));
+	    	  String caminho = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator + src;
+	          InputStream is = new BufferedInputStream(new FileInputStream(caminho));
 	          Drawable d = Drawable.createFromStream(is, "src name");
 	          return d;
 	      } catch (Exception e) {
