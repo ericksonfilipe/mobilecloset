@@ -178,11 +178,11 @@ public class BDAdapter {
 	public Map<Categoria, Calibragem> getCalibragens() {
 		SQLiteDatabase banco = bdHelper.getReadableDatabase();
 		Map<Categoria, Calibragem> calibragens = new HashMap<Categoria, Calibragem>();
-		Cursor c = banco.query("calibragem", new String[] {"categoria", "pos_x", "pos_y", "altura", "largura"}, null, null, null, null, null);
+		Cursor c = banco.query("calibragem", new String[] {"categoria", "left", "top", "right", "bottom"}, null, null, null, null, null);
 		while (c.moveToNext()) {
 			String cat = c.getString(c.getColumnIndex("categoria"));
 			Categoria categoria = Categoria.valueOf(cat);
-			Calibragem calibragem = new Calibragem(categoria, c.getDouble(c.getColumnIndex("pos_x")), c.getDouble(c.getColumnIndex("pos_y")), c.getDouble(c.getColumnIndex("altura")), c.getDouble(c.getColumnIndex("largura")));
+			Calibragem calibragem = new Calibragem(categoria, c.getInt(c.getColumnIndex("left")), c.getInt(c.getColumnIndex("top")),  c.getInt(c.getColumnIndex("right")), c.getInt(c.getColumnIndex("bottom")));
 			calibragens.put(categoria, calibragem);
 		}
 		return calibragens;
@@ -190,8 +190,8 @@ public class BDAdapter {
 
 	public void insertCalibragem(Calibragem calibragem) {
 		SQLiteDatabase banco = bdHelper.getWritableDatabase();
-		String sql = String.format("INSERT INTO calibragem(categoria, pos_x, pos_y, altura, largura) VALUES('%s', ", calibragem.getCategoria().name())
-		+ calibragem.getPosicaoX() + ", " + calibragem.getPosicaoY() + ", " + calibragem.getAltura() + ", " + calibragem.getLargura() + ");";
+		String sql = String.format("INSERT INTO calibragem(categoria, left, top, right, bottom) VALUES('%s', %d, %d, %d, %d);",
+				calibragem.getCategoria().name(), calibragem.left, calibragem.top, calibragem.right, calibragem.bottom);
 		banco.execSQL(sql);
 	}
 
