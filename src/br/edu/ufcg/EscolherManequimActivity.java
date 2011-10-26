@@ -3,6 +3,7 @@ package br.edu.ufcg;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -11,6 +12,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
@@ -46,6 +50,7 @@ public class EscolherManequimActivity extends Activity {
 	            Manequim manequimEscolhido = (Manequim) gallery.getAdapter().getItem(position);
 	            dh.inserirManequimPadrao(manequimEscolhido);
 	            Intent i = new Intent(EscolherManequimActivity.this, CalibragemRoupasActivity.class);
+	            System.out.println("CAMINHO --> "+manequimEscolhido.getCaminhoImagem());
 	            i.putExtra("background", manequimEscolhido.getCaminhoImagem());
 				startActivity(i);
 	        }
@@ -100,25 +105,30 @@ public class EscolherManequimActivity extends Activity {
 	    public View getView(int position, View convertView, ViewGroup parent) {
 	        ImageView imageView = new ImageView(mContext);
 
-	        Drawable drawable = carregarImagem(imagens[position]);
-	        imageView.setImageDrawable(drawable);	        
-	        imageView.setLayoutParams(new Gallery.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-	        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-	        imageView.setBackgroundResource(mGalleryItemBackground);
-	        
-//	        Bitmap bmpOriginal = BitmapFactory.decodeResource(getResources(), R.id.ImageManequim);
-//			System.out.println("width: "+bmpOriginal.getWidth());
-//			System.out.println("height: "+bmpOriginal.getHeight());
-//	        Bitmap bmResult = Bitmap.createBitmap(bmpOriginal.getWidth(), bmpOriginal.getHeight(), Bitmap.Config.ARGB_8888);
-//			Canvas tempCanvas = new Canvas(bmResult); 
-//			tempCanvas.drawBitmap(bmpOriginal, 0, 0, null);
-//			//tempCanvas.rotate(90);
-//			tempCanvas.restore();
-//			imageView.setImageBitmap(bmResult);
-//			drawable.draw(tempCanvas);
-//			imageView.setImageDrawable(drawable);
+	        try {
+		        String caminho = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+		        		+ File.separator + imagens[position];
+		        InputStream is = new BufferedInputStream(new FileInputStream(caminho));
+		        Bitmap d = BitmapFactory.decodeStream(is);
+		        
+		        Matrix matrix = new Matrix();
+				matrix.setRotate(90);
+				Bitmap girado = Bitmap.createBitmap(d, 0, 0, d.getWidth(), d.getHeight(), matrix, true);
+				//BitmapDrawable bd = new BitmapDrawable(girado);
+		        
+		        imageView.setImageBitmap(girado);
+		        imageView.setLayoutParams(new Gallery.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+		        imageView.setBackgroundResource(mGalleryItemBackground);
+		        
+		        
+		        
+		        } catch (FileNotFoundException e) {
+					System.out.println("Exc="+e);
+				}
 
-	        return imageView;
+		    return imageView;
+	        
 	    }
 	    
 	    private void carregaArrayImagens() {
@@ -131,7 +141,7 @@ public class EscolherManequimActivity extends Activity {
 		}
 	}
     
-	private Drawable carregarImagem(String src) {
+/*	private Drawable carregarImagem(String src) {
 	      try {
 	    	  String caminho = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator + src;
 	          InputStream is = new BufferedInputStream(new FileInputStream(caminho));
@@ -141,6 +151,6 @@ public class EscolherManequimActivity extends Activity {
 	          System.out.println("Exc="+e);
 	          return null;
 	      }
-	}
+	}*/
 
 }
