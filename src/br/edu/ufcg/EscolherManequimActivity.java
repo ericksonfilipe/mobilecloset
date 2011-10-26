@@ -113,7 +113,7 @@ public class EscolherManequimActivity extends Activity {
 				Matrix matrix = new Matrix();
 				matrix.setRotate(90);
 				Bitmap girado = Bitmap.createBitmap(d, 0, 0, d.getWidth(), d.getHeight(), matrix, true);
-				//				imageView.setImageDrawable(carregarImagem(imagens[position]));
+				//								imageView.setImageDrawable(carregarImagem(imagens[position]));
 				imageView.setImageBitmap(girado);
 				imageView.setLayoutParams(new Gallery.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 				imageView.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -136,16 +136,16 @@ public class EscolherManequimActivity extends Activity {
 		}
 	}
 
-//	private Drawable carregarImagem(String src) {
-//		try {
-//			String caminho = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator + src;
-//			InputStream is = new BufferedInputStream(new FileInputStream(caminho));
-//			Drawable d = Drawable.createFromStream(is, "src name");
-//			return d;
-//		} catch (Exception e) {
-//			System.out.println("Exc="+e);
-//			return null;
-//		}
-//	}
+	//	private Drawable carregarImagem(String src) {
+	//		try {
+	//			String caminho = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator + src;
+	//			InputStream is = new BufferedInputStream(new FileInputStream(caminho));
+	//			Drawable d = Drawable.createFromStream(is, "src name");
+	//			return d;
+	//		} catch (Exception e) {
+	//			System.out.println("Exc="+e);
+	//			return null;
+	//		}
+	//	}
 
 }
