@@ -3,6 +3,7 @@ package br.edu.ufcg;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -10,6 +11,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
@@ -88,12 +93,27 @@ public class VisualizacaoDeRoupas extends Activity {
 	    public View getView(int position, View convertView, ViewGroup parent) {
 	        ImageView imageView = new ImageView(mContext);
 
-	        Drawable drawable = carregarImagem(Environment.getExternalStoragePublicDirectory(
-	        		Environment.DIRECTORY_PICTURES) + File.separator + imagens[position]);
-	        imageView.setImageDrawable(drawable);
-	        imageView.setLayoutParams(new Gallery.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-	        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-	        imageView.setBackgroundResource(mGalleryItemBackground);
+	        try {
+	        	String caminho = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+	        			+ File.separator + imagens[position];
+	        	InputStream is = new BufferedInputStream(new FileInputStream(caminho));
+	        	Bitmap d = BitmapFactory.decodeStream(is);
+	        
+	        	Matrix matrix = new Matrix();
+	        	matrix.setRotate(90);
+	        	Bitmap girado = Bitmap.createBitmap(d, 0, 0, d.getWidth(), d.getHeight(), matrix, true);
+	        	//BitmapDrawable bd = new BitmapDrawable(girado);
+	        
+	        	imageView.setImageBitmap(girado);
+	        	imageView.setLayoutParams(new Gallery.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+	        	imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+	        	imageView.setBackgroundResource(mGalleryItemBackground);
+	        
+	        
+	        
+	        } catch (FileNotFoundException e) {
+				System.out.println("Exc="+e);
+			}
 
 	        return imageView;
 	    }
