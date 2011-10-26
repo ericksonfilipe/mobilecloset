@@ -33,8 +33,8 @@ public class CalibragemRoupasActivity  extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		String caminhoBackground = (String) getIntent().getExtras().get("background");
-//		Bitmap b = carregarImagem(caminhoBackground);
-				Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+		Bitmap b = carregarImagem(caminhoBackground);
+//		Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.background);
 		Matrix matrix = new Matrix();
 		matrix.setRotate(90);
 		Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
@@ -57,11 +57,14 @@ public class CalibragemRoupasActivity  extends Activity {
 		private boolean move = false;
 		private boolean zoom = false;
 
+		private int[] imagens = new int[] {R.drawable.molde_camisa, R.drawable.molde_calca};
+		private int posicao = 0;
+
 		public Zoom(Context context) {
 			super(context);
 			x = 40;
 			y = 40;
-			image=context.getResources().getDrawable(R.drawable.icon);
+			image=context.getResources().getDrawable(imagens[posicao]);
 			image.setBounds(x, y, 80, 80);
 			setFocusable(true);
 		}
@@ -108,6 +111,14 @@ public class CalibragemRoupasActivity  extends Activity {
 				Rect bounds = image.getBounds();
 				dao.insertCalibragem(new Calibragem(categoria, bounds.left, bounds.top, bounds.right, bounds.bottom));
 				Log.e("deu certo?", dao.getCalibragens().get(categoria).toString());
+
+				posicao++;
+				if (posicao >= imagens.length) {
+					finish();
+					return false;
+				}
+				image = getResources().getDrawable(imagens[posicao]);
+				image.setBounds(x, y, 80, 80);
 			}
 
 			if (zoomControler_w < 10) zoomControler_w = 10;
@@ -124,7 +135,7 @@ public class CalibragemRoupasActivity  extends Activity {
 			invalidate();
 			return true;
 		}
-		
+
 		private int getLargura() {
 			return image.getBounds().right - image.getBounds().left;
 		}
