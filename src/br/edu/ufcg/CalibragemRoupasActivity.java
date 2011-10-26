@@ -67,6 +67,8 @@ public class CalibragemRoupasActivity  extends Activity {
 			image=context.getResources().getDrawable(imagens[posicao]);
 			image.setBounds(x, y, 80, 80);
 			setFocusable(true);
+			this.requestFocus();
+			this.setFocusableInTouchMode(true);
 		}
 
 		@Override
