@@ -15,6 +15,7 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -32,6 +33,8 @@ public class EscolherManequimActivity extends Activity {
 
 	Gallery gallery;
 	private BDAdapter dh;
+
+	private boolean DEBUG = true;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -54,20 +57,6 @@ public class EscolherManequimActivity extends Activity {
 				startActivity(i);
 			}
 		});
-
-		//        
-		//        ImageView imgView =(ImageView)findViewById(R.id.ImageManequim);
-		//        BDAdapter bd = new BDAdapter(this);
-		//        
-		//        //por enquanto, pegando ultimo manequim 
-		//        String caminhoManequim = bd.getAllManequins().get(bd.getAllManequins().size()-1).getPath();
-		//        
-		//        Drawable drawable = LoadImage(Environment.getExternalStoragePublicDirectory(
-		//        		Environment.DIRECTORY_PICTURES) + File.separator + caminhoManequim);
-		//        
-		//        Log.e("drawable", "drawable null? " + drawable); //TIRAR
-		//        
-		//        imgView.setImageDrawable(drawable);
 
 	}
 
@@ -105,21 +94,23 @@ public class EscolherManequimActivity extends Activity {
 			ImageView imageView = new ImageView(mContext);
 
 			try {
-				String caminho = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-				+ File.separator + imagens[position];
-				InputStream is = new BufferedInputStream(new FileInputStream(caminho));
-				Bitmap d = BitmapFactory.decodeStream(is);
+				if (DEBUG) {
+					imageView.setImageDrawable(carregarImagem(imagens[position]));
+				} else {
+					String caminho = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+					+ File.separator + imagens[position];
+					InputStream is = new BufferedInputStream(new FileInputStream(caminho));
+					Bitmap d = BitmapFactory.decodeStream(is);
 
-				Matrix matrix = new Matrix();
-				matrix.setRotate(90);
-				Bitmap girado = Bitmap.createBitmap(d, 0, 0, d.getWidth(), d.getHeight(), matrix, true);
-				//								imageView.setImageDrawable(carregarImagem(imagens[position]));
-				imageView.setImageBitmap(girado);
+					Matrix matrix = new Matrix();
+					matrix.setRotate(90);
+					Bitmap girado = Bitmap.createBitmap(d, 0, 0, d.getWidth(), d.getHeight(), matrix, true);
+					imageView.setImageBitmap(girado);
+				}
 				imageView.setLayoutParams(new Gallery.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 				imageView.setScaleType(ImageView.ScaleType.FIT_XY);
 				imageView.setBackgroundResource(mGalleryItemBackground);
 			} catch (FileNotFoundException e) {
-				System.out.println("Exc="+e);
 			}
 
 			return imageView;
@@ -136,16 +127,16 @@ public class EscolherManequimActivity extends Activity {
 		}
 	}
 
-	//	private Drawable carregarImagem(String src) {
-	//		try {
-	//			String caminho = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator + src;
-	//			InputStream is = new BufferedInputStream(new FileInputStream(caminho));
-	//			Drawable d = Drawable.createFromStream(is, "src name");
-	//			return d;
-	//		} catch (Exception e) {
-	//			System.out.println("Exc="+e);
-	//			return null;
-	//		}
-	//	}
+	private Drawable carregarImagem(String src) {
+		try {
+			String caminho = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator + src;
+			InputStream is = new BufferedInputStream(new FileInputStream(caminho));
+			Drawable d = Drawable.createFromStream(is, "src name");
+			return d;
+		} catch (Exception e) {
+			System.out.println("Exc="+e);
+			return null;
+		}
+	}
 
 }

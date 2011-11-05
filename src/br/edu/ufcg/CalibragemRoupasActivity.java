@@ -17,7 +17,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -28,27 +27,28 @@ import br.edu.ufcg.model.Categoria;
 
 public class CalibragemRoupasActivity  extends Activity {
 
-	private Categoria categoria = Categoria.CAMISA;
-	private Drawable image;
+	private boolean DEBUG = true;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		String caminhoBackground = (String) getIntent().getExtras().get("background");
-		Bitmap b = carregarImagem(caminhoBackground);
-//		Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+
+		Bitmap b = null;
+		if (DEBUG) {
+			b = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+		} else {
+			b = carregarImagem(caminhoBackground);
+		}
+
 		Matrix matrix = new Matrix();
 		matrix.setRotate(90);
 		Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
 		BitmapDrawable bd = new BitmapDrawable(girado);
 		MyImageView myImageView = new MyImageView(this);
-//		Drawable d = carregarImagem(caminhoBackground);
 		myImageView.setBackgroundDrawable(bd);
-//		z.setBackgroundDrawable(d);
 		setContentView(myImageView);
 	}
-
-
 
 	public class MyImageView extends View {
 
@@ -70,7 +70,7 @@ public class CalibragemRoupasActivity  extends Activity {
 
 		private boolean zoom = false;
 
-		private int[] imagens = new int[] {R.drawable.molde_camisa, R.drawable.molde_calca};
+		private int[] imagens = new int[] {R.drawable.molde_camisa, R.drawable.molde_calca, R.drawable.molde_saia};
 		private int posicao = 0;
 
 		public MyImageView(Context context) {
@@ -184,7 +184,23 @@ public class CalibragemRoupasActivity  extends Activity {
 			case KeyEvent.KEYCODE_DPAD_CENTER:
 				BDAdapter dao = new BDAdapter(getApplicationContext());
 				Rect bounds = mImage.getBounds();
-				dao.insertCalibragem(new Calibragem(categoria, bounds.left, bounds.top, bounds.right, bounds.bottom));
+
+				Categoria[] categorias = new Categoria[] {};
+				switch (posicao) {
+				case 0:
+					categorias = new Categoria[] {Categoria.CAMISA, Categoria.CAMISA_MANGA_LONGA, Categoria.CAMISETA, Categoria.VESTIDO};
+					break;
+				case 1:
+					categorias = new Categoria[] {Categoria.CALCA, Categoria.SHORT};
+					break;
+				case 2:
+					categorias = new Categoria[] {Categoria.SAIA};
+					break;
+				}
+
+				for (Categoria categoria : categorias) {
+					dao.insertCalibragem(new Calibragem(categoria, bounds.left, bounds.top, bounds.right, bounds.bottom));
+				}
 
 				posicao++;
 				if (posicao >= imagens.length) {
@@ -206,13 +222,10 @@ public class CalibragemRoupasActivity  extends Activity {
 			super.onDraw(canvas);
 
 			canvas.save();
-			Log.d("DEBUG", "X: "+mPosX+" Y: "+mPosY);
 			canvas.translate(mPosX, mPosY);
 			canvas.scale(mScaleFactor, mScaleFactor);
 
 			if (zoom) {
-				Log.e("depois",String.valueOf(mImage.getBounds().left));
-				Log.e("depois",String.valueOf(mImage.getBounds().right));
 				int left = mImage.getBounds().left;
 				int top = mImage.getBounds().top;
 				int right = mImage.getBounds().right;
@@ -246,7 +259,6 @@ public class CalibragemRoupasActivity  extends Activity {
 			Bitmap d = BitmapFactory.decodeStream(is);
 			return d;
 		} catch (Exception e) {
-			System.out.println("Exc="+e);
 			return null;
 		}
 	}
