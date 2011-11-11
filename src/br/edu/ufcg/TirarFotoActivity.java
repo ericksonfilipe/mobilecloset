@@ -1,7 +1,12 @@
 package br.edu.ufcg;
 
+import java.io.ByteArrayOutputStream;
+
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +19,7 @@ import br.edu.ufcg.BD.BDAdapter;
 public class TirarFotoActivity extends Activity implements ImageListener, OnClickListener {
 
 	private CameraView mPreview;
-	private BDAdapter dh;
+	private BDAdapter dao;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -35,7 +40,7 @@ public class TirarFotoActivity extends Activity implements ImageListener, OnClic
 
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-		this.dh = new BDAdapter(this);
+		this.dao = new BDAdapter(this);
 
 	}
 
@@ -45,21 +50,14 @@ public class TirarFotoActivity extends Activity implements ImageListener, OnClic
 		mPreview.setVisibility(View.INVISIBLE);
 		mPreview.freezeCamera();
 		
-		this.dh.salvarManequimMemoriaExterna(image);
-		System.out.println("xxxxxxxxxxxxxxxxx FOI");
-
-		//try {
-		//	OutputStream fos = openFileOutput(File.separator + "var" + File.separator + "mobileCloset" + File.separator + "imagem.jpg", Context.MODE_WORLD_READABLE);
-		//Log.e("pffffffff", Environment.getExternalStorageDirectory()+"");
-		//fos.write(image);
-		//fos.flush();
-		//fos.close();
-
-		//} catch (FileNotFoundException e) {
-		//e.printStackTrace();
-		//} catch (IOException e) {
-		//	e.printStackTrace();
-		//}
+		Bitmap plecas = BitmapFactory.decodeByteArray(image, 0, image.length);
+		Bitmap mudado = Bitmap.createScaledBitmap(plecas, 500, 500, true);
+		
+		ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
+		mudado.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos); 
+		byte[] bitmapdata = bos.toByteArray();
+		
+		this.dao.inserirManequim(bitmapdata);
 
 		this.finish();
 	}

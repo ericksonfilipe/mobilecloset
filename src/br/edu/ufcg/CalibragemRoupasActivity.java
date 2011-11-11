@@ -1,10 +1,5 @@
 package br.edu.ufcg;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,39 +10,81 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.AttributeSet;
-import android.view.KeyEvent;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Calibragem;
 import br.edu.ufcg.model.Categoria;
 
 public class CalibragemRoupasActivity  extends Activity {
 
-	private boolean DEBUG = true;
+	private boolean DEBUG = false;
+	private boolean modificarLargura = true;
+	private MyImageView myImageView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		String caminhoBackground = (String) getIntent().getExtras().get("background");
+		byte[] imagem = (byte[]) getIntent().getExtras().get("background");
 
 		Bitmap b = null;
 		if (DEBUG) {
 			b = BitmapFactory.decodeResource(getResources(), R.drawable.background);
 		} else {
-			b = carregarImagem(caminhoBackground);
+			b = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
 		}
 
 		Matrix matrix = new Matrix();
 		matrix.setRotate(90);
 		Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
 		BitmapDrawable bd = new BitmapDrawable(girado);
-		MyImageView myImageView = new MyImageView(this);
+		myImageView = new MyImageView(this);
 		myImageView.setBackgroundDrawable(bd);
 		setContentView(myImageView);
+
+		Button zoomIn = new Button(this);
+		zoomIn.setText("+");
+		zoomIn.setOnClickListener(new AumentarListener(myImageView));
+
+		Button zoomOut = new Button(this);
+		zoomOut.setText("-");
+		zoomOut.setOnClickListener(new DiminuirListener(myImageView));
+
+		RelativeLayout layout = new RelativeLayout(this);
+		LinearLayout linear = new LinearLayout(this);
+		linear.addView(zoomIn);
+		linear.addView(zoomOut);
+		layout.addView(linear);
+
+		addContentView(layout, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflate = new MenuInflater(this);
+		inflate.inflate(R.menu.calibragem_menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.salvarCalibragem:
+			myImageView.salvarCalibragem();
+			break;
+		}
+		return true;
 	}
 
 	public class MyImageView extends View {
@@ -55,6 +92,7 @@ public class CalibragemRoupasActivity  extends Activity {
 		private static final int INVALID_POINTER_ID = -1;
 
 		private Drawable mImage;
+
 		private float mPosX;
 		private float mPosY;
 
@@ -76,7 +114,6 @@ public class CalibragemRoupasActivity  extends Activity {
 		public MyImageView(Context context) {
 			this(context, null, 0);
 			mImage = getResources().getDrawable(imagens[posicao]);
-
 			mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage.getIntrinsicHeight());
 
 			setFocusable(true);
@@ -161,61 +198,131 @@ public class CalibragemRoupasActivity  extends Activity {
 			return true;
 		}
 
-		@Override
-		public boolean onKeyDown(int keyCode, KeyEvent event) {
+		public void zoomInLargura() {
 			zoom = true;
-			switch(keyCode) {
-			case KeyEvent.KEYCODE_DPAD_UP:
-				zoomControler_h = 10;
-				zoomControler_w = 0;
-				break;
-			case KeyEvent.KEYCODE_DPAD_RIGHT:
-				zoomControler_w = 10;
-				zoomControler_h = 0;
-				break;
-			case KeyEvent.KEYCODE_DPAD_DOWN:
-				zoomControler_h = -10;
-				zoomControler_w = 0;
-				break;
-			case KeyEvent.KEYCODE_DPAD_LEFT:
-				zoomControler_w= -10;
-				zoomControler_h = 0;
-				break;
-			case KeyEvent.KEYCODE_DPAD_CENTER:
-				BDAdapter dao = new BDAdapter(getApplicationContext());
-				Rect bounds = mImage.getBounds();
+			zoomControler_w = 10;
+			zoomControler_h = 0;
+			invalidate();
+		}
 
-				Categoria[] categorias = new Categoria[] {};
-				switch (posicao) {
-				case 0:
-					categorias = new Categoria[] {Categoria.CAMISA, Categoria.CAMISA_MANGA_LONGA, Categoria.CAMISETA, Categoria.VESTIDO};
-					break;
-				case 1:
-					categorias = new Categoria[] {Categoria.CALCA, Categoria.SHORT};
-					break;
-				case 2:
-					categorias = new Categoria[] {Categoria.SAIA};
-					break;
-				}
+		public void zoomOutLargura() {
+			zoom = true;
+			zoomControler_w = -10;
+			zoomControler_h = 0;
+			invalidate();
+		}
 
-				for (Categoria categoria : categorias) {
-					dao.insertCalibragem(new Calibragem(categoria, bounds.left, bounds.top, bounds.right, bounds.bottom));
-				}
+		public void zoomInAltura() {
+			zoom = true;
+			zoomControler_h = 10;
+			zoomControler_w = 0;
+			invalidate();
+		}
 
-				posicao++;
-				if (posicao >= imagens.length) {
-					finish();
-					return false;
-				}
+		public void zoomOutAltura() {
+			zoom = true;
+			zoomControler_h = -10;
+			zoomControler_w = 0;
+			invalidate();
+		}
 
-				mImage = getResources().getDrawable(imagens[posicao]);
-				mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage.getIntrinsicHeight());
+		public void salvarCalibragem() {
+			BDAdapter dao = new BDAdapter(getApplicationContext());
+			Rect bounds = mImage.getBounds();
+
+			Categoria[] categorias = new Categoria[] {};
+			switch (posicao) {
+			case 0:
+				categorias = new Categoria[] {Categoria.CAMISA, Categoria.CAMISA_MANGA_LONGA, Categoria.CAMISETA, Categoria.VESTIDO};
+				break;
+			case 1:
+				categorias = new Categoria[] {Categoria.CALCA, Categoria.SHORT};
+				break;
+			case 2:
+				categorias = new Categoria[] {Categoria.SAIA};
 				break;
 			}
+			Log.e("left", String.valueOf(bounds.centerX() - ((int)mImage.getIntrinsicWidth()/2)));
+			Log.e("top", String.valueOf(bounds.centerY() - ((int)mImage.getIntrinsicHeight()/2)));
+			Log.e("right", String.valueOf(bounds.centerX() + ((int)mImage.getIntrinsicWidth()/2)));
+			Log.e("bottom", String.valueOf(bounds.centerY() + ((int)mImage.getIntrinsicHeight()/2)));
+			
+			for (Categoria categoria : categorias) {
+				dao.insertCalibragem(new Calibragem(categoria, (int)mPosX, (int)mPosY, bounds.right - bounds.left, bounds.bottom - bounds.top));
+//					dao.insertCalibragem(new Calibragem(categoria, bounds.centerX() - ((int)mImage.getIntrinsicWidth()/2), bounds.centerY() - ((int)mImage.getIntrinsicHeight()/2), bounds.centerX() + ((int)mImage.getIntrinsicWidth()/2), bounds.centerY() + ((int)mImage.getIntrinsicHeight()/2)));
+			}
 
+			posicao++;
+			if (posicao >= imagens.length) {
+				finish();
+				return;
+			}
+
+			mImage = getResources().getDrawable(imagens[posicao]);
+			mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage.getIntrinsicHeight());
 			invalidate();
-			return true;
 		}
+
+		//		@Override
+		//		public boolean onKeyDown(int keyCode, KeyEvent event) {
+		//			zoom = true;
+		//			switch(keyCode) {
+		//			case KeyEvent.KEYCODE_DPAD_UP:
+		//				zoomControler_h = 10;
+		//				zoomControler_w = 0;
+		//				break;
+		//			case KeyEvent.KEYCODE_DPAD_RIGHT:
+		//				zoomControler_w = 10;
+		//				zoomControler_h = 0;
+		//				break;
+		//			case KeyEvent.KEYCODE_DPAD_DOWN:
+		//				zoomControler_h = -10;
+		//				zoomControler_w = 0;
+		//				break;
+		//			case KeyEvent.KEYCODE_DPAD_LEFT:
+		//				zoomControler_w= -10;
+		//				zoomControler_h = 0;
+		//				break;
+		//			case KeyEvent.KEYCODE_DPAD_CENTER:
+//						BDAdapter dao = new BDAdapter(getApplicationContext());
+//						Rect bounds = mImage.getBounds();
+//		
+//						Categoria[] categorias = new Categoria[] {};
+//						switch (posicao) {
+//						case 0:
+//							categorias = new Categoria[] {Categoria.CAMISA, Categoria.CAMISA_MANGA_LONGA, Categoria.CAMISETA, Categoria.VESTIDO};
+//							break;
+//						case 1:
+//							categorias = new Categoria[] {Categoria.CALCA, Categoria.SHORT};
+//							break;
+//						case 2:
+//							categorias = new Categoria[] {Categoria.SAIA};
+//							break;
+//						}
+//						Log.e("left", String.valueOf(bounds.centerX() - ((int)mImage.getIntrinsicWidth()/2)));
+//						Log.e("top", String.valueOf(bounds.centerY() - ((int)mImage.getIntrinsicHeight()/2)));
+//						Log.e("right", String.valueOf(bounds.centerX() + ((int)mImage.getIntrinsicWidth()/2)));
+//						Log.e("bottom", String.valueOf(bounds.centerY() + ((int)mImage.getIntrinsicHeight()/2)));
+//						
+//						for (Categoria categoria : categorias) {
+//							dao.insertCalibragem(new Calibragem(categoria, (int)mPosX, (int)mPosY, bounds.right - bounds.left, bounds.bottom - bounds.top));
+//		//					dao.insertCalibragem(new Calibragem(categoria, bounds.centerX() - ((int)mImage.getIntrinsicWidth()/2), bounds.centerY() - ((int)mImage.getIntrinsicHeight()/2), bounds.centerX() + ((int)mImage.getIntrinsicWidth()/2), bounds.centerY() + ((int)mImage.getIntrinsicHeight()/2)));
+//						}
+//		
+//						posicao++;
+//						if (posicao >= imagens.length) {
+//							finish();
+//							return false;
+//						}
+//		
+//						mImage = getResources().getDrawable(imagens[posicao]);
+//						mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage.getIntrinsicHeight());
+//						break;
+//					}
+		//
+		//			invalidate();
+		//			return true;
+		//		}
 
 		@Override
 		public void onDraw(Canvas canvas) {
@@ -234,6 +341,7 @@ public class CalibragemRoupasActivity  extends Activity {
 				zoom = false;
 			}
 			mImage.draw(canvas);
+
 			canvas.restore();
 		}
 
@@ -252,25 +360,33 @@ public class CalibragemRoupasActivity  extends Activity {
 
 	}
 
-	private Bitmap carregarImagem(String src) {
-		try {
-			String caminho = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator + src;
-			InputStream is = new BufferedInputStream(new FileInputStream(caminho));
-			Bitmap d = BitmapFactory.decodeStream(is);
-			return d;
-		} catch (Exception e) {
-			return null;
+	private class AumentarListener implements OnClickListener {
+		private MyImageView view;
+		public AumentarListener(MyImageView view) {
+			this.view = view;
+		}
+
+		public void onClick(View arg0) {
+			if (modificarLargura) {
+				view.zoomInLargura();
+			} else {
+				view.zoomInAltura();
+			}
 		}
 	}
 
-	//	private Drawable carregarImagem(String src) {
-	//	      try {
-	//	    	  String caminho = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator + src;
-	//	          InputStream is = new BufferedInputStream(new FileInputStream(caminho));
-	//	          Drawable d = Drawable.createFromStream(is, "src name");
-	//	          return d;
-	//	      } catch (Exception e) {
-	//	          return null;
-	//	      }
-	//	}
+	private class DiminuirListener implements OnClickListener {
+		private MyImageView view;
+		public DiminuirListener(MyImageView view) {
+			this.view = view;
+		}
+
+		public void onClick(View arg0) {
+			if (modificarLargura) {
+				view.zoomOutLargura();
+			} else {
+				view.zoomOutAltura();
+			}
+		}
+	}
 }

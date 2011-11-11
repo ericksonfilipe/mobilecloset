@@ -1,10 +1,6 @@
 package br.edu.ufcg;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -15,9 +11,7 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -33,8 +27,9 @@ public class EscolherManequimActivity extends Activity {
 
 	Gallery gallery;
 	private BDAdapter dh;
+	private List<Manequim> manequins = new ArrayList<Manequim>();
 
-	private boolean DEBUG = true;
+	private boolean DEBUG = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +38,7 @@ public class EscolherManequimActivity extends Activity {
 
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		this.dh = new BDAdapter(this);     
+		this.manequins = dh.getManequins();
 
 		gallery = (Gallery) findViewById(R.id.gallery);
 		gallery.setAdapter(new ImageAdapter(this));
@@ -52,8 +48,7 @@ public class EscolherManequimActivity extends Activity {
 				Manequim manequimEscolhido = (Manequim) gallery.getAdapter().getItem(position);
 				dh.inserirManequimPadrao(manequimEscolhido);
 				Intent i = new Intent(EscolherManequimActivity.this, CalibragemRoupasActivity.class);
-				System.out.println("CAMINHO --> "+manequimEscolhido.getCaminhoImagem());
-				i.putExtra("background", manequimEscolhido.getCaminhoImagem());
+				i.putExtra("background", manequimEscolhido.getImagem());
 				startActivity(i);
 			}
 		});
@@ -64,7 +59,7 @@ public class EscolherManequimActivity extends Activity {
 		int mGalleryItemBackground;
 		private Context mContext;
 
-		private String[] imagens;
+		private Manequim[] imagens;
 
 		public ImageAdapter(Context c) {
 			mContext = c;
@@ -81,8 +76,6 @@ public class EscolherManequimActivity extends Activity {
 		}
 
 		public Manequim getItem(int position) {
-			BDAdapter bd = new BDAdapter(EscolherManequimActivity.this);
-			List<Manequim> manequins = bd.getManequins();
 			return manequins.get(position);
 		}
 
@@ -93,50 +86,30 @@ public class EscolherManequimActivity extends Activity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ImageView imageView = new ImageView(mContext);
 
-			try {
-				if (DEBUG) {
-					imageView.setImageDrawable(carregarImagem(imagens[position]));
-				} else {
-					String caminho = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-					+ File.separator + imagens[position];
-					InputStream is = new BufferedInputStream(new FileInputStream(caminho));
-					Bitmap d = BitmapFactory.decodeStream(is);
+			if (DEBUG) {
+				imageView.setImageDrawable(getResources().getDrawable(R.drawable.background));
+			} else {
+				byte[] imagem = imagens[position].getImagem();
+				Bitmap d = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
 
-					Matrix matrix = new Matrix();
-					matrix.setRotate(90);
-					Bitmap girado = Bitmap.createBitmap(d, 0, 0, d.getWidth(), d.getHeight(), matrix, true);
-					imageView.setImageBitmap(girado);
-				}
-				imageView.setLayoutParams(new Gallery.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-				imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-				imageView.setBackgroundResource(mGalleryItemBackground);
-			} catch (FileNotFoundException e) {
+				Matrix matrix = new Matrix();
+				matrix.setRotate(90);
+				Bitmap girado = Bitmap.createBitmap(d, 0, 0, d.getWidth(), d.getHeight(), matrix, true);
+				imageView.setImageBitmap(girado);
 			}
+			imageView.setLayoutParams(new Gallery.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+			imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+			imageView.setBackgroundResource(mGalleryItemBackground);
 
 			return imageView;
 
 		}
 
 		private void carregaArrayImagens() {
-			BDAdapter bd = new BDAdapter(EscolherManequimActivity.this);
-			List<Manequim> manequins = bd.getManequins();
-			imagens = new String[manequins.size()];
+			imagens = new Manequim[manequins.size()];
 			for (int i = 0; i < manequins.size(); i++) {
-				imagens[i] = manequins.get(i).getCaminhoImagem();
+				imagens[i] = manequins.get(i);
 			}
 		}
 	}
-
-	private Drawable carregarImagem(String src) {
-		try {
-			String caminho = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator + src;
-			InputStream is = new BufferedInputStream(new FileInputStream(caminho));
-			Drawable d = Drawable.createFromStream(is, "src name");
-			return d;
-		} catch (Exception e) {
-			System.out.println("Exc="+e);
-			return null;
-		}
-	}
-
 }

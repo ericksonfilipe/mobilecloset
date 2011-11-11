@@ -1,31 +1,31 @@
 package br.edu.ufcg.model;
 
-public class Manequim implements Armazenavel {
+public class Manequim {
 
 	private int id;
-	private String caminhoImagem;
+	private byte[] imagem;
 
 	public Manequim() {}
 
-	public Manequim(int id, String caminhoImagem) {
+	public Manequim(int id, byte[] imagem) {
 		this.id = id;
-		this.caminhoImagem = caminhoImagem;
+		this.imagem = imagem;
 	}
 
 	public int getId() {
 		return id;
 	}
 	
-	public String getCaminhoImagem() {
-		return caminhoImagem;
+	public byte[] getImagem() {
+		return imagem;
 	}
 	
-	public void setCaminhoImagem(String caminhoImagem) {
-		this.caminhoImagem = caminhoImagem;
+	public void setCaminhoImagem(byte[] caminhoImagem) {
+		this.imagem = caminhoImagem;
 	}
 	
 	@Override
 	public String toString() {
-		return String.format("[id = %d, Caminho = %s]", this.id, this.caminhoImagem);
+		return String.format("[id = %d]", this.id);
 	}
 }

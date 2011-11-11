@@ -1,10 +1,5 @@
 package br.edu.ufcg;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.List;
 
 import android.app.Activity;
@@ -14,15 +9,10 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
@@ -31,115 +21,79 @@ import br.edu.ufcg.model.Categoria;
 import br.edu.ufcg.model.Roupa;
 
 public class VisualizacaoDeRoupas extends Activity {
-	
+
 	Gallery gallery;
-	private BDAdapter dh;
-       
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.visualizacao_roupas);
-        
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        this.dh = new BDAdapter(this);     
-                
-        gallery = (Gallery) findViewById(R.id.gallery);
-	    gallery.setAdapter(new ImageAdapter(this));
 
-	    gallery.setOnItemClickListener(new OnItemClickListener() {
-	        public void onItemClick(AdapterView parent, View v, int position, long id) {
-//	            Toast.makeText(VisualizacaoDeRoupas.this, "" + position, Toast.LENGTH_SHORT);
-//	            Roupa roupaEscolhida = (Roupa) gallery.getAdapter().getItem(position);
-//	            dh.inserirRoupa(roupaEscolhida);
-//	            
-//				startActivity(new Intent(VisualizacaoDeRoupas.this, CalibragemRoupasActivity.class));
-				
-	        }
-	    });
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.visualizacao_roupas);
 
-        
-    }
-	
+		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+		gallery = (Gallery) findViewById(R.id.gallery);
+		gallery.setAdapter(new ImageAdapter(this));
+	}
+
 	public class ImageAdapter extends BaseAdapter {
-	    int mGalleryItemBackground;
-	    private Context mContext;
+		int mGalleryItemBackground;
+		private Context mContext;
 
-	    private String[] imagens;
+		private Roupa[] imagens;
 
-	    public ImageAdapter(Context c) {
-	        mContext = c;
-	        TypedArray attr = mContext.obtainStyledAttributes(R.styleable.HelloGallery);
-	        mGalleryItemBackground = attr.getResourceId(
-	                R.styleable.HelloGallery_android_galleryItemBackground, 0);
-	        attr.recycle();
-	        
-	        carregaArrayImagens();
-	    }
+		public ImageAdapter(Context c) {
+			mContext = c;
+			TypedArray attr = mContext.obtainStyledAttributes(R.styleable.HelloGallery);
+			mGalleryItemBackground = attr.getResourceId(
+					R.styleable.HelloGallery_android_galleryItemBackground, 0);
+			attr.recycle();
 
-	    public int getCount() {
-	        return imagens.length;
-	    }
+			carregaArrayImagens();
+		}
 
-	    public Roupa getItem(int position) {
-	    	BDAdapter bd = new BDAdapter(VisualizacaoDeRoupas.this);
-			List<Roupa> roupas = bd.getRoupas();
-	        return roupas.get(position);
-	    }
+		public int getCount() {
+			return imagens.length;
+		}
 
-	    public long getItemId(int position) {
-	        return position;
-	    }
-
-	    public View getView(int position, View convertView, ViewGroup parent) {
-	        ImageView imageView = new ImageView(mContext);
-
-	        try {
-	        	String caminho = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-	        			+ File.separator + imagens[position];
-	        	InputStream is = new BufferedInputStream(new FileInputStream(caminho));
-	        	Bitmap d = BitmapFactory.decodeStream(is);
-	        
-	        	Matrix matrix = new Matrix();
-	        	matrix.setRotate(90);
-	        	Bitmap girado = Bitmap.createBitmap(d, 0, 0, d.getWidth(), d.getHeight(), matrix, true);
-	        	//BitmapDrawable bd = new BitmapDrawable(girado);
-	        
-	        	imageView.setImageBitmap(girado);
-	        	imageView.setLayoutParams(new Gallery.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-	        	imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-	        	imageView.setBackgroundResource(mGalleryItemBackground);
-	        
-	        
-	        
-	        } catch (FileNotFoundException e) {
-				System.out.println("Exc="+e);
-			}
-
-	        return imageView;
-	    }
-	    
-	    private void carregaArrayImagens() {
+		public Roupa getItem(int position) {
 			BDAdapter bd = new BDAdapter(VisualizacaoDeRoupas.this);
-			
+			List<Roupa> roupas = bd.getRoupas();
+			return roupas.get(position);
+		}
+
+		public long getItemId(int position) {
+			return position;
+		}
+
+		public View getView(int position, View convertView, ViewGroup parent) {
+			ImageView imageView = new ImageView(mContext);
+
+			byte[] imagem = imagens[position].getImagem();
+			Bitmap d = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
+
+			Matrix matrix = new Matrix();
+			matrix.setRotate(90);
+			Bitmap girado = Bitmap.createBitmap(d, 0, 0, d.getWidth(), d.getHeight(), matrix, true);
+			//BitmapDrawable bd = new BitmapDrawable(girado);
+
+			imageView.setImageBitmap(girado);
+			imageView.setLayoutParams(new Gallery.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+			imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+			imageView.setBackgroundResource(mGalleryItemBackground);
+
+			return imageView;
+		}
+
+		private void carregaArrayImagens() {
+			BDAdapter bd = new BDAdapter(VisualizacaoDeRoupas.this);
+
 			Bundle params = getIntent().getExtras();
 			Categoria categoria = (Categoria) params.get("categoria");
 			List<Roupa> roupas = bd.getRoupas(categoria);
-			imagens = new String[roupas.size()];
+			imagens = new Roupa[roupas.size()];
 			for (int i = 0; i < roupas.size(); i++) {
-				imagens[i] = roupas.get(i).getCaminhoImagem();
+				imagens[i] = roupas.get(i);
 			}
 		}
 	}
-    
-	private Drawable carregarImagem(String src) {
-	      try {
-	          InputStream is = new BufferedInputStream(new FileInputStream(src));
-	          Drawable d = Drawable.createFromStream(is, "src name");
-	          return d;
-	      } catch (Exception e) {
-	          System.out.println("Exc="+e);
-	          return null;
-	      }
-	}
-
 }
