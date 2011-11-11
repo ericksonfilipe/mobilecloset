@@ -1,33 +1,33 @@
 package br.edu.ufcg.model;
 
-public class Roupa implements Armazenavel {
+public class Roupa {
 
 	private int id;
-	private String caminhoImagem;
+	private byte[] imagem;
 	private Categoria categoria;
 
 	public Roupa() {}
 
-	public Roupa(int id, String caminhoImagem, Categoria categoria) {
+	public Roupa(int id, byte[] imagem, Categoria categoria) {
 		this.id = id;
-		this.caminhoImagem = caminhoImagem;
+		this.imagem = imagem;
 		this.categoria = categoria;
-	}
-
-	public String getCaminhoImagem() {
-		return this.caminhoImagem;
-	}
-
-	public void setCaminhoImagem(String path) {
-		this.caminhoImagem = path;
 	}
 
 	public int getId() {
 		return id;
 	}
-
+	
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public byte[] getImagem() {
+		return this.imagem;
+	}
+
+	public void setImagem(byte[] imagem) {
+		this.imagem = imagem;
 	}
 
 	public Categoria getCategoria() {
@@ -40,7 +40,7 @@ public class Roupa implements Armazenavel {
 
 	@Override
 	public String toString() {
-		return String.format("Roupa [id = %d, path = %s, categoria = %s]", this.id, this.caminhoImagem, this.categoria);
+		return String.format("Roupa [id = %d, categoria = %s]", this.id, this.categoria);
 	}
 
 }

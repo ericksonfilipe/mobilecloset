@@ -1,10 +1,13 @@
 package br.edu.ufcg;
 
+import java.io.ByteArrayOutputStream;
+
 import android.app.Activity;
-import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,6 +16,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Categoria;
+import br.edu.ufcg.model.Roupa;
 
 public class TirarFotoRoupaActivity extends Activity implements ImageListener, OnClickListener {
 
@@ -65,21 +69,15 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener, O
 		Bundle params = getIntent().getExtras();
 		Categoria categoria = (Categoria) params.get("categoria");
 		
-		this.dh.salvarRoupaMemoriaExterna(image, categoria);
-		System.out.println("xxxxxxxxxxxxxxxxx FOI");
-
-		//try {
-		//	OutputStream fos = openFileOutput(File.separator + "var" + File.separator + "mobileCloset" + File.separator + "imagem.jpg", Context.MODE_WORLD_READABLE);
-		//Log.e("pffffffff", Environment.getExternalStorageDirectory()+"");
-		//fos.write(image);
-		//fos.flush();
-		//fos.close();
-
-		//} catch (FileNotFoundException e) {
-		//e.printStackTrace();
-		//} catch (IOException e) {
-		//	e.printStackTrace();
-		//}
+		Bitmap plecas = BitmapFactory.decodeByteArray(image, 0, image.length);
+		Bitmap mudado = Bitmap.createScaledBitmap(plecas, 400, 400, true);
+		
+		ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
+		mudado.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos); 
+		byte[] bitmapdata = bos.toByteArray();
+		
+		Roupa roupa = new Roupa(0, bitmapdata, categoria);
+		this.dh.inserirRoupa(roupa);
 
 		this.finish();
 	}

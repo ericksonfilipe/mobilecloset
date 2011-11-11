@@ -1,5 +1,6 @@
 package br.edu.ufcg;
 
+import br.edu.ufcg.BD.BDAdapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -40,7 +41,10 @@ public class Closet extends Activity implements OnClickListener {
 			startActivity(i);
 			break;
 		case R.id.button_provar:
-			i = new Intent(v.getContext(), Provar.class);
+			i = new Intent(v.getContext(), ProvadorActivity.class);
+			BDAdapter dao = new BDAdapter(v.getContext());
+//			i.putExtra("background", dao.getManequimPadrao().getCaminhoImagem());
+			i.putExtra("background", "pff.jpg".getBytes());
 			startActivity(i);
 			break;
 		}

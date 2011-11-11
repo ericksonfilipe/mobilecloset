@@ -5,7 +5,7 @@
       android:versionName="1.0">
     <uses-sdk android:minSdkVersion="8" />
 
-    <application android:icon="@drawable/cabide" android:label="@string/app_name">
+    <application android:icon="@drawable/cabide" android:label="@string/app_name" android:debuggable="true">
         <activity android:name=".MobileclosetActivity"
                   android:label="@string/app_name">
             <intent-filter>
@@ -42,6 +42,9 @@
         <activity android:name=".CadastrarCamisasActivity" ></activity>
         
         <activity android:name=".VisualizacaoDeRoupas" ></activity>
+        
+        <activity android:name=".ProvadorActivity" ></activity>
+        
         
     </application>
     
