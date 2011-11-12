@@ -154,4 +154,14 @@ public class BDAdapter {
 		banco.execSQL("DELETE FROM calibragem;");
 	}
 
+	public byte[] getManequimPadrao() {
+		int id = getIdManequimPadrao();
+		for (Manequim manequim : getManequins()) {
+			if (manequim.getId() == id) {
+				return manequim.getImagem();
+			}
+		}
+		return null;
+	}
+
 }

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -23,7 +24,7 @@ import br.edu.ufcg.model.Roupa;
 
 public class ProvadorActivity extends Activity {
 	
-	private boolean DEBUG = true;
+	private boolean DEBUG = false;
 	
 	private BDAdapter dao;
 
@@ -40,8 +41,10 @@ public class ProvadorActivity extends Activity {
 		Bitmap b = null;
 		if (DEBUG) {
 			b = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		} else {
 			b = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
+			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		}
 
 		Matrix matrix = new Matrix();
@@ -53,6 +56,7 @@ public class ProvadorActivity extends Activity {
 		Provador provador = new Provador(this, carregaRoupasSuperiores(), carregaRoupasInferiores());
 		provador.setBackgroundDrawable(bd);
 		setContentView(provador);
+		
 
 	}
 
@@ -107,6 +111,12 @@ public class ProvadorActivity extends Activity {
 			roupaSuperior = carregaDrawable(roupasSuperiores.get(posicaoRoupaSuperior).getImagem());
 			roupaSuperior.setBounds(calibragemS.left, calibragemS.top, calibragemS.right, calibragemS.bottom);
 
+			System.out.println("--- calibragem.LEFT: "+calibragemS.left);
+			System.out.println("--- calibragem.TOP: "+calibragemS.top);
+			System.out.println("--- calibragem.RIGHT: "+calibragemS.right);
+			System.out.println("--- calibragem.BOTTOM: "+calibragemS.bottom);
+			
+			
 			roupaInferior = carregaDrawable(roupasInferiores.get(posicaoRoupaInferior).getImagem());
 			roupaInferior.setBounds(calibragemI.left, calibragemI.top, calibragemI.right, calibragemI.bottom);
 

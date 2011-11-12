@@ -248,8 +248,14 @@ public class CalibragemRoupasActivity  extends Activity {
 			Log.e("bottom", String.valueOf(bounds.centerY() + ((int)mImage.getIntrinsicHeight()/2)));
 			
 			for (Categoria categoria : categorias) {
-				dao.insertCalibragem(new Calibragem(categoria, (int)mPosX, (int)mPosY, bounds.right - bounds.left, bounds.bottom - bounds.top));
-//					dao.insertCalibragem(new Calibragem(categoria, bounds.centerX() - ((int)mImage.getIntrinsicWidth()/2), bounds.centerY() - ((int)mImage.getIntrinsicHeight()/2), bounds.centerX() + ((int)mImage.getIntrinsicWidth()/2), bounds.centerY() + ((int)mImage.getIntrinsicHeight()/2)));
+				//dao.insertCalibragem(new Calibragem(categoria, (int)mPosX, (int)mPosY, bounds.right - bounds.left, bounds.bottom - bounds.top));
+				dao.insertCalibragem(new Calibragem(categoria, bounds.left+(int)mPosX, bounds.top+(int)mPosY, bounds.right+(int)mPosX, bounds.bottom+(int)mPosY));
+				System.out.println("--- BOUNDS.LEFT: "+bounds.left);
+				System.out.println("--- BOUNDS.TOP: "+bounds.top);
+				System.out.println("--- BOUNDS.RIGHT: "+bounds.right);
+				System.out.println("--- BOUNDS.BOTTOM: "+bounds.bottom);
+				
+				//					dao.insertCalibragem(new Calibragem(categoria, bounds.centerX() - ((int)mImage.getIntrinsicWidth()/2), bounds.centerY() - ((int)mImage.getIntrinsicHeight()/2), bounds.centerX() + ((int)mImage.getIntrinsicWidth()/2), bounds.centerY() + ((int)mImage.getIntrinsicHeight()/2)));
 			}
 
 			posicao++;
