@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.Size;
@@ -141,6 +142,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         parameters.setColorEffect(Parameters.EFFECT_NONE);
         parameters.setFocusMode(Parameters.FOCUS_MODE_AUTO);
         parameters.setRotation(90);
+        parameters.setPictureFormat(ImageFormat.JPEG);
         //parameters.setSceneMode(Parameters.SCENE_MODE_PORTRAIT);
         parameters.setWhiteBalance(Parameters.WHITE_BALANCE_FLUORESCENT);
         setDisplayOrientation(mCamera, 90);
