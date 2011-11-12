@@ -89,6 +89,7 @@ public final class R {
         public static final int tracejado2=0x7f02004b;
     }
     public static final class id {
+        public static final int alterarDimensoes=0x7f06001c;
         public static final int buttonEscolherRoupas=0x7f060007;
         public static final int button_bermudas=0x7f060017;
         public static final int button_cadastrar_roupa=0x7f060010;
@@ -116,7 +117,7 @@ public final class R {
         public static final int imagem_camera_roupas=0x7f060002;
         public static final int linearLayout1=0x7f060008;
         public static final int linearLayout2=0x7f06000b;
-        public static final int salvarCalibragem=0x7f06001c;
+        public static final int salvarCalibragem=0x7f06001d;
         public static final int textView2=0x7f060012;
     }
     public static final class layout {

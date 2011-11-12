@@ -83,6 +83,10 @@ public class CalibragemRoupasActivity  extends Activity {
 		case R.id.salvarCalibragem:
 			myImageView.salvarCalibragem();
 			break;
+		case R.id.alterarDimensoes:
+			modificarLargura = !modificarLargura;
+			item.setTitle(modificarLargura ? "Alterar Altura" : "Alterar Largura");
+			break;
 		}
 		return true;
 	}
