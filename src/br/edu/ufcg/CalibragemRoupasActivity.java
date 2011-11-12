@@ -5,13 +5,16 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,7 +23,7 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import br.edu.ufcg.BD.BDAdapter;
@@ -52,22 +55,27 @@ public class CalibragemRoupasActivity  extends Activity {
 		myImageView = new MyImageView(this);
 		myImageView.setBackgroundDrawable(bd);
 		setContentView(myImageView);
-
-		Button zoomIn = new Button(this);
-		zoomIn.setText("+");
+		
+		ImageButton zoomIn = new ImageButton(this);
+		zoomIn.setImageDrawable(getResources().getDrawable(R.drawable.zoom_in));
+		zoomIn.setBackgroundColor(Color.TRANSPARENT);
 		zoomIn.setOnClickListener(new AumentarListener(myImageView));
 
-		Button zoomOut = new Button(this);
-		zoomOut.setText("-");
+		ImageButton zoomOut = new ImageButton(this);
+		zoomOut.setImageDrawable(getResources().getDrawable(R.drawable.zoom_out));
+		zoomOut.setBackgroundColor(Color.TRANSPARENT);
 		zoomOut.setOnClickListener(new DiminuirListener(myImageView));
 
 		RelativeLayout layout = new RelativeLayout(this);
 		LinearLayout linear = new LinearLayout(this);
 		linear.addView(zoomIn);
 		linear.addView(zoomOut);
+		linear.setGravity(Gravity.RIGHT);
+		linear.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		layout.addView(linear);
+		layout.setGravity(Gravity.BOTTOM);
 
-		addContentView(layout, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 	}
 
 	@Override
