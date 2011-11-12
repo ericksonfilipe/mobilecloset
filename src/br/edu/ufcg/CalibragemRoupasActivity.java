@@ -11,9 +11,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -254,20 +252,9 @@ public class CalibragemRoupasActivity  extends Activity {
 				categorias = new Categoria[] {Categoria.SAIA};
 				break;
 			}
-			Log.e("left", String.valueOf(bounds.centerX() - ((int)mImage.getIntrinsicWidth()/2)));
-			Log.e("top", String.valueOf(bounds.centerY() - ((int)mImage.getIntrinsicHeight()/2)));
-			Log.e("right", String.valueOf(bounds.centerX() + ((int)mImage.getIntrinsicWidth()/2)));
-			Log.e("bottom", String.valueOf(bounds.centerY() + ((int)mImage.getIntrinsicHeight()/2)));
 			
 			for (Categoria categoria : categorias) {
-				//dao.insertCalibragem(new Calibragem(categoria, (int)mPosX, (int)mPosY, bounds.right - bounds.left, bounds.bottom - bounds.top));
 				dao.insertCalibragem(new Calibragem(categoria, bounds.left+(int)mPosX, bounds.top+(int)mPosY, bounds.right+(int)mPosX, bounds.bottom+(int)mPosY));
-				System.out.println("--- BOUNDS.LEFT: "+bounds.left);
-				System.out.println("--- BOUNDS.TOP: "+bounds.top);
-				System.out.println("--- BOUNDS.RIGHT: "+bounds.right);
-				System.out.println("--- BOUNDS.BOTTOM: "+bounds.bottom);
-				
-				//					dao.insertCalibragem(new Calibragem(categoria, bounds.centerX() - ((int)mImage.getIntrinsicWidth()/2), bounds.centerY() - ((int)mImage.getIntrinsicHeight()/2), bounds.centerX() + ((int)mImage.getIntrinsicWidth()/2), bounds.centerY() + ((int)mImage.getIntrinsicHeight()/2)));
 			}
 
 			posicao++;
@@ -280,67 +267,6 @@ public class CalibragemRoupasActivity  extends Activity {
 			mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage.getIntrinsicHeight());
 			invalidate();
 		}
-
-		//		@Override
-		//		public boolean onKeyDown(int keyCode, KeyEvent event) {
-		//			zoom = true;
-		//			switch(keyCode) {
-		//			case KeyEvent.KEYCODE_DPAD_UP:
-		//				zoomControler_h = 10;
-		//				zoomControler_w = 0;
-		//				break;
-		//			case KeyEvent.KEYCODE_DPAD_RIGHT:
-		//				zoomControler_w = 10;
-		//				zoomControler_h = 0;
-		//				break;
-		//			case KeyEvent.KEYCODE_DPAD_DOWN:
-		//				zoomControler_h = -10;
-		//				zoomControler_w = 0;
-		//				break;
-		//			case KeyEvent.KEYCODE_DPAD_LEFT:
-		//				zoomControler_w= -10;
-		//				zoomControler_h = 0;
-		//				break;
-		//			case KeyEvent.KEYCODE_DPAD_CENTER:
-//						BDAdapter dao = new BDAdapter(getApplicationContext());
-//						Rect bounds = mImage.getBounds();
-//		
-//						Categoria[] categorias = new Categoria[] {};
-//						switch (posicao) {
-//						case 0:
-//							categorias = new Categoria[] {Categoria.CAMISA, Categoria.CAMISA_MANGA_LONGA, Categoria.CAMISETA, Categoria.VESTIDO};
-//							break;
-//						case 1:
-//							categorias = new Categoria[] {Categoria.CALCA, Categoria.SHORT};
-//							break;
-//						case 2:
-//							categorias = new Categoria[] {Categoria.SAIA};
-//							break;
-//						}
-//						Log.e("left", String.valueOf(bounds.centerX() - ((int)mImage.getIntrinsicWidth()/2)));
-//						Log.e("top", String.valueOf(bounds.centerY() - ((int)mImage.getIntrinsicHeight()/2)));
-//						Log.e("right", String.valueOf(bounds.centerX() + ((int)mImage.getIntrinsicWidth()/2)));
-//						Log.e("bottom", String.valueOf(bounds.centerY() + ((int)mImage.getIntrinsicHeight()/2)));
-//						
-//						for (Categoria categoria : categorias) {
-//							dao.insertCalibragem(new Calibragem(categoria, (int)mPosX, (int)mPosY, bounds.right - bounds.left, bounds.bottom - bounds.top));
-//		//					dao.insertCalibragem(new Calibragem(categoria, bounds.centerX() - ((int)mImage.getIntrinsicWidth()/2), bounds.centerY() - ((int)mImage.getIntrinsicHeight()/2), bounds.centerX() + ((int)mImage.getIntrinsicWidth()/2), bounds.centerY() + ((int)mImage.getIntrinsicHeight()/2)));
-//						}
-//		
-//						posicao++;
-//						if (posicao >= imagens.length) {
-//							finish();
-//							return false;
-//						}
-//		
-//						mImage = getResources().getDrawable(imagens[posicao]);
-//						mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage.getIntrinsicHeight());
-//						break;
-//					}
-		//
-		//			invalidate();
-		//			return true;
-		//		}
 
 		@Override
 		public void onDraw(Canvas canvas) {

@@ -1,7 +1,5 @@
 package br.edu.ufcg;
 
-import br.edu.ufcg.BD.BDAdapter;
-import br.edu.ufcg.model.Manequim;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -9,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import br.edu.ufcg.BD.BDAdapter;
 
 public class Closet extends Activity implements OnClickListener {
 	 /** Called when the activity is first created. */

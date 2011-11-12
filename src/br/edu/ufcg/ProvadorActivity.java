@@ -19,7 +19,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -185,12 +184,6 @@ public class ProvadorActivity extends Activity {
 			roupaSuperior = carregaDrawable(roupasSuperiores.get(posicaoRoupaSuperior).getImagem());
 			roupaSuperior.setBounds(calibragemS.left, calibragemS.top, calibragemS.right, calibragemS.bottom);
 
-			System.out.println("--- calibragem.LEFT: "+calibragemS.left);
-			System.out.println("--- calibragem.TOP: "+calibragemS.top);
-			System.out.println("--- calibragem.RIGHT: "+calibragemS.right);
-			System.out.println("--- calibragem.BOTTOM: "+calibragemS.bottom);
-
-
 			roupaInferior = carregaDrawable(roupasInferiores.get(posicaoRoupaInferior).getImagem());
 			roupaInferior.setBounds(calibragemI.left, calibragemI.top, calibragemI.right, calibragemI.bottom);
 
@@ -233,7 +226,6 @@ public class ProvadorActivity extends Activity {
 				Roupa roupa = roupasInferiores.get(posicaoRoupaInferior);
 				roupaInferior = carregaDrawable(roupa.getImagem());
 				Calibragem calibragemI = calibragens.get(roupa.getCategoria());
-				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n" + roupa.getCategoria());
 				roupaInferior.setBounds(calibragemI.left, calibragemI.top, calibragemI.right, calibragemI.bottom);
 				invalidate();
 			}
