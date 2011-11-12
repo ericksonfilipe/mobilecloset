@@ -248,7 +248,7 @@ public class CalibragemRoupasActivity  extends Activity {
 				categorias = new Categoria[] {Categoria.CAMISA, Categoria.CAMISA_MANGA_LONGA, Categoria.CAMISETA, Categoria.VESTIDO};
 				break;
 			case 1:
-				categorias = new Categoria[] {Categoria.CALCA, Categoria.SHORT};
+				categorias = new Categoria[] {Categoria.CALCA, Categoria.SHORT, Categoria.BERMUDA};
 				break;
 			case 2:
 				categorias = new Categoria[] {Categoria.SAIA};

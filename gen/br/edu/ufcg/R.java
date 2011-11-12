@@ -86,9 +86,11 @@ public final class R {
         public static final int molde_camiseta=0x7f020048;
         public static final int molde_saia=0x7f020049;
         public static final int molde_short=0x7f02004a;
-        public static final int tracejado2=0x7f02004b;
-        public static final int zoom_in=0x7f02004c;
-        public static final int zoom_out=0x7f02004d;
+        public static final int next=0x7f02004b;
+        public static final int previous=0x7f02004c;
+        public static final int tracejado2=0x7f02004d;
+        public static final int zoom_in=0x7f02004e;
+        public static final int zoom_out=0x7f02004f;
     }
     public static final class id {
         public static final int alterarDimensoes=0x7f060022;

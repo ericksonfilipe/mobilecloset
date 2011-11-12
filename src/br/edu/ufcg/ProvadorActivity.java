@@ -16,10 +16,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import br.edu.ufcg.BD.BDAdapter;
@@ -34,6 +35,8 @@ public class ProvadorActivity extends Activity {
 	private BDAdapter dao;
 
 	private List<Roupa> roupas;
+	
+	private Provador provador;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +61,7 @@ public class ProvadorActivity extends Activity {
 		BitmapDrawable bd = new BitmapDrawable(girado);
 
 
-		Provador provador = new Provador(this, carregaRoupasSuperiores(), carregaRoupasInferiores());
+		provador = new Provador(this, carregaRoupasSuperiores(), carregaRoupasInferiores());
 		provador.setBackgroundDrawable(bd);
 		setContentView(provador);
 
@@ -74,10 +77,22 @@ public class ProvadorActivity extends Activity {
 		esquerda.setOrientation(LinearLayout.VERTICAL);
 		esquerda.setGravity(Gravity.CENTER);
 
-		Button menosB = new Button(this);
-		menosB.setText("menos1");
-		Button menosB2 = new Button(this);
-		menosB2.setText("menos2");
+		ImageButton menosB = new ImageButton(this);
+		menosB.setImageDrawable(getResources().getDrawable(R.drawable.previous));
+		menosB.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View arg0) {
+				provador.voltaRoupaSuperior();
+			}
+		});
+		ImageButton menosB2 = new ImageButton(this);
+		menosB2.setImageDrawable(getResources().getDrawable(R.drawable.previous));
+		menosB2.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View arg0) {
+				provador.voltaRoupaInferior();
+			}
+		});
 
 		esquerda.addView(menosB);
 		esquerda.addView(menosB2);
@@ -93,10 +108,23 @@ public class ProvadorActivity extends Activity {
 		direita.setOrientation(LinearLayout.VERTICAL);
 		direita.setGravity(Gravity.CENTER);
 
-		Button maisB = new Button(this);
-		maisB.setText("menos1");
-		Button maisB2 = new Button(this);
-		maisB2.setText("menos2");
+		ImageButton maisB = new ImageButton(this);
+		maisB.setImageDrawable(getResources().getDrawable(R.drawable.next));
+		maisB.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View arg0) {
+				provador.proximaRoupaSuperior();
+			}
+		});
+		
+		ImageButton maisB2 = new ImageButton(this);
+		maisB2.setImageDrawable(getResources().getDrawable(R.drawable.next));
+		maisB2.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View arg0) {
+				provador.proximaRoupaInferior();
+			}
+		});
 
 		direita.addView(maisB);
 		direita.addView(maisB2);
@@ -205,6 +233,7 @@ public class ProvadorActivity extends Activity {
 				Roupa roupa = roupasInferiores.get(posicaoRoupaInferior);
 				roupaInferior = carregaDrawable(roupa.getImagem());
 				Calibragem calibragemI = calibragens.get(roupa.getCategoria());
+				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n" + roupa.getCategoria());
 				roupaInferior.setBounds(calibragemI.left, calibragemI.top, calibragemI.right, calibragemI.bottom);
 				invalidate();
 			}
@@ -220,25 +249,5 @@ public class ProvadorActivity extends Activity {
 				invalidate();
 			}
 		}
-
-		@Override
-		public boolean onKeyDown(int keyCode, KeyEvent event) {
-			switch(keyCode) {
-			case KeyEvent.KEYCODE_DPAD_UP:
-				proximaRoupaSuperior();
-				break;
-			case KeyEvent.KEYCODE_DPAD_DOWN:
-				voltaRoupaSuperior();
-				break;
-			case KeyEvent.KEYCODE_DPAD_RIGHT:
-				proximaRoupaInferior();
-				break;
-			case KeyEvent.KEYCODE_DPAD_LEFT:
-				voltaRoupaInferior();
-				break;
-			}
-			return true;
-		}
-
 	}
 }
