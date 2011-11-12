@@ -60,7 +60,10 @@ public class BDAdapter {
 				.query("manequim_padrao", new String[] { "id" },
 						null, null, null, null, null);
 		c.moveToFirst();
-		return c.getInt(c.getColumnIndex("id"));
+		int id = c.getInt(c.getColumnIndex("id"));
+		c.close();
+		banco.close();
+		return id;
 	}
 
 	/**
@@ -118,6 +121,8 @@ public class BDAdapter {
 			Calibragem calibragem = new Calibragem(categoria, c.getInt(c.getColumnIndex("left")), c.getInt(c.getColumnIndex("top")),  c.getInt(c.getColumnIndex("right")), c.getInt(c.getColumnIndex("bottom")));
 			calibragens.put(categoria, calibragem);
 		}
+		c.close();
+		banco.close();
 		return calibragens;
 	}
 
@@ -128,30 +133,11 @@ public class BDAdapter {
 		banco.execSQL(sql);
 		banco.close();
 	}
-	
-	public void inserePlecas(byte[] imagem) {
-		SQLiteDatabase banco = bdHelper.getWritableDatabase();
-		ContentValues cv = new ContentValues();
-		cv.put("imagem", imagem);
-		banco.insert("plecas", null, cv);
-//		banco.execSQL("INSERT INTO plecas(imagem) VALUES(\"" + imagem + "\");");
-		banco.close();
-	}
-	
-	public byte[] getPlecas() {
-		SQLiteDatabase banco = bdHelper.getReadableDatabase();
-		Cursor c = banco.query("plecas", new String[] {"imagem"}, null, null, null, null, null);
-		c.moveToFirst();
-		byte[] r = c.getBlob(c.getColumnIndex("imagem"));
-		c.close();
-		banco.close();
-		return r;
-		
-	}
 
 	public void deleteCalibragens() {
 		SQLiteDatabase banco = bdHelper.getWritableDatabase();
 		banco.execSQL("DELETE FROM calibragem;");
+		banco.close();
 	}
 
 	public byte[] getManequimPadrao() {
@@ -163,5 +149,4 @@ public class BDAdapter {
 		}
 		return null;
 	}
-
 }

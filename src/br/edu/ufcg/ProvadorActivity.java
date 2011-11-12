@@ -15,27 +15,32 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Calibragem;
 import br.edu.ufcg.model.Categoria;
 import br.edu.ufcg.model.Roupa;
 
 public class ProvadorActivity extends Activity {
-	
+
 	private boolean DEBUG = false;
-	
+
 	private BDAdapter dao;
 
 	private List<Roupa> roupas;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		dao = new BDAdapter(this);
 		this.roupas = dao.getRoupas();
-		
+
 		byte[] imagem = (byte[]) getIntent().getExtras().get("background");
 
 		Bitmap b = null;
@@ -51,13 +56,54 @@ public class ProvadorActivity extends Activity {
 		matrix.setRotate(90);
 		Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
 		BitmapDrawable bd = new BitmapDrawable(girado);
-		
-		
+
+
 		Provador provador = new Provador(this, carregaRoupasSuperiores(), carregaRoupasInferiores());
 		provador.setBackgroundDrawable(bd);
 		setContentView(provador);
-		
 
+		addContentView(getLayoutBotoesEsquerda(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		addContentView(getLayoutBotoesDireita(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+
+	}
+
+	private RelativeLayout getLayoutBotoesEsquerda() {
+		RelativeLayout layout = new RelativeLayout(this);
+
+		LinearLayout esquerda = new LinearLayout(this);
+		esquerda.setOrientation(LinearLayout.VERTICAL);
+		esquerda.setGravity(Gravity.CENTER);
+
+		Button menosB = new Button(this);
+		menosB.setText("menos1");
+		Button menosB2 = new Button(this);
+		menosB2.setText("menos2");
+
+		esquerda.addView(menosB);
+		esquerda.addView(menosB2);
+
+		layout.addView(esquerda, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
+		return layout;
+	}
+
+	private RelativeLayout getLayoutBotoesDireita() {
+		RelativeLayout layout = new RelativeLayout(this);
+
+		LinearLayout direita = new LinearLayout(this);
+		direita.setOrientation(LinearLayout.VERTICAL);
+		direita.setGravity(Gravity.CENTER);
+
+		Button maisB = new Button(this);
+		maisB.setText("menos1");
+		Button maisB2 = new Button(this);
+		maisB2.setText("menos2");
+
+		direita.addView(maisB);
+		direita.addView(maisB2);
+
+		layout.setGravity(Gravity.RIGHT);
+		layout.addView(direita, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
+		return layout;
 	}
 
 	private List<Roupa> carregaRoupasSuperiores() {
@@ -87,7 +133,7 @@ public class ProvadorActivity extends Activity {
 	}
 
 	public class Provador extends View {
-		
+
 		private Map<Categoria,Calibragem> calibragens;
 
 		private List<Roupa> roupasSuperiores;
@@ -103,11 +149,11 @@ public class ProvadorActivity extends Activity {
 			super(context);
 			this.roupasSuperiores = roupasSuperiores;
 			this.roupasInferiores = roupasInferiores;
-			
+
 			calibragens = dao.getCalibragens();
 			Calibragem calibragemS = calibragens.get(roupasSuperiores.get(posicaoRoupaSuperior).getCategoria());
 			Calibragem calibragemI = calibragens.get(roupasInferiores.get(posicaoRoupaInferior).getCategoria());
-			
+
 			roupaSuperior = carregaDrawable(roupasSuperiores.get(posicaoRoupaSuperior).getImagem());
 			roupaSuperior.setBounds(calibragemS.left, calibragemS.top, calibragemS.right, calibragemS.bottom);
 
@@ -115,15 +161,15 @@ public class ProvadorActivity extends Activity {
 			System.out.println("--- calibragem.TOP: "+calibragemS.top);
 			System.out.println("--- calibragem.RIGHT: "+calibragemS.right);
 			System.out.println("--- calibragem.BOTTOM: "+calibragemS.bottom);
-			
-			
+
+
 			roupaInferior = carregaDrawable(roupasInferiores.get(posicaoRoupaInferior).getImagem());
 			roupaInferior.setBounds(calibragemI.left, calibragemI.top, calibragemI.right, calibragemI.bottom);
 
 			setFocusable(true);
 			this.requestFocus();
 		}
-		
+
 		@Override
 		protected void onDraw(Canvas canvas) {
 			super.onDraw(canvas);
