@@ -11,6 +11,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -67,6 +68,7 @@ public class ProvadorActivity extends Activity {
 		addContentView(getLayoutBotoesEsquerda(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		addContentView(getLayoutBotoesDireita(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
+		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}
 
 	private RelativeLayout getLayoutBotoesEsquerda() {
@@ -78,6 +80,7 @@ public class ProvadorActivity extends Activity {
 
 		ImageButton voltaSuperiorButton = new ImageButton(this);
 		voltaSuperiorButton.setImageDrawable(getResources().getDrawable(R.drawable.previous));
+		voltaSuperiorButton.setBackgroundColor(Color.TRANSPARENT);
 		voltaSuperiorButton.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View arg0) {
@@ -86,6 +89,7 @@ public class ProvadorActivity extends Activity {
 		});
 		ImageButton voltaInferiorButton = new ImageButton(this);
 		voltaInferiorButton.setImageDrawable(getResources().getDrawable(R.drawable.previous));
+		voltaInferiorButton.setBackgroundColor(Color.TRANSPARENT);
 		voltaInferiorButton.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View arg0) {
@@ -109,6 +113,7 @@ public class ProvadorActivity extends Activity {
 
 		ImageButton proximaSuperiorButton = new ImageButton(this);
 		proximaSuperiorButton.setImageDrawable(getResources().getDrawable(R.drawable.next));
+		proximaSuperiorButton.setBackgroundColor(Color.TRANSPARENT);
 		proximaSuperiorButton.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View arg0) {
@@ -118,6 +123,7 @@ public class ProvadorActivity extends Activity {
 		
 		ImageButton proximaInferiorButton = new ImageButton(this);
 		proximaInferiorButton.setImageDrawable(getResources().getDrawable(R.drawable.next));
+		proximaInferiorButton.setBackgroundColor(Color.TRANSPARENT);
 		proximaInferiorButton.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View arg0) {

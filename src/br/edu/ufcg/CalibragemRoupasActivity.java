@@ -66,8 +66,8 @@ public class CalibragemRoupasActivity  extends Activity {
 
 		RelativeLayout layout = new RelativeLayout(this);
 		LinearLayout linear = new LinearLayout(this);
-		linear.addView(zoomIn);
 		linear.addView(zoomOut);
+		linear.addView(zoomIn);
 		linear.setGravity(Gravity.RIGHT);
 		linear.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		layout.addView(linear);
