@@ -14,19 +14,34 @@ import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Categoria;
 import br.edu.ufcg.model.Roupa;
 
-public class TirarFotoRoupaActivity extends Activity implements ImageListener, OnClickListener {
+public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 
+	private BDAdapter dao;
+	
 	private CameraView mPreview;
-	private BDAdapter dh;
+
+	private LinearLayout layout;
+	private int[] moldes;
+	private Categoria[] categorias;
+	
+	private int indice = 0;
+	
+//	private int 
 
 	/** Called when the activity is first created. */
 	@Override
@@ -36,33 +51,74 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener, O
 		mPreview = (CameraView) findViewById(R.id.imagem_camera_roupas);
 		mPreview.addImageListener(this);
 		
-		Bundle params = getIntent().getExtras();
-        Categoria categoria = (Categoria) params.get("categoria");
+		this.dao = new BDAdapter(this);
 
-        LinearLayout layout = new LinearLayout(this);
-        
-        //codigo feio pra funfar, ajeitar depois =P
-        if (categoria.toString()=="Bermuda") layout.setBackgroundResource(R.drawable.molde_short);
-        else if (categoria.toString()=="Calça") layout.setBackgroundResource(R.drawable.molde_calca);
-        else if (categoria.toString()=="Camisa") layout.setBackgroundResource(R.drawable.molde_camisa);
-        else if (categoria.toString()=="Camisa manga longa") layout.setBackgroundResource(R.drawable.molde_camisao);
-        else if (categoria.toString()=="Camiseta") layout.setBackgroundResource(R.drawable.molde_camiseta);
-        else if (categoria.toString()=="Saia") layout.setBackgroundResource(R.drawable.molde_saia);
-        else if (categoria.toString()=="Short") layout.setBackgroundResource(R.drawable.molde_short);
-        else layout.setBackgroundResource(R.drawable.molde_camiseta);
-        
+		//FIXME o segundo molde de short deveria ser um molde específico pra bermuda, já que há diferença entre eles.
+		moldes = new int[] {R.drawable.molde_short, R.drawable.molde_calca,
+				R.drawable.molde_camisa, R.drawable.molde_camisao, R.drawable.molde_camiseta,
+				R.drawable.molde_saia, R.drawable.molde_short, R.drawable.molde_camiseta};
+		categorias = Categoria.values();
+		
+		if (moldes.length != categorias.length) Log.e("ERRO NOSSO", "O NUMERO DE MOLDES TEM QUE SER IGUAL AO NUMERO DE CATEGORIAS! JAH PODE OLHAR NO ONCREATE DE TIRARFOTOROUPAACTIVITY");
+		
+        layout = new LinearLayout(this);
+        layout.setBackgroundResource(moldes[indice]);
         
         addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+        
+        
+        ImageButton proximoMoldeButton = new ImageButton(this);
+		proximoMoldeButton.setImageDrawable(getResources().getDrawable(R.drawable.next));
+		proximoMoldeButton.setBackgroundColor(Color.TRANSPARENT);
+		proximoMoldeButton.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View arg0) {
+				if (indice != categorias.length - 1) {
+					indice++;
+					layout.setBackgroundResource(moldes[indice]);
+				}
+			}
+		});
+
+		ImageButton voltaMoldeButton = new ImageButton(this);
+		voltaMoldeButton.setImageDrawable(getResources().getDrawable(R.drawable.previous));
+		voltaMoldeButton.setBackgroundColor(Color.TRANSPARENT);
+		voltaMoldeButton.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View arg0) {
+				if (indice != 0) {
+					indice--;
+					layout.setBackgroundResource(moldes[indice]);
+				}
+			}
+		});
+
+		RelativeLayout layout = new RelativeLayout(this);
+		LinearLayout linear = new LinearLayout(this);
+		linear.addView(voltaMoldeButton);
+		linear.addView(proximoMoldeButton);
+		linear.setGravity(Gravity.RIGHT);
+		linear.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		layout.addView(linear);
+		layout.setGravity(Gravity.BOTTOM);
+
+		addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+        
 		
-		Button tiraFoto = new Button(this);
-		tiraFoto.setBackgroundColor(Color.TRANSPARENT);
-		tiraFoto.setOnClickListener(this);
-		addContentView(tiraFoto, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+	}
 
-		this.dh = new BDAdapter(this);
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflate = new MenuInflater(this);
+		inflate.inflate(R.menu.tirar_foto_menu, menu);
+		return true;
+	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		mPreview.takePicture();
+		return true;
 	}
 
 	public void takeImage(byte[] image) { 
@@ -71,10 +127,6 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener, O
 		mPreview.setVisibility(View.INVISIBLE);
 		mPreview.freezeCamera();
 
-		Bundle params = getIntent().getExtras();
-		Categoria categoria = (Categoria) params.get("categoria");
-		
-		
 		Bitmap plecas = BitmapFactory.decodeByteArray(image, 0, image.length);
 		Bitmap mudado = Bitmap.createScaledBitmap(plecas, 400, 400, true);
 		mudado = JPEGtoRGB888(mudado); 
@@ -85,8 +137,8 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener, O
 		roupaSemBackground.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos); 
 		byte[] bitmapdata = bos.toByteArray();
 		
-		Roupa roupa = new Roupa(0, bitmapdata, categoria);
-		this.dh.inserirRoupa(roupa);
+		Roupa roupa = new Roupa(0, bitmapdata, categorias[indice]);
+		this.dao.inserirRoupa(roupa);
 
 		this.finish();
 	}
@@ -142,12 +194,6 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener, O
 		return posProcessamento(bmpOriginal, bmp);
 	}
 
-	public void onClick(View v) {
-		mPreview.takePicture();
-
-	}
-	
-	
 	 /**
      * Realiza o pos-processamento na imagem limiarizada. Os pixels da imagem
      * que sao brancos, permanecem assim enquanto os pixels pretos sao substituidos

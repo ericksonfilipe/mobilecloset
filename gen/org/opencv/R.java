@@ -127,6 +127,7 @@ public final class R {
         public static final int passar_menoss=0x7f060012;
         public static final int pbl=0x7f060010;
         public static final int salvarCalibragem=0x7f060023;
+        public static final int salvarFoto=0x7f060024;
         public static final int textView2=0x7f060018;
         public static final int xpto=0x7f060013;
     }
@@ -148,6 +149,7 @@ public final class R {
     }
     public static final class menu {
         public static final int calibragem_menu=0x7f050000;
+        public static final int tirar_foto_menu=0x7f050001;
     }
     public static final class string {
         public static final int app_name=0x7f040000;
