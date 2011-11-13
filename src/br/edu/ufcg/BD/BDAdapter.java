@@ -86,6 +86,12 @@ public class BDAdapter {
 		banco.close();
 	}
 
+	public void removeRoupa(Roupa roupa) {
+		SQLiteDatabase banco = bdHelper.getWritableDatabase();
+		banco.execSQL(String.format("DELETE FROM roupa WHERE id = %d;", roupa.getId()));
+		banco.close();
+	}
+
 	public List<Roupa> getRoupas() {
 		return getRoupas(null);
 	}
