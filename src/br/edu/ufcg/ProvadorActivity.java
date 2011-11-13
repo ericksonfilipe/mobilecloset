@@ -76,25 +76,25 @@ public class ProvadorActivity extends Activity {
 		esquerda.setOrientation(LinearLayout.VERTICAL);
 		esquerda.setGravity(Gravity.CENTER);
 
-		ImageButton menosB = new ImageButton(this);
-		menosB.setImageDrawable(getResources().getDrawable(R.drawable.previous));
-		menosB.setOnClickListener(new OnClickListener() {
+		ImageButton voltaSuperiorButton = new ImageButton(this);
+		voltaSuperiorButton.setImageDrawable(getResources().getDrawable(R.drawable.previous));
+		voltaSuperiorButton.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View arg0) {
 				provador.voltaRoupaSuperior();
 			}
 		});
-		ImageButton menosB2 = new ImageButton(this);
-		menosB2.setImageDrawable(getResources().getDrawable(R.drawable.previous));
-		menosB2.setOnClickListener(new OnClickListener() {
+		ImageButton voltaInferiorButton = new ImageButton(this);
+		voltaInferiorButton.setImageDrawable(getResources().getDrawable(R.drawable.previous));
+		voltaInferiorButton.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View arg0) {
 				provador.voltaRoupaInferior();
 			}
 		});
 
-		esquerda.addView(menosB);
-		esquerda.addView(menosB2);
+		esquerda.addView(voltaSuperiorButton);
+		esquerda.addView(voltaInferiorButton);
 
 		layout.addView(esquerda, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
 		return layout;
@@ -107,26 +107,26 @@ public class ProvadorActivity extends Activity {
 		direita.setOrientation(LinearLayout.VERTICAL);
 		direita.setGravity(Gravity.CENTER);
 
-		ImageButton maisB = new ImageButton(this);
-		maisB.setImageDrawable(getResources().getDrawable(R.drawable.next));
-		maisB.setOnClickListener(new OnClickListener() {
+		ImageButton proximaSuperiorButton = new ImageButton(this);
+		proximaSuperiorButton.setImageDrawable(getResources().getDrawable(R.drawable.next));
+		proximaSuperiorButton.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View arg0) {
 				provador.proximaRoupaSuperior();
 			}
 		});
 		
-		ImageButton maisB2 = new ImageButton(this);
-		maisB2.setImageDrawable(getResources().getDrawable(R.drawable.next));
-		maisB2.setOnClickListener(new OnClickListener() {
+		ImageButton proximaInferiorButton = new ImageButton(this);
+		proximaInferiorButton.setImageDrawable(getResources().getDrawable(R.drawable.next));
+		proximaInferiorButton.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View arg0) {
 				provador.proximaRoupaInferior();
 			}
 		});
 
-		direita.addView(maisB);
-		direita.addView(maisB2);
+		direita.addView(proximaSuperiorButton);
+		direita.addView(proximaInferiorButton);
 
 		layout.setGravity(Gravity.RIGHT);
 		layout.addView(direita, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
