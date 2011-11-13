@@ -33,15 +33,7 @@
         
         <activity android:name=".CalibragemRoupasActivity" ></activity>
         
-        <activity android:name=".VerRoupasActivity" ></activity>
-        
-        <activity android:name=".VerCamisasActivity" ></activity>
-        
-        <activity android:name=".CadastrarRoupasActivity" ></activity>
-        
-        <activity android:name=".CadastrarCamisasActivity" ></activity>
-        
-        <activity android:name=".VisualizacaoDeRoupas" ></activity>
+        <activity android:name=".VisualizacaoDeRoupasActivity" ></activity>
         
         <activity android:name=".ProvadorActivity" ></activity>
         
