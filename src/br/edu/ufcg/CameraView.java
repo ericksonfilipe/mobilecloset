@@ -158,6 +158,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         		altura = it.height;
         	}
         }
+        System.out.println("PRINT!!!  largura="+largura+"   altura="+altura);
         parameters.setPreviewSize(largura, altura);
         mCamera.setParameters(parameters);
         mCamera.startPreview();

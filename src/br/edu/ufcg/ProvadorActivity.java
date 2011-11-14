@@ -124,7 +124,11 @@ public class ProvadorActivity extends Activity {
 		direita.setGravity(Gravity.CENTER);
 
 		proximaSuperiorButton = new ImageButton(this);
-		proximaSuperiorButton.setImageResource(R.drawable.next);
+		if (provador.roupasSuperiores.isEmpty()) {
+			proximaSuperiorButton.setImageResource(R.drawable.next_cinza);
+		} else {
+			proximaSuperiorButton.setImageResource(R.drawable.next);
+		}
 		proximaSuperiorButton.setBackgroundColor(Color.TRANSPARENT);
 		proximaSuperiorButton.setOnClickListener(new OnClickListener() {
 
@@ -134,7 +138,11 @@ public class ProvadorActivity extends Activity {
 		});
 
 		proximaInferiorButton = new ImageButton(this);
-		proximaInferiorButton.setImageResource(R.drawable.next);
+		if (provador.roupasInferiores.isEmpty()) {
+			proximaInferiorButton.setImageResource(R.drawable.next_cinza);
+		} else {
+			proximaInferiorButton.setImageResource(R.drawable.next);
+		}
 		proximaInferiorButton.setBackgroundColor(Color.TRANSPARENT);
 		proximaInferiorButton.setOnClickListener(new OnClickListener() {
 
