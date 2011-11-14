@@ -20,6 +20,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
+import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Manequim;
 
@@ -45,6 +46,7 @@ public class EscolherManequimActivity extends Activity {
 
 		gallery.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView parent, View v, int position, long id) {
+				Toast.makeText(EscolherManequimActivity.this, "Agora, calibre o molde das roupas no manequim escolhido.", Toast.LENGTH_LONG).show();
 				Manequim manequimEscolhido = (Manequim) gallery.getAdapter().getItem(position);
 				dh.inserirManequimPadrao(manequimEscolhido);
 				Intent i = new Intent(EscolherManequimActivity.this, CalibragemRoupasActivity.class);
