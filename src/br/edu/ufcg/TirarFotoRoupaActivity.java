@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import br.edu.ufcg.BD.BDAdapter;
@@ -40,10 +41,11 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 	private Categoria[] categorias;
 	
 	private int indice = 0;
-	
-//	private int 
 
-	/** Called when the activity is first created. */
+	private ImageButton proximoMoldeButton;
+
+	private ImageView voltaMoldeButton;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,7 +55,7 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 		
 		this.dao = new BDAdapter(this);
 
-		//FIXME o segundo molde de short deveria ser um molde específico pra bermuda, já que há diferença entre eles.
+		//FIXME o segundo molde de short deveria ser um molde especï¿½fico pra bermuda, jï¿½ que hï¿½ diferenï¿½a entre eles.
 		moldes = new int[] {R.drawable.molde_short, R.drawable.molde_calca,
 				R.drawable.molde_camisa, R.drawable.molde_camisao, R.drawable.molde_camiseta,
 				R.drawable.molde_saia, R.drawable.molde_short, R.drawable.molde_camiseta};
@@ -67,31 +69,15 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
         addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
         
         
-        ImageButton proximoMoldeButton = new ImageButton(this);
-		proximoMoldeButton.setImageDrawable(getResources().getDrawable(R.drawable.next));
+        proximoMoldeButton = new ImageButton(this);
+        proximoMoldeButton.setImageResource(R.drawable.next);
 		proximoMoldeButton.setBackgroundColor(Color.TRANSPARENT);
-		proximoMoldeButton.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View arg0) {
-				if (indice != categorias.length - 1) {
-					indice++;
-					layout.setBackgroundResource(moldes[indice]);
-				}
-			}
-		});
+		proximoMoldeButton.setOnClickListener(new ProximoListener());
 
-		ImageButton voltaMoldeButton = new ImageButton(this);
-		voltaMoldeButton.setImageDrawable(getResources().getDrawable(R.drawable.previous));
+		voltaMoldeButton = new ImageButton(this);
+		voltaMoldeButton.setImageResource(R.drawable.previous_cinza);
 		voltaMoldeButton.setBackgroundColor(Color.TRANSPARENT);
-		voltaMoldeButton.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View arg0) {
-				if (indice != 0) {
-					indice--;
-					layout.setBackgroundResource(moldes[indice]);
-				}
-			}
-		});
+		voltaMoldeButton.setOnClickListener(new VoltaListener());
 
 		RelativeLayout layout = new RelativeLayout(this);
 		LinearLayout linear = new LinearLayout(this);
@@ -103,9 +89,45 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 		layout.setGravity(Gravity.BOTTOM);
 
 		addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-        
-		
+
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+	}
+
+	private class VoltaListener implements OnClickListener {
+
+		public void onClick(View arg0) {
+			if (indice != 0) {
+				indice--;
+				layout.setBackgroundResource(moldes[indice]);
+			} 
+			atualizaImagensBotoes();
+		}
+		
+	}
+
+	private class ProximoListener implements OnClickListener {
+
+		public void onClick(View arg0) {
+			if (indice != categorias.length - 1) {
+				indice++;
+				layout.setBackgroundResource(moldes[indice]);
+			}
+			atualizaImagensBotoes();
+		}
+	}
+	
+	private void atualizaImagensBotoes() {
+		if (indice > 0) {
+			voltaMoldeButton.setImageResource(R.drawable.previous);
+		} else {
+			voltaMoldeButton.setImageResource(R.drawable.previous_cinza);
+		}
+
+		if (indice < moldes.length - 1) {
+			proximoMoldeButton.setImageResource(R.drawable.next);
+		} else {
+			proximoMoldeButton.setImageResource(R.drawable.next_cinza);
+		}
 	}
 
 	@Override
