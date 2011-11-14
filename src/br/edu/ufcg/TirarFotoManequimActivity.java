@@ -17,7 +17,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import br.edu.ufcg.BD.BDAdapter;
 
-public class TirarFotoActivity extends Activity implements ImageListener, OnClickListener {
+public class TirarFotoManequimActivity extends Activity implements ImageListener, OnClickListener {
 
 	private CameraView mPreview;
 	private BDAdapter dao;
