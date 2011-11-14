@@ -52,13 +52,14 @@ public class BDAdapter {
 	
 	/**
 	 * Método que recupera o id do manequim padrão
-	 * @return manequim padrão
+	 * @return id manequim padrão, -1 se não houver
 	 */
 	public int getIdManequimPadrao() {
 		SQLiteDatabase banco = bdHelper.getReadableDatabase();
 		Cursor c = banco
 				.query("manequim_padrao", new String[] { "id" },
 						null, null, null, null, null);
+		if (c == null || c.getCount() == 0) { return -1; }
 		c.moveToFirst();
 		int id = c.getInt(c.getColumnIndex("id"));
 		c.close();

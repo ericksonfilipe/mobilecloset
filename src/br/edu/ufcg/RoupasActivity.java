@@ -1,5 +1,6 @@
 package br.edu.ufcg;
 
+import br.edu.ufcg.BD.BDAdapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class RoupasActivity extends Activity implements OnClickListener {
 	
@@ -34,8 +36,13 @@ public class RoupasActivity extends Activity implements OnClickListener {
 			startActivity(i);
 			break;
 		case R.id.button_ver_roupas:
-			i = new Intent(v.getContext(), VisualizacaoDeRoupasActivity.class);
-			startActivity(i);
+			BDAdapter dao = new BDAdapter(this);
+			if (dao.getRoupas().isEmpty()) {
+				Toast.makeText(this, "Não há roupas cadastradas!", Toast.LENGTH_LONG).show();
+			} else {
+				i = new Intent(v.getContext(), VisualizacaoDeRoupasActivity.class);
+				startActivity(i);
+			}
 			break;
 		}
 		
