@@ -124,7 +124,7 @@ public class ProvadorActivity extends Activity {
 		direita.setGravity(Gravity.CENTER);
 
 		proximaSuperiorButton = new ImageButton(this);
-		if (provador.roupasSuperiores.isEmpty()) {
+		if (provador.roupasSuperiores.size() <= 1) {
 			proximaSuperiorButton.setImageResource(R.drawable.next_cinza);
 		} else {
 			proximaSuperiorButton.setImageResource(R.drawable.next);
@@ -138,7 +138,7 @@ public class ProvadorActivity extends Activity {
 		});
 
 		proximaInferiorButton = new ImageButton(this);
-		if (provador.roupasInferiores.isEmpty()) {
+		if (provador.roupasInferiores.size() <= 1) {
 			proximaInferiorButton.setImageResource(R.drawable.next_cinza);
 		} else {
 			proximaInferiorButton.setImageResource(R.drawable.next);
