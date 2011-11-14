@@ -29,7 +29,7 @@ public class ManequimActivity extends Activity implements OnClickListener {
 		Intent i;
 		switch (v.getId()) {
 		case R.id.button_tirar_foto:
-			i = new Intent(v.getContext(), TirarFotoActivity.class);
+			i = new Intent(v.getContext(), TirarFotoManequimActivity.class);
 			startActivity(i);
 			break;
 		case R.id.button_escolher_manequim:

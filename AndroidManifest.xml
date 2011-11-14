@@ -19,7 +19,7 @@
         
         <activity android:name=".Creditos" android:theme="@android:style/Theme.Dialog" ></activity>
         
-        <activity android:name=".TirarFotoActivity" ></activity>
+        <activity android:name=".TirarFotoManequimActivity" ></activity>
         
         <activity android:name=".Closet" ></activity>
         
