@@ -16,6 +16,7 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,6 +24,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Calibragem;
 import br.edu.ufcg.model.Categoria;
@@ -35,8 +37,13 @@ public class ProvadorActivity extends Activity {
 	private BDAdapter dao;
 
 	private List<Roupa> roupas;
-	
+
 	private Provador provador;
+
+	private ImageButton voltaSuperiorButton;
+	private ImageButton voltaInferiorButton;
+	private ImageButton proximaSuperiorButton;
+	private ImageButton proximaInferiorButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -60,8 +67,14 @@ public class ProvadorActivity extends Activity {
 		Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
 		BitmapDrawable bd = new BitmapDrawable(girado);
 
+		List<Roupa> roupasSuperiores = carregaRoupasSuperiores();
+		List<Roupa> roupasInferiores = carregaRoupasInferiores();
 
-		provador = new Provador(this, carregaRoupasSuperiores(), carregaRoupasInferiores());
+		if (roupasSuperiores.isEmpty() && roupasInferiores.isEmpty()) {
+			Toast.makeText(this, "Não há roupas cadastradas!", Toast.LENGTH_LONG).show();
+		}
+
+		provador = new Provador(this, roupasSuperiores, roupasInferiores);
 		provador.setBackgroundDrawable(bd);
 		setContentView(provador);
 
@@ -78,20 +91,20 @@ public class ProvadorActivity extends Activity {
 		esquerda.setOrientation(LinearLayout.VERTICAL);
 		esquerda.setGravity(Gravity.CENTER);
 
-		ImageButton voltaSuperiorButton = new ImageButton(this);
-		voltaSuperiorButton.setImageDrawable(getResources().getDrawable(R.drawable.previous));
+		voltaSuperiorButton = new ImageButton(this);
+		voltaSuperiorButton.setImageResource(R.drawable.previous_cinza);
 		voltaSuperiorButton.setBackgroundColor(Color.TRANSPARENT);
 		voltaSuperiorButton.setOnClickListener(new OnClickListener() {
-			
+
 			public void onClick(View arg0) {
 				provador.voltaRoupaSuperior();
 			}
 		});
-		ImageButton voltaInferiorButton = new ImageButton(this);
-		voltaInferiorButton.setImageDrawable(getResources().getDrawable(R.drawable.previous));
+		voltaInferiorButton = new ImageButton(this);
+		voltaInferiorButton.setImageResource(R.drawable.previous_cinza);
 		voltaInferiorButton.setBackgroundColor(Color.TRANSPARENT);
 		voltaInferiorButton.setOnClickListener(new OnClickListener() {
-			
+
 			public void onClick(View arg0) {
 				provador.voltaRoupaInferior();
 			}
@@ -111,21 +124,21 @@ public class ProvadorActivity extends Activity {
 		direita.setOrientation(LinearLayout.VERTICAL);
 		direita.setGravity(Gravity.CENTER);
 
-		ImageButton proximaSuperiorButton = new ImageButton(this);
-		proximaSuperiorButton.setImageDrawable(getResources().getDrawable(R.drawable.next));
+		proximaSuperiorButton = new ImageButton(this);
+		proximaSuperiorButton.setImageResource(R.drawable.next);
 		proximaSuperiorButton.setBackgroundColor(Color.TRANSPARENT);
 		proximaSuperiorButton.setOnClickListener(new OnClickListener() {
-			
+
 			public void onClick(View arg0) {
 				provador.proximaRoupaSuperior();
 			}
 		});
-		
-		ImageButton proximaInferiorButton = new ImageButton(this);
-		proximaInferiorButton.setImageDrawable(getResources().getDrawable(R.drawable.next));
+
+		proximaInferiorButton = new ImageButton(this);
+		proximaInferiorButton.setImageResource(R.drawable.next);
 		proximaInferiorButton.setBackgroundColor(Color.TRANSPARENT);
 		proximaInferiorButton.setOnClickListener(new OnClickListener() {
-			
+
 			public void onClick(View arg0) {
 				provador.proximaRoupaInferior();
 			}
@@ -184,14 +197,18 @@ public class ProvadorActivity extends Activity {
 			this.roupasInferiores = roupasInferiores;
 
 			calibragens = dao.getCalibragens();
-			Calibragem calibragemS = calibragens.get(roupasSuperiores.get(posicaoRoupaSuperior).getCategoria());
-			Calibragem calibragemI = calibragens.get(roupasInferiores.get(posicaoRoupaInferior).getCategoria());
 
-			roupaSuperior = carregaDrawable(roupasSuperiores.get(posicaoRoupaSuperior).getImagem());
-			roupaSuperior.setBounds(calibragemS.left, calibragemS.top, calibragemS.right, calibragemS.bottom);
+			if (!roupasSuperiores.isEmpty()) {
+				Calibragem calibragemS = calibragens.get(roupasSuperiores.get(posicaoRoupaSuperior).getCategoria());
+				roupaSuperior = carregaDrawable(roupasSuperiores.get(posicaoRoupaSuperior).getImagem());
+				roupaSuperior.setBounds(calibragemS.left, calibragemS.top, calibragemS.right, calibragemS.bottom);
+			}
 
-			roupaInferior = carregaDrawable(roupasInferiores.get(posicaoRoupaInferior).getImagem());
-			roupaInferior.setBounds(calibragemI.left, calibragemI.top, calibragemI.right, calibragemI.bottom);
+			if (!roupasInferiores.isEmpty()) {
+				Calibragem calibragemI = calibragens.get(roupasInferiores.get(posicaoRoupaInferior).getCategoria());
+				roupaInferior = carregaDrawable(roupasInferiores.get(posicaoRoupaInferior).getImagem());
+				roupaInferior.setBounds(calibragemI.left, calibragemI.top, calibragemI.right, calibragemI.bottom);
+			}
 
 			setFocusable(true);
 			this.requestFocus();
@@ -200,12 +217,16 @@ public class ProvadorActivity extends Activity {
 		@Override
 		protected void onDraw(Canvas canvas) {
 			super.onDraw(canvas);
-			roupaInferior.draw(canvas);
-			roupaSuperior.draw(canvas);
+			if (roupaInferior != null) {
+				roupaInferior.draw(canvas);
+			}
+			if (roupaSuperior != null) {
+				roupaSuperior.draw(canvas);
+			}
 		}
 
 		public void proximaRoupaSuperior() {
-			if (posicaoRoupaSuperior != roupasSuperiores.size()-1) {
+			if (posicaoRoupaSuperior < roupasSuperiores.size()-1) {
 				posicaoRoupaSuperior++;
 				Roupa roupa = roupasSuperiores.get(posicaoRoupaSuperior);
 				roupaSuperior = carregaDrawable(roupa.getImagem());
@@ -213,10 +234,11 @@ public class ProvadorActivity extends Activity {
 				roupaSuperior.setBounds(calibragemS.left, calibragemS.top, calibragemS.right, calibragemS.bottom);
 				invalidate();
 			}
+			atualizaImagensBotoes();
 		}
 
 		public void voltaRoupaSuperior() {
-			if (posicaoRoupaSuperior != 0) {
+			if (posicaoRoupaSuperior > 0) {
 				posicaoRoupaSuperior--;
 				Roupa roupa = roupasSuperiores.get(posicaoRoupaSuperior);
 				roupaSuperior = carregaDrawable(roupa.getImagem());
@@ -224,10 +246,11 @@ public class ProvadorActivity extends Activity {
 				roupaSuperior.setBounds(calibragemS.left, calibragemS.top, calibragemS.right, calibragemS.bottom);
 				invalidate();
 			}
+			atualizaImagensBotoes();
 		}
 
 		public void proximaRoupaInferior() {
-			if (posicaoRoupaInferior != roupasInferiores.size()-1) {
+			if (posicaoRoupaInferior < roupasInferiores.size()-1) {
 				posicaoRoupaInferior++;
 				Roupa roupa = roupasInferiores.get(posicaoRoupaInferior);
 				roupaInferior = carregaDrawable(roupa.getImagem());
@@ -235,16 +258,44 @@ public class ProvadorActivity extends Activity {
 				roupaInferior.setBounds(calibragemI.left, calibragemI.top, calibragemI.right, calibragemI.bottom);
 				invalidate();
 			}
+			atualizaImagensBotoes();
 		}
 
 		public void voltaRoupaInferior() {
-			if (posicaoRoupaInferior != 0) {
+			if (posicaoRoupaInferior > 0) {
 				posicaoRoupaInferior--;
 				Roupa roupa = roupasInferiores.get(posicaoRoupaInferior);
 				roupaInferior = carregaDrawable(roupa.getImagem());
 				Calibragem calibragemI = calibragens.get(roupa.getCategoria());
 				roupaInferior.setBounds(calibragemI.left, calibragemI.top, calibragemI.right, calibragemI.bottom);
 				invalidate();
+			}
+			atualizaImagensBotoes();
+		}
+
+		private void atualizaImagensBotoes() {
+			if (posicaoRoupaInferior > 0) {
+				voltaInferiorButton.setImageResource(R.drawable.previous);
+			} else {
+				voltaInferiorButton.setImageResource(R.drawable.previous_cinza);
+			}
+
+			if (posicaoRoupaInferior < roupasInferiores.size() - 1) {
+				proximaInferiorButton.setImageResource(R.drawable.next);
+			} else {
+				proximaInferiorButton.setImageResource(R.drawable.next_cinza);
+			}
+
+			if (posicaoRoupaSuperior > 0) {
+				voltaSuperiorButton.setImageResource(R.drawable.previous);
+			} else {
+				voltaSuperiorButton.setImageResource(R.drawable.previous_cinza);
+			}
+
+			if (posicaoRoupaSuperior < roupasSuperiores.size() - 1) {
+				proximaSuperiorButton.setImageResource(R.drawable.next);
+			} else {
+				proximaSuperiorButton.setImageResource(R.drawable.next_cinza);
 			}
 		}
 	}
