@@ -49,6 +49,7 @@ public class EscolherManequimActivity extends Activity {
 				dh.inserirManequimPadrao(manequimEscolhido);
 				Intent i = new Intent(EscolherManequimActivity.this, CalibragemRoupasActivity.class);
 				i.putExtra("background", manequimEscolhido.getImagem());
+				finish();
 				startActivity(i);
 			}
 		});
