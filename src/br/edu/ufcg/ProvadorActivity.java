@@ -174,7 +174,11 @@ public class ProvadorActivity extends Activity {
 	}
 
 	private Drawable carregaDrawable(byte[] imagem) {
-		return new BitmapDrawable(BitmapFactory.decodeByteArray(imagem, 0, imagem.length));
+		Bitmap b = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
+		Matrix matrix = new Matrix();
+		matrix.setRotate(90);
+		Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
+		return new BitmapDrawable(girado);
 	}
 
 	public class Provador extends View {
