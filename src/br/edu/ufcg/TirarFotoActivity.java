@@ -9,6 +9,9 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -33,15 +36,23 @@ public class TirarFotoActivity extends Activity implements ImageListener, OnClic
 		layout.setBackgroundResource(R.drawable.tracejado2);
 		addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 
-		Button tiraFoto = new Button(this);
-		tiraFoto.setBackgroundColor(Color.TRANSPARENT);
-		tiraFoto.setOnClickListener(this);
-		addContentView(tiraFoto, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 		this.dao = new BDAdapter(this);
 
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflate = new MenuInflater(this);
+		inflate.inflate(R.menu.tirar_foto_menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		mPreview.takePicture();
+		return true;
 	}
 
 	public void takeImage(byte[] image) { 
