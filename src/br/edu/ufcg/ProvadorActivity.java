@@ -7,6 +7,7 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,6 +21,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -47,40 +49,60 @@ public class ProvadorActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		dao = new BDAdapter(this);
-		this.roupas = dao.getRoupas();
+		
+//		if (getIntent().getExtras().get("manequimFaltando").equals(true)) {
+//			System.out.println("PARA REDIRECIONAR");
+//			Button botaoRedirecionar = new Button(this);
+//			botaoRedirecionar.setBackgroundColor(Color.GREEN);
+//			botaoRedirecionar.setText("Cadastrar Manequim");
+//			botaoRedirecionar.setOnClickListener(new OnClickListener() {
+//				public void onClick(View v2) {
+//					ProvadorActivity.this.finish();
+//					Intent i = new Intent(v2.getContext(), ProvadorActivity.class);
+//					startActivity(i);
+//				}
+//			});
+//			addContentView(botaoRedirecionar, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+//			
+//		} else {
+			dao = new BDAdapter(this);
+			this.roupas = dao.getRoupas();
 
-		byte[] imagem = (byte[]) getIntent().getExtras().get("background");
+			byte[] imagem = (byte[]) getIntent().getExtras().get("background");
 
-		Bitmap b = null;
-		if (DEBUG) {
-			b = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+			Bitmap b = null;
+			if (DEBUG) {
+				b = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+				this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			} else {
+				b = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
+				this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			}
+
+			Matrix matrix = new Matrix();
+			matrix.setRotate(90);
+			Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
+			BitmapDrawable bd = new BitmapDrawable(girado);
+
+			List<Roupa> roupasSuperiores = carregaRoupasSuperiores();
+			List<Roupa> roupasInferiores = carregaRoupasInferiores();
+
+			if (roupasSuperiores.isEmpty() && roupasInferiores.isEmpty()) {
+				Toast.makeText(this, "Não há roupas cadastradas!", Toast.LENGTH_LONG).show();
+			}
+
+			provador = new Provador(this, roupasSuperiores, roupasInferiores);
+			provador.setBackgroundDrawable(bd);
+			setContentView(provador);
+
+			addContentView(getLayoutBotoesEsquerda(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+			addContentView(getLayoutBotoesDireita(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+
 			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		} else {
-			b = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
-			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		}
+//		}
+		
+		
 
-		Matrix matrix = new Matrix();
-		matrix.setRotate(90);
-		Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
-		BitmapDrawable bd = new BitmapDrawable(girado);
-
-		List<Roupa> roupasSuperiores = carregaRoupasSuperiores();
-		List<Roupa> roupasInferiores = carregaRoupasInferiores();
-
-		if (roupasSuperiores.isEmpty() && roupasInferiores.isEmpty()) {
-			Toast.makeText(this, "Não há roupas cadastradas!", Toast.LENGTH_LONG).show();
-		}
-
-		provador = new Provador(this, roupasSuperiores, roupasInferiores);
-		provador.setBackgroundDrawable(bd);
-		setContentView(provador);
-
-		addContentView(getLayoutBotoesEsquerda(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-		addContentView(getLayoutBotoesDireita(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-
-		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}
 
 	private RelativeLayout getLayoutBotoesEsquerda() {

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
 
 public class Closet extends Activity implements OnClickListener {
@@ -42,9 +43,15 @@ public class Closet extends Activity implements OnClickListener {
 			break;
 		case R.id.button_provar:
 			i = new Intent(v.getContext(), ProvadorActivity.class);
-			BDAdapter dao = new BDAdapter(v.getContext());
-			i.putExtra("background", dao.getManequimPadrao());
-			startActivity(i);
+			BDAdapter dao = new BDAdapter(this);
+			if (dao.getManequimPadrao() == null) {
+//				i.putExtra("manequimFaltando", true);
+//				startActivity(i);
+				Toast.makeText(this, "Não há manequim escolhido!", Toast.LENGTH_LONG).show();
+			} else {
+				i.putExtra("background", dao.getManequimPadrao());
+				startActivity(i);
+			}
 			break;
 		}
 		
