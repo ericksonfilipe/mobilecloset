@@ -40,7 +40,7 @@ public class RoupasActivity extends Activity implements OnClickListener {
 			if (dao.getRoupas().isEmpty()) {
 				Toast.makeText(this, "Não há roupas cadastradas!", Toast.LENGTH_LONG).show();
 			} else {
-				i = new Intent(v.getContext(), VisualizacaoDeRoupasActivity.class);
+				i = new Intent(v.getContext(), VerRoupasActivity.class);
 				startActivity(i);
 			}
 			break;

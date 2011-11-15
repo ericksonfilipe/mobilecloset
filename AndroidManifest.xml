@@ -31,7 +31,7 @@
         
         <activity android:name=".CalibragemRoupasActivity" ></activity>
         
-        <activity android:name=".VisualizacaoDeRoupasActivity" ></activity>
+        <activity android:name=".VerRoupasActivity" ></activity>
         
         <activity android:name=".ProvadorActivity" ></activity>
         

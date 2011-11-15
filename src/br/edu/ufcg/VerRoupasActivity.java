@@ -26,7 +26,7 @@ import android.widget.RelativeLayout;
 import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Roupa;
 
-public class VisualizacaoDeRoupasActivity extends Activity {
+public class VerRoupasActivity extends Activity {
 
 	private BDAdapter dao;
 	private VisualizadorRoupa visualizadorRoupa;
@@ -38,8 +38,13 @@ public class VisualizacaoDeRoupasActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		dao = new BDAdapter(this);
+		
+		LinearLayout layoutProvador = new LinearLayout(this);
+		layoutProvador.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		
 		visualizadorRoupa = new VisualizadorRoupa(this, dao.getRoupas());
-		setContentView(visualizadorRoupa);
+		layoutProvador.addView(visualizadorRoupa);
+		setContentView(layoutProvador);
 		
         proximaSuperiorButton = new ImageButton(this);
         proximaSuperiorButton.setImageResource(R.drawable.next);
@@ -99,19 +104,20 @@ public class VisualizacaoDeRoupasActivity extends Activity {
 		private List<Roupa> roupas;
 
 		private int posicaoRoupa;
-
 		private Drawable roupaAtual;
+		
 
 		public VisualizadorRoupa(Context context, List<Roupa> roupas) {
 			super(context);
 			this.roupas = roupas;
 			if (!roupas.isEmpty()) {
 				roupaAtual = carregaDrawable(roupas.get(posicaoRoupa).getImagem());
-				roupaAtual.setBounds(0, 0, roupaAtual.getIntrinsicWidth(), roupaAtual.getIntrinsicHeight());
+				roupaAtual.setBounds(0, 0, getApplicationContext().getResources().getDisplayMetrics().widthPixels, getApplicationContext().getResources().getDisplayMetrics().heightPixels);
 			}
 
 			setFocusable(true);
 			this.requestFocus();
+			this.requestLayout();
 		}
 
 		public void removeImagem() {
