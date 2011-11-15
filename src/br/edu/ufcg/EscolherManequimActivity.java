@@ -93,7 +93,7 @@ public class EscolherManequimActivity extends Activity {
 	private class VoltaListener implements OnClickListener {
 
 		public void onClick(View arg0) {
-			visualizadorManequim.voltaRoupaSuperior();
+			visualizadorManequim.voltaManequim();
 		}
 
 	}
@@ -101,7 +101,7 @@ public class EscolherManequimActivity extends Activity {
 	private class ProximoListener implements OnClickListener {
 
 		public void onClick(View arg0) {
-			visualizadorManequim.proximaRoupaSuperior();
+			visualizadorManequim.proximoManequim();
 		}
 	}
 	
@@ -179,7 +179,7 @@ public class EscolherManequimActivity extends Activity {
 			return manequins.get(posicao);
 		}
 
-		public void proximaRoupaSuperior() {
+		public void proximoManequim() {
 			if (posicao < manequins.size()-1) {
 				posicao++;
 				Manequim roupa = manequins.get(posicao);
@@ -190,7 +190,7 @@ public class EscolherManequimActivity extends Activity {
 			atualizaImagensBotoes();
 		}
 
-		public void voltaRoupaSuperior() {
+		public void voltaManequim() {
 			if (posicao > 0) {
 				posicao--;
 				Manequim roupa = manequins.get(posicao);
