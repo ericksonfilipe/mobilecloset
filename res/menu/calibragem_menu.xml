@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/alterarDimensoes"
+          android:title="Alterar Altura" />
+    <item android:id="@+id/salvarCalibragem"
+          android:title="Salvar" />
+</menu>
