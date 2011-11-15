@@ -40,6 +40,7 @@ public class VerRoupasActivity extends Activity {
 		dao = new BDAdapter(this);
 
 		visualizadorRoupa = new VisualizadorRoupa(this, dao.getRoupas());
+		visualizadorRoupa.setBackgroundColor(Color.GRAY);
 		setContentView(visualizadorRoupa);
 
 		proximaButton = new ImageButton(this);
