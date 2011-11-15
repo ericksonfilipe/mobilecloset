@@ -36,18 +36,14 @@ public class VerRoupasActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		dao = new BDAdapter(this);
-		
-		LinearLayout layoutProvador = new LinearLayout(this);
-		layoutProvador.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-		
+
 		visualizadorRoupa = new VisualizadorRoupa(this, dao.getRoupas());
-		layoutProvador.addView(visualizadorRoupa);
-		setContentView(layoutProvador);
-		
-        proximaSuperiorButton = new ImageButton(this);
-        proximaSuperiorButton.setImageResource(R.drawable.next);
+		setContentView(visualizadorRoupa);
+
+		proximaSuperiorButton = new ImageButton(this);
+		proximaSuperiorButton.setImageResource(R.drawable.next);
 		proximaSuperiorButton.setBackgroundColor(Color.TRANSPARENT);
 		proximaSuperiorButton.setOnClickListener(new ProximoListener());
 
@@ -75,7 +71,7 @@ public class VerRoupasActivity extends Activity {
 		public void onClick(View arg0) {
 			visualizadorRoupa.voltaRoupaSuperior();
 		}
-		
+
 	}
 
 	private class ProximoListener implements OnClickListener {
@@ -84,7 +80,6 @@ public class VerRoupasActivity extends Activity {
 			visualizadorRoupa.proximaRoupaSuperior();
 		}
 	}
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -105,7 +100,7 @@ public class VerRoupasActivity extends Activity {
 
 		private int posicaoRoupa;
 		private Drawable roupaAtual;
-		
+
 
 		public VisualizadorRoupa(Context context, List<Roupa> roupas) {
 			super(context);
@@ -178,7 +173,7 @@ public class VerRoupasActivity extends Activity {
 				proximaSuperiorButton.setImageResource(R.drawable.next_cinza);
 			}
 		}
-		
+
 		private Drawable carregaDrawable(byte[] imagem) {
 			Bitmap b = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
 			Matrix matrix = new Matrix();
