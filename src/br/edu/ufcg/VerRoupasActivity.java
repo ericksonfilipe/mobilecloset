@@ -30,8 +30,8 @@ public class VerRoupasActivity extends Activity {
 
 	private BDAdapter dao;
 	private VisualizadorRoupa visualizadorRoupa;
-	public ImageButton voltaSuperiorButton;
-	public ImageButton proximaSuperiorButton;
+	public ImageButton anteriorButton;
+	public ImageButton proximaButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -42,20 +42,20 @@ public class VerRoupasActivity extends Activity {
 		visualizadorRoupa = new VisualizadorRoupa(this, dao.getRoupas());
 		setContentView(visualizadorRoupa);
 
-		proximaSuperiorButton = new ImageButton(this);
-		proximaSuperiorButton.setImageResource(R.drawable.next);
-		proximaSuperiorButton.setBackgroundColor(Color.TRANSPARENT);
-		proximaSuperiorButton.setOnClickListener(new ProximoListener());
+		proximaButton = new ImageButton(this);
+		proximaButton.setImageResource(R.drawable.next);
+		proximaButton.setBackgroundColor(Color.TRANSPARENT);
+		proximaButton.setOnClickListener(new ProximoListener());
 
-		voltaSuperiorButton = new ImageButton(this);
-		voltaSuperiorButton.setImageResource(R.drawable.previous_cinza);
-		voltaSuperiorButton.setBackgroundColor(Color.TRANSPARENT);
-		voltaSuperiorButton.setOnClickListener(new VoltaListener());
+		anteriorButton = new ImageButton(this);
+		anteriorButton.setImageResource(R.drawable.previous_cinza);
+		anteriorButton.setBackgroundColor(Color.TRANSPARENT);
+		anteriorButton.setOnClickListener(new VoltaListener());
 
 		RelativeLayout layout = new RelativeLayout(this);
 		LinearLayout linear = new LinearLayout(this);
-		linear.addView(voltaSuperiorButton);
-		linear.addView(proximaSuperiorButton);
+		linear.addView(anteriorButton);
+		linear.addView(proximaButton);
 		linear.setGravity(Gravity.RIGHT);
 		linear.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		layout.addView(linear);
@@ -162,15 +162,15 @@ public class VerRoupasActivity extends Activity {
 
 		private void atualizaImagensBotoes() {
 			if (posicaoRoupa > 0) {
-				voltaSuperiorButton.setImageResource(R.drawable.previous);
+				anteriorButton.setImageResource(R.drawable.previous);
 			} else {
-				voltaSuperiorButton.setImageResource(R.drawable.previous_cinza);
+				anteriorButton.setImageResource(R.drawable.previous_cinza);
 			}
 
 			if (posicaoRoupa < roupas.size() - 1) {
-				proximaSuperiorButton.setImageResource(R.drawable.next);
+				proximaButton.setImageResource(R.drawable.next);
 			} else {
-				proximaSuperiorButton.setImageResource(R.drawable.next_cinza);
+				proximaButton.setImageResource(R.drawable.next_cinza);
 			}
 		}
 
