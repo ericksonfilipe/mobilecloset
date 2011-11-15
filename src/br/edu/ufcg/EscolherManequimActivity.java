@@ -56,7 +56,7 @@ public class EscolherManequimActivity extends Activity {
 		anteriorButton.setOnClickListener(new VoltaListener());
 		
 		Button meioButton = new Button(this);
-		meioButton.setText("Calibrar");
+		meioButton.setText("Escolher!");
 		meioButton.setOnClickListener(new CalibrarListener());
 
 		RelativeLayout layoutProximo = new RelativeLayout(this);
