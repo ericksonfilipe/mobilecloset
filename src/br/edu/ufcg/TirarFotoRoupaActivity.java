@@ -23,7 +23,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import br.edu.ufcg.BD.BDAdapter;
@@ -44,7 +43,11 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 
 	private ImageButton proximoMoldeButton;
 
-	private ImageView voltaMoldeButton;
+	private ImageButton voltaMoldeButton;
+	
+	private ImageButton fundo;
+	
+	private boolean fundoClaro = true;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -88,11 +91,52 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 		layout.addView(linear);
 		layout.setGravity(Gravity.BOTTOM);
 
+		
+		
+//		RelativeLayout layoutEsquerda = new RelativeLayout(this);
+//		LinearLayout esquerda = new LinearLayout(this);
+//		esquerda.setOrientation(LinearLayout.VERTICAL);
+//		esquerda.setGravity(Gravity.CENTER);
+
+		fundo = new ImageButton(this);
+		fundo.setImageResource(R.drawable.botao2);
+		fundo.setBackgroundColor(Color.TRANSPARENT);
+		fundo.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View arg0) {
+				fundoClaro = !fundoClaro;
+				
+				if (fundoClaro) {
+					fundo.setImageResource(R.drawable.botao2);
+				} else {
+					fundo.setImageResource(R.drawable.botao1);
+				}
+				
+			}
+		});
+		
+		
+//		esquerda.setGravity(Gravity.LEFT);
+//		esquerda.addView(fundo);
+//		
+//		layoutEsquerda.addView(esquerda, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
+//		layoutEsquerda.setGravity(Gravity.BOTTOM);
+		
+		RelativeLayout layoutEsquerda = new RelativeLayout(this);
+		LinearLayout linearEsq = new LinearLayout(this);
+		linearEsq.addView(fundo);
+		linearEsq.setGravity(Gravity.LEFT);
+		linearEsq.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		layoutEsquerda.addView(linearEsq);
+		layoutEsquerda.setGravity(Gravity.BOTTOM);
+
+		
+		addContentView(layoutEsquerda, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}
-
+	
 	private class VoltaListener implements OnClickListener {
 
 		public void onClick(View arg0) {
@@ -198,7 +242,7 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 //		Mat mRgba = orig.clone();
 		
 		//Realizando o threshold com limiar = 128
-		Imgproc.threshold(orig, mIntermediateMat, 128, 255, Imgproc.THRESH_BINARY);
+		Imgproc.threshold(orig, mIntermediateMat, 100, 255, Imgproc.THRESH_BINARY);
 //    	Imgproc.cvtColor(mIntermediateMat, mRgba, Imgproc.COLOR_RGB2BGRA);
 		
 		Bitmap bmp = Bitmap.createBitmap(orig.cols(), orig.rows(),
@@ -243,10 +287,18 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 				pixelOrig = orig.getPixel(x, y);
 				pixelLimiarizado = lim.getPixel(x, y);
 //				System.err.println(">>>>>> pixel: " + pixelLimiarizado);
-				if (pixelLimiarizado == Color.WHITE) {
-					result.setPixel(x, y, Color.TRANSPARENT);
-				} else {
-					result.setPixel(x, y, pixelOrig);
+				if (fundoClaro) { // objeto de interesse eh escuro
+					if (pixelLimiarizado == Color.WHITE) {
+						result.setPixel(x, y, Color.TRANSPARENT);
+					} else {
+						result.setPixel(x, y, pixelOrig);
+					}
+				} else { // objeto de interesse eh branco
+					if (pixelLimiarizado == Color.WHITE) {
+						result.setPixel(x, y, pixelOrig);
+					} else {
+						result.setPixel(x, y, Color.TRANSPARENT);
+					}
 				}
 			}
 		}
