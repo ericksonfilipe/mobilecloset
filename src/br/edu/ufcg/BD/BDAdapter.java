@@ -33,6 +33,12 @@ public class BDAdapter {
 		banco.close();
 	}
 
+	public void removeManequim(Manequim manequim) {
+		SQLiteDatabase banco = bdHelper.getWritableDatabase();
+		banco.execSQL(String.format("DELETE FROM manequim WHERE id = %d;", manequim.getId()));
+		banco.close();
+	}
+
 	/**
 	 * Retorna todos os manequins cadastrados, ordenados por id.
 	 * @return List<Manequim>
