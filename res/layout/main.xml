@@ -10,7 +10,7 @@
 		<LinearLayout android:weightSum="1"
 			android:layout_gravity="bottom" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:orientation="vertical">
-			<Button android:background="@drawable/button_meuguardaroupa" android:layout_gravity="center_horizontal" android:layout_width="300dp" android:id="@+id/buttonEscolherRoupas" android:layout_height="46dp"></Button>
+			<Button android:background="@drawable/button_provar" android:layout_gravity="center_horizontal" android:layout_width="300dp" android:id="@+id/button_provar" android:layout_height="46dp"></Button>
 		</LinearLayout>
 	</LinearLayout>
 	<LinearLayout android:id="@+id/linearLayout1"
@@ -21,7 +21,7 @@
 			<LinearLayout
 				android:layout_width="fill_parent" android:layout_height="wrap_content"
 				android:orientation="vertical" android:layout_gravity="bottom">
-				<Button android:background="@drawable/button_bluetooth" android:id="@+id/dropaBD" android:layout_gravity="right" android:layout_width="146dp" android:layout_height="47dp"></Button>
+				<Button android:background="@drawable/button_manequim" android:id="@+id/button_manequim" android:layout_gravity="right" android:layout_width="146dp" android:layout_height="47dp"></Button>
 			</LinearLayout>
 		</LinearLayout>
 		<LinearLayout
@@ -30,8 +30,8 @@
 			<LinearLayout
 				android:layout_width="fill_parent" android:layout_height="wrap_content"
 				android:orientation="vertical" android:layout_gravity="bottom">
-				<Button android:id="@+id/button_sobre"  
-					android:background="@drawable/button_instrucoes"
+				<Button android:id="@+id/button_roupas"  
+					android:background="@drawable/button_roupas"
 					android:layout_height="47dp" android:layout_width="147dp"
 					android:layout_gravity="right"></Button>
 			</LinearLayout>
