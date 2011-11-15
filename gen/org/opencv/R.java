@@ -54,11 +54,15 @@ public final class R {
         public static final int molde_short=0x7f020028;
         public static final int next=0x7f020029;
         public static final int next_cinza=0x7f02002a;
-        public static final int previous=0x7f02002b;
-        public static final int previous_cinza=0x7f02002c;
-        public static final int tracejado2=0x7f02002d;
-        public static final int zoom_in=0x7f02002e;
-        public static final int zoom_out=0x7f02002f;
+        public static final int next_cinza_old=0x7f02002b;
+        public static final int next_old=0x7f02002c;
+        public static final int previous=0x7f02002d;
+        public static final int previous_cinza=0x7f02002e;
+        public static final int previous_cinza_old=0x7f02002f;
+        public static final int previous_old=0x7f020030;
+        public static final int tracejado2=0x7f020031;
+        public static final int zoom_in=0x7f020032;
+        public static final int zoom_out=0x7f020033;
     }
     public static final class id {
         public static final int alterarDimensoes=0x7f060016;
