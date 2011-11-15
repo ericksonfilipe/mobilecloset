@@ -21,8 +21,6 @@
         
         <activity android:name=".TirarFotoManequimActivity" ></activity>
         
-        <activity android:name=".Closet" ></activity>
-        
         <activity android:name=".Provar" ></activity>
         
         <activity android:name=".RoupasActivity" ></activity>
