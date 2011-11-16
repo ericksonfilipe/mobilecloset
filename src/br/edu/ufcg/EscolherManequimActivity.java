@@ -182,8 +182,8 @@ public class EscolherManequimActivity extends Activity {
 		public void proximoManequim() {
 			if (posicao < manequins.size()-1) {
 				posicao++;
-				Manequim roupa = manequins.get(posicao);
-				manequimAtual = carregaDrawable(roupa.getImagem());
+				Manequim manequim = manequins.get(posicao);
+				manequimAtual = carregaDrawable(manequim.getImagem());
 				manequimAtual.setBounds(0, 0, getWidth(), getHeight());
 				invalidate();
 			}
@@ -193,8 +193,8 @@ public class EscolherManequimActivity extends Activity {
 		public void voltaManequim() {
 			if (posicao > 0) {
 				posicao--;
-				Manequim roupa = manequins.get(posicao);
-				manequimAtual = carregaDrawable(roupa.getImagem());
+				Manequim manequim = manequins.get(posicao);
+				manequimAtual = carregaDrawable(manequim.getImagem());
 				manequimAtual.setBounds(0, 0, getWidth(), getHeight());
 				invalidate();
 			}
