@@ -38,8 +38,11 @@ public class CalibragemRoupasActivity  extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		byte[] imagem = (byte[]) getIntent().getExtras().get("background");
+		
 		Roupa roupa = (Roupa) getIntent().getExtras().get("roupa");
+		
+		BDAdapter dao = new BDAdapter(this);
+		byte[] imagem = dao.getManequimPadrao();
 
 		Bitmap b = null;
 		if (DEBUG) {

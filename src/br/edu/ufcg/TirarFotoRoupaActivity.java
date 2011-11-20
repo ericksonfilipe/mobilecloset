@@ -27,6 +27,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import br.edu.ufcg.BD.BDAdapter;
+import br.edu.ufcg.model.Calibragem2;
 import br.edu.ufcg.model.Categoria;
 import br.edu.ufcg.model.Roupa;
 
@@ -199,16 +200,13 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 		mudado = JPEGtoRGB888(mudado); 
 		
 		Bitmap roupaSemBackground = tiraBackground(mudado);
-		roupaSemBackground = Bitmap.createScaledBitmap(roupaSemBackground, 125, 125, true);
 		
 		ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
 		roupaSemBackground.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos); 
 		byte[] bitmapdata = bos.toByteArray();
 		
 		Roupa roupa = new Roupa(0, bitmapdata, categorias[indice]);
-		Log.e("roupa1: ", roupa.toString());
 		dao.inserirRoupa(roupa);
-		
 
 		this.finish();
 		

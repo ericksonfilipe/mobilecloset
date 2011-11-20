@@ -35,7 +35,6 @@ public class ProvadorActivity extends Activity {
 
 	private BDAdapter dao;
 
-	private List<Roupa> roupas;
 	private Map<Roupa, Calibragem2> calibragens;
 
 	private Provador provador;
@@ -50,7 +49,6 @@ public class ProvadorActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 			dao = new BDAdapter(this);
-			this.roupas = dao.getRoupas();
 			this.calibragens = dao.getCalibragens2();
 
 			byte[] imagem = (byte[]) getIntent().getExtras().get("background");
@@ -58,10 +56,8 @@ public class ProvadorActivity extends Activity {
 			Bitmap b = null;
 			if (DEBUG) {
 				b = BitmapFactory.decodeResource(getResources(), R.drawable.background);
-				this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 			} else {
 				b = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
-				this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 			}
 
 			Matrix matrix = new Matrix();
@@ -84,10 +80,6 @@ public class ProvadorActivity extends Activity {
 			addContentView(getLayoutBotoesDireita(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
 			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-//		}
-		
-		
-
 	}
 
 	private RelativeLayout getLayoutBotoesEsquerda() {

@@ -75,7 +75,6 @@ public final class R {
         public static final int button_sair=0x7f06000a;
         public static final int button_tirar_foto=0x7f06000b;
         public static final int button_ver_roupas=0x7f060014;
-        public static final int calibrar=0x7f060019;
         public static final int gallery=0x7f060003;
         public static final int imageView1=0x7f060000;
         public static final int imagem_camera=0x7f060001;
@@ -87,9 +86,10 @@ public final class R {
         public static final int passar_menos=0x7f06000e;
         public static final int passar_menoss=0x7f06000f;
         public static final int pbl=0x7f06000d;
+        public static final int removerManequim=0x7f060018;
         public static final int removerRoupa=0x7f06001a;
         public static final int salvarCalibragem=0x7f060017;
-        public static final int salvarFoto=0x7f060018;
+        public static final int salvarFoto=0x7f060019;
         public static final int textView2=0x7f060015;
         public static final int xpto=0x7f060010;
     }
@@ -107,8 +107,9 @@ public final class R {
     }
     public static final class menu {
         public static final int calibragem_menu=0x7f050000;
-        public static final int tirar_foto_menu=0x7f050001;
-        public static final int ver_roupa_menu=0x7f050002;
+        public static final int escolher_manequim_menu=0x7f050001;
+        public static final int tirar_foto_menu=0x7f050002;
+        public static final int ver_roupa_menu=0x7f050003;
     }
     public static final class string {
         public static final int app_name=0x7f040000;

@@ -115,7 +115,7 @@ public class EscolherManequimActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflate = new MenuInflater(this);
-		inflate.inflate(R.menu.ver_roupa_menu, menu);
+		inflate.inflate(R.menu.escolher_manequim_menu, menu);
 		return true;
 	}
 
