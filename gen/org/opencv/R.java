@@ -75,6 +75,7 @@ public final class R {
         public static final int button_sair=0x7f06000a;
         public static final int button_tirar_foto=0x7f06000b;
         public static final int button_ver_roupas=0x7f060014;
+        public static final int calibrar=0x7f060019;
         public static final int gallery=0x7f060003;
         public static final int imageView1=0x7f060000;
         public static final int imagem_camera=0x7f060001;
@@ -86,7 +87,7 @@ public final class R {
         public static final int passar_menos=0x7f06000e;
         public static final int passar_menoss=0x7f06000f;
         public static final int pbl=0x7f06000d;
-        public static final int removerRoupa=0x7f060019;
+        public static final int removerRoupa=0x7f06001a;
         public static final int salvarCalibragem=0x7f060017;
         public static final int salvarFoto=0x7f060018;
         public static final int textView2=0x7f060015;

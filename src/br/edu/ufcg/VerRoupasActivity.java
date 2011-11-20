@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,7 +24,9 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
+import br.edu.ufcg.model.Manequim;
 import br.edu.ufcg.model.Roupa;
 
 public class VerRoupasActivity extends Activity {
@@ -90,8 +93,27 @@ public class VerRoupasActivity extends Activity {
 	}
 
 	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		visualizadorRoupa.removeImagem();
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.calibrar:
+//			Mandar arrumar a tela pra calibrar uma roupa
+//			Roupa roupa = visualizadorRoupa.getRoupaAtual();
+//			Intent i = new Intent(VerRoupasActivity.this, CalibragemActivity.class);
+//			i.putExtra("roupa", roupa.getImagem());
+//			if (dao.getManequimPadrao() == null) {
+////				i.putExtra("manequimFaltando", true);
+////				startActivity(i);
+//				Toast.makeText(this, "Não há manequim escolhido!", Toast.LENGTH_LONG).show();
+//			} else {
+//				i.putExtra("background", dao.getManequimPadrao());
+//				startActivity(i);
+//			}
+//			finish();
+			break;
+		case R.id.removerRoupa:
+			visualizadorRoupa.removeImagem();
+			break;
+		}
 		return true;
 	}
 
@@ -181,6 +203,10 @@ public class VerRoupasActivity extends Activity {
 			matrix.setRotate(90);
 			Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
 			return new BitmapDrawable(girado);
+		}
+		
+		public Roupa getRoupaAtual() {
+			return roupas.get(posicaoRoupa);
 		}
 	}
 }
