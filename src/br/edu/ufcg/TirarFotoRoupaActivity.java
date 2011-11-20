@@ -7,6 +7,7 @@ import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -198,18 +199,37 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 		mudado = JPEGtoRGB888(mudado); 
 		
 		Bitmap roupaSemBackground = tiraBackground(mudado);
+		roupaSemBackground = Bitmap.createScaledBitmap(roupaSemBackground, 125, 125, true);
 		
 		ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
 		roupaSemBackground.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos); 
 		byte[] bitmapdata = bos.toByteArray();
 		
 		Roupa roupa = new Roupa(0, bitmapdata, categorias[indice]);
-		this.dao.inserirRoupa(roupa);
+		Log.e("roupa1: ", roupa.toString());
+		dao.inserirRoupa(roupa);
+		
 
 		this.finish();
+		
+		Intent i = new Intent(this, CalibragemRoupasActivity.class);
+		roupa = getRoupaCadastrada();
+		i.putExtra("roupa", roupa);
+		i.putExtra("background", dao.getManequimPadrao());
+		startActivity(i);
 	}
 	
-	 /** Takes a JPEG captured by the device camera and converts it to 
+	 private Roupa getRoupaCadastrada() {
+		Roupa roupa = null;
+		for (Roupa r : dao.getRoupas()) {
+			if (roupa == null || r.getId() > roupa.getId()) {
+				roupa = r;
+			}
+		}
+		return roupa;
+	}
+
+	/** Takes a JPEG captured by the device camera and converts it to 
 	RGB888 format */ 
 	    private Bitmap JPEGtoRGB888(Bitmap img) 
 	    { 
