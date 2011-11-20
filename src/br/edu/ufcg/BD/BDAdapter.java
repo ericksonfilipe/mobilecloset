@@ -9,6 +9,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import br.edu.ufcg.model.Calibragem;
 import br.edu.ufcg.model.Calibragem2;
 import br.edu.ufcg.model.Categoria;
@@ -92,6 +93,7 @@ public class BDAdapter {
 		cv.put("categoria", roupa.getCategoria().name());
 		banco.insert("roupa", null, cv);
 		banco.close();
+		Log.e("salvei", "roupa");
 	}
 
 	public void removeRoupa(Roupa roupa) {
@@ -157,6 +159,7 @@ public class BDAdapter {
 	//----------------tentativa de calibragem de roupa---------------------------------------------------------------
 	
 	public Map<Roupa, Calibragem2> getCalibragens2() {
+		Log.e("chamei", "getCalibragens2");
 		SQLiteDatabase banco = bdHelper.getReadableDatabase();
 		Map<Roupa, Calibragem2> calibragens = new HashMap<Roupa, Calibragem2>();
 		Cursor c = banco.query("calibragem2", new String[] {"roupa", "left", "top", "right", "bottom"}, null, null, null, null, null);
@@ -181,6 +184,7 @@ public class BDAdapter {
 				calibragem.getRoupa().getId(), calibragem.left, calibragem.top, calibragem.right, calibragem.bottom);
 		banco.execSQL(sql);
 		banco.close();
+		Log.e("inseri", "calibragem2");
 	}
 	
 	public void atualizaCalibragem2(Calibragem2 calibragem) {
