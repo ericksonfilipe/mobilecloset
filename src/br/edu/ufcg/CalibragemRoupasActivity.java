@@ -26,8 +26,8 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import br.edu.ufcg.BD.BDAdapter;
-import br.edu.ufcg.model.Calibragem;
-import br.edu.ufcg.model.Categoria;
+import br.edu.ufcg.model.Calibragem2;
+import br.edu.ufcg.model.Roupa;
 
 public class CalibragemRoupasActivity  extends Activity {
 
@@ -39,6 +39,7 @@ public class CalibragemRoupasActivity  extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		byte[] imagem = (byte[]) getIntent().getExtras().get("background");
+		Roupa roupa = (Roupa) getIntent().getExtras().get("roupa");
 
 		Bitmap b = null;
 		if (DEBUG) {
@@ -53,7 +54,7 @@ public class CalibragemRoupasActivity  extends Activity {
 		matrix.setRotate(90);
 		Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
 		BitmapDrawable bd = new BitmapDrawable(girado);
-		myImageView = new MyImageView(this);
+		myImageView = new MyImageView(this, roupa);
 		myImageView.setBackgroundDrawable(bd);
 		setContentView(myImageView);
 		
@@ -120,16 +121,16 @@ public class CalibragemRoupasActivity  extends Activity {
 		private float mScaleFactor = 1.f;
 
 		private boolean zoom = false;
+		
+		private Roupa roupa;
 
-		private int[] imagens = new int[] {R.drawable.molde_camisa, R.drawable.molde_calca, R.drawable.molde_saia};
-		private int posicao = 0;
-
-		public MyImageView(Context context) {
+		public MyImageView(Context context, Roupa roupa) {
 			this(context, null, 0);
-			mImage = getResources().getDrawable(imagens[posicao]);
-			mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage.getIntrinsicHeight());
+			this.roupa = roupa;
+			this.mImage = carregaDrawable(roupa.getImagem());
+			this.mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage.getIntrinsicHeight());
 
-			setFocusable(true);
+			this.setFocusable(true);
 			this.requestFocus();
 			this.setFocusableInTouchMode(true);
 		}
@@ -141,6 +142,14 @@ public class CalibragemRoupasActivity  extends Activity {
 		public MyImageView(Context context, AttributeSet attrs, int defStyle) {
 			super(context, attrs, defStyle);
 			mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
+		}
+		
+		private Drawable carregaDrawable(byte[] imagem) {
+			Bitmap b = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
+			Matrix matrix = new Matrix();
+			matrix.setRotate(90);
+			Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
+			return new BitmapDrawable(girado);
 		}
 
 		@Override
@@ -242,35 +251,9 @@ public class CalibragemRoupasActivity  extends Activity {
 		public void salvarCalibragem() {
 			BDAdapter dao = new BDAdapter(getApplicationContext());
 			Rect bounds = mImage.getBounds();
-
-			Categoria[] categorias = new Categoria[] {};
-			switch (posicao) {
-			case 0:
-				categorias = new Categoria[] {Categoria.CAMISA, Categoria.CAMISA_MANGA_LONGA, Categoria.CAMISETA, Categoria.VESTIDO};
-				break;
-			case 1:
-				categorias = new Categoria[] {Categoria.CALCA, Categoria.SHORT, Categoria.BERMUDA};
-				break;
-			case 2:
-				categorias = new Categoria[] {Categoria.SAIA};
-				break;
-			}
 			
-			for (Categoria categoria : categorias) {
-				dao.insertCalibragem(new Calibragem(categoria, bounds.left+(int)mPosX, bounds.top+(int)mPosY, bounds.right+(int)mPosX, bounds.bottom+(int)mPosY));
-			}
-
-			posicao++;
-			if (posicao >= imagens.length) {
-				finish();
-//				Intent i = new Intent(this.getContext(), ManequimActivity.class);
-//				startActivity(i);
-				return;
-			}
-
-			mImage = getResources().getDrawable(imagens[posicao]);
-			mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage.getIntrinsicHeight());
-			invalidate();
+			dao.insertCalibragem2(new Calibragem2(roupa, bounds.left+(int)mPosX, bounds.top+(int)mPosY, bounds.right+(int)mPosX, bounds.bottom+(int)mPosY));
+			finish();
 		}
 
 		@Override

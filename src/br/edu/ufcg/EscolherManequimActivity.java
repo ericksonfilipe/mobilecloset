@@ -4,7 +4,6 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,7 +24,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Manequim;
 
@@ -108,13 +106,9 @@ public class EscolherManequimActivity extends Activity {
 	private class CalibrarListener implements OnClickListener {
 
 		public void onClick(View arg0) {
-			Toast.makeText(EscolherManequimActivity.this, "Agora, calibre o molde das roupas no manequim escolhido.", Toast.LENGTH_LONG).show();
 			Manequim manequimEscolhido = visualizadorManequim.getManequim();
 			dao.inserirManequimPadrao(manequimEscolhido);
-			Intent i = new Intent(EscolherManequimActivity.this, CalibragemRoupasActivity.class);
-			i.putExtra("background", manequimEscolhido.getImagem());
 			finish();
-			startActivity(i);
 		}
 	}
 

@@ -1,7 +1,13 @@
 package br.edu.ufcg.model;
 
-public class Roupa {
+import java.io.Serializable;
 
+public class Roupa implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1575837948040959794L;
 	private int id;
 	private byte[] imagem;
 	private Categoria categoria;

@@ -123,7 +123,7 @@ public class BDAdapter {
 		c.close();
 		banco.close();
 		return roupas;
-	}	
+	}
 
 	public Map<Categoria, Calibragem> getCalibragens() {
 		SQLiteDatabase banco = bdHelper.getReadableDatabase();
