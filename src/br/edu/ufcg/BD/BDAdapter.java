@@ -10,6 +10,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import br.edu.ufcg.model.Calibragem;
+import br.edu.ufcg.model.Calibragem2;
 import br.edu.ufcg.model.Categoria;
 import br.edu.ufcg.model.Manequim;
 import br.edu.ufcg.model.Roupa;
@@ -152,6 +153,57 @@ public class BDAdapter {
 		banco.execSQL("DELETE FROM calibragem;");
 		banco.close();
 	}
+	
+	//----------------tentativa de calibragem de roupa---------------------------------------------------------------
+	
+	public Map<Roupa, Calibragem2> getCalibragens2() {
+		SQLiteDatabase banco = bdHelper.getReadableDatabase();
+		Map<Roupa, Calibragem2> calibragens = new HashMap<Roupa, Calibragem2>();
+		Cursor c = banco.query("calibragem2", new String[] {"roupa", "left", "top", "right", "bottom"}, null, null, null, null, null);
+		while (c.moveToNext()) {
+			int idDeRoupa = c.getInt(c.getColumnIndex("roupa"));
+			
+			Cursor c2 = banco.query("roupa", new String[] {"id", "imagem", "categoria"}, null, null, null, null, "id");
+			while(c2.moveToNext()){
+				if(c.getInt(c.getColumnIndex("id")) == idDeRoupa){
+					Roupa roupa = new Roupa(c.getInt(c.getColumnIndex("id")), c.getBlob(c.getColumnIndex("imagem")),Categoria.valueOf(c.getString(c.getColumnIndex("categoria"))));					
+					Calibragem2 calibragem = new Calibragem2(roupa, c.getInt(c.getColumnIndex("left")), c.getInt(c.getColumnIndex("top")),  c.getInt(c.getColumnIndex("right")), c.getInt(c.getColumnIndex("bottom")));
+					calibragens.put(roupa, calibragem);
+				}
+			}
+			
+		}
+		c.close();
+		banco.close();
+		return calibragens;
+	}
+
+	public void insertCalibragem2(Calibragem2 calibragem) {
+		SQLiteDatabase banco = bdHelper.getWritableDatabase();
+		String sql = String.format("INSERT INTO calibragem2(roupa, left, top, right, bottom) VALUES(%d, %d, %d, %d, %d);",
+				calibragem.getRoupa().getId(), calibragem.left, calibragem.top, calibragem.right, calibragem.bottom);
+		banco.execSQL(sql);
+		banco.close();
+	}
+	
+	public void atualizaCalibragem2(Calibragem2 calibragem) {
+		SQLiteDatabase banco = bdHelper.getWritableDatabase();
+		String sql = String.format("UPDATE calibragem2 SET left=%d, top=%d, right=%d, bottom=%d WHERE roupa=%d;",
+				calibragem.left, calibragem.top, calibragem.right, calibragem.bottom,calibragem.getRoupa().getId());
+		banco.execSQL(sql);
+		banco.close();
+	}
+
+	public void deleteCalibragens2() {
+		SQLiteDatabase banco = bdHelper.getWritableDatabase();
+		banco.execSQL("DELETE FROM calibragem2;");
+		banco.close();
+	}
+	
+	
+	
+	
+	//----------------------------------------------------------------------------------------------------------------
 
 	public byte[] getManequimPadrao() {
 		int id = getIdManequimPadrao();
