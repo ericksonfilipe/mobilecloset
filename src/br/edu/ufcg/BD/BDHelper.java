@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class BDHelper extends SQLiteOpenHelper {
 
 	private static final String NOME_DB = "mobileCloset";
-	private static final int VERSAO_DB = 14;
+	private static final int VERSAO_DB = 15;
 	private final String SQL_CRIA_MANEQUIM = "CREATE TABLE manequim (id INTEGER PRIMARY KEY AUTOINCREMENT, imagem BLOB NOT NULL);";
 	private final String SQL_CRIA_MANEQUIM_PADRAO = "CREATE TABLE manequim_padrao (id INTEGER PRIMARY KEY);";
 	private final String SQL_CRIA_ROUPA	= "CREATE TABLE roupa (id INTEGER PRIMARY KEY AUTOINCREMENT, imagem BLOB NOT NULL, categoria TEXT NOT NULL);";
