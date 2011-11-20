@@ -161,17 +161,14 @@ public class BDAdapter {
 		Map<Roupa, Calibragem2> calibragens = new HashMap<Roupa, Calibragem2>();
 		Cursor c = banco.query("calibragem2", new String[] {"roupa", "left", "top", "right", "bottom"}, null, null, null, null, null);
 		while (c.moveToNext()) {
-			int idDeRoupa = c.getInt(c.getColumnIndex("roupa"));
+			int idRoupa = c.getInt(c.getColumnIndex("roupa"));
 			
-			Cursor c2 = banco.query("roupa", new String[] {"id", "imagem", "categoria"}, null, null, null, null, "id");
-			while(c2.moveToNext()){
-				if(c.getInt(c.getColumnIndex("id")) == idDeRoupa){
-					Roupa roupa = new Roupa(c.getInt(c.getColumnIndex("id")), c.getBlob(c.getColumnIndex("imagem")),Categoria.valueOf(c.getString(c.getColumnIndex("categoria"))));					
-					Calibragem2 calibragem = new Calibragem2(roupa, c.getInt(c.getColumnIndex("left")), c.getInt(c.getColumnIndex("top")),  c.getInt(c.getColumnIndex("right")), c.getInt(c.getColumnIndex("bottom")));
-					calibragens.put(roupa, calibragem);
-				}
-			}
-			
+			Cursor c2 = banco.rawQuery(String.format("SELECT r.id, r.imagem, r.categoria FROM roupa r WHERE r.id = %d;", idRoupa), null);
+			c2.moveToFirst();
+			Roupa roupa = new Roupa(c2.getInt(c2.getColumnIndex("id")), c2.getBlob(c2.getColumnIndex("imagem")),Categoria.valueOf(c2.getString(c2.getColumnIndex("categoria"))));					
+			Calibragem2 calibragem = new Calibragem2(roupa, c.getInt(c.getColumnIndex("left")), c.getInt(c.getColumnIndex("top")),  c.getInt(c.getColumnIndex("right")), c.getInt(c.getColumnIndex("bottom")));
+			calibragens.put(roupa, calibragem);
+			c2.close();
 		}
 		c.close();
 		banco.close();

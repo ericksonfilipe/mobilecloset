@@ -25,7 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
-import br.edu.ufcg.model.Calibragem;
+import br.edu.ufcg.model.Calibragem2;
 import br.edu.ufcg.model.Categoria;
 import br.edu.ufcg.model.Roupa;
 
@@ -36,6 +36,7 @@ public class ProvadorActivity extends Activity {
 	private BDAdapter dao;
 
 	private List<Roupa> roupas;
+	private Map<Roupa, Calibragem2> calibragens;
 
 	private Provador provador;
 
@@ -48,23 +49,9 @@ public class ProvadorActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-//		if (getIntent().getExtras().get("manequimFaltando").equals(true)) {
-//			System.out.println("PARA REDIRECIONAR");
-//			Button botaoRedirecionar = new Button(this);
-//			botaoRedirecionar.setBackgroundColor(Color.GREEN);
-//			botaoRedirecionar.setText("Cadastrar Manequim");
-//			botaoRedirecionar.setOnClickListener(new OnClickListener() {
-//				public void onClick(View v2) {
-//					ProvadorActivity.this.finish();
-//					Intent i = new Intent(v2.getContext(), ProvadorActivity.class);
-//					startActivity(i);
-//				}
-//			});
-//			addContentView(botaoRedirecionar, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-//			
-//		} else {
 			dao = new BDAdapter(this);
 			this.roupas = dao.getRoupas();
+			this.calibragens = dao.getCalibragens2();
 
 			byte[] imagem = (byte[]) getIntent().getExtras().get("background");
 
@@ -182,7 +169,7 @@ public class ProvadorActivity extends Activity {
 	private List<Roupa> carregaRoupasSuperiores() {
 		List<Categoria> superiores = Arrays.asList(new Categoria[] {Categoria.CAMISA, Categoria.CAMISETA, Categoria.CAMISA_MANGA_LONGA, Categoria.VESTIDO});
 		List<Roupa> roupas = new ArrayList<Roupa>();
-		for (Roupa roupa : this.roupas) {
+		for (Roupa roupa : calibragens.keySet()) {
 			if (superiores.contains(roupa.getCategoria())) {
 				roupas.add(roupa);
 			}
@@ -193,7 +180,7 @@ public class ProvadorActivity extends Activity {
 	private List<Roupa> carregaRoupasInferiores() {
 		List<Categoria> inferiores = Arrays.asList(new Categoria[] {Categoria.BERMUDA, Categoria.CALCA, Categoria.SAIA, Categoria.SHORT});
 		List<Roupa> roupas = new ArrayList<Roupa>();
-		for (Roupa roupa : this.roupas) {
+		for (Roupa roupa : calibragens.keySet()) {
 			if (inferiores.contains(roupa.getCategoria())) {
 				roupas.add(roupa);
 			}
@@ -211,8 +198,6 @@ public class ProvadorActivity extends Activity {
 
 	public class Provador extends View {
 
-		private Map<Categoria,Calibragem> calibragens;
-
 		private List<Roupa> roupasSuperiores;
 		private List<Roupa> roupasInferiores;
 
@@ -227,16 +212,14 @@ public class ProvadorActivity extends Activity {
 			this.roupasSuperiores = roupasSuperiores;
 			this.roupasInferiores = roupasInferiores;
 
-			calibragens = dao.getCalibragens();
-
 			if (!roupasSuperiores.isEmpty()) {
-				Calibragem calibragemS = calibragens.get(roupasSuperiores.get(posicaoRoupaSuperior).getCategoria());
+				Calibragem2 calibragemS = calibragens.get(roupasSuperiores.get(posicaoRoupaSuperior));
 				roupaSuperior = carregaDrawable(roupasSuperiores.get(posicaoRoupaSuperior).getImagem());
 				roupaSuperior.setBounds(calibragemS.left, calibragemS.top, calibragemS.right, calibragemS.bottom);
 			}
 
 			if (!roupasInferiores.isEmpty()) {
-				Calibragem calibragemI = calibragens.get(roupasInferiores.get(posicaoRoupaInferior).getCategoria());
+				Calibragem2 calibragemI = calibragens.get(roupasInferiores.get(posicaoRoupaInferior));
 				roupaInferior = carregaDrawable(roupasInferiores.get(posicaoRoupaInferior).getImagem());
 				roupaInferior.setBounds(calibragemI.left, calibragemI.top, calibragemI.right, calibragemI.bottom);
 			}
@@ -261,7 +244,7 @@ public class ProvadorActivity extends Activity {
 				posicaoRoupaSuperior++;
 				Roupa roupa = roupasSuperiores.get(posicaoRoupaSuperior);
 				roupaSuperior = carregaDrawable(roupa.getImagem());
-				Calibragem calibragemS = calibragens.get(roupa.getCategoria());
+				Calibragem2 calibragemS = calibragens.get(roupa);
 				roupaSuperior.setBounds(calibragemS.left, calibragemS.top, calibragemS.right, calibragemS.bottom);
 				invalidate();
 			}
@@ -273,7 +256,7 @@ public class ProvadorActivity extends Activity {
 				posicaoRoupaSuperior--;
 				Roupa roupa = roupasSuperiores.get(posicaoRoupaSuperior);
 				roupaSuperior = carregaDrawable(roupa.getImagem());
-				Calibragem calibragemS = calibragens.get(roupa.getCategoria());
+				Calibragem2 calibragemS = calibragens.get(roupa);
 				roupaSuperior.setBounds(calibragemS.left, calibragemS.top, calibragemS.right, calibragemS.bottom);
 				invalidate();
 			}
@@ -285,7 +268,7 @@ public class ProvadorActivity extends Activity {
 				posicaoRoupaInferior++;
 				Roupa roupa = roupasInferiores.get(posicaoRoupaInferior);
 				roupaInferior = carregaDrawable(roupa.getImagem());
-				Calibragem calibragemI = calibragens.get(roupa.getCategoria());
+				Calibragem2 calibragemI = calibragens.get(roupa);
 				roupaInferior.setBounds(calibragemI.left, calibragemI.top, calibragemI.right, calibragemI.bottom);
 				invalidate();
 			}
@@ -297,7 +280,7 @@ public class ProvadorActivity extends Activity {
 				posicaoRoupaInferior--;
 				Roupa roupa = roupasInferiores.get(posicaoRoupaInferior);
 				roupaInferior = carregaDrawable(roupa.getImagem());
-				Calibragem calibragemI = calibragens.get(roupa.getCategoria());
+				Calibragem2 calibragemI = calibragens.get(roupa);
 				roupaInferior.setBounds(calibragemI.left, calibragemI.top, calibragemI.right, calibragemI.bottom);
 				invalidate();
 			}
