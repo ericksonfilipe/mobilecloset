@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -34,15 +33,17 @@ public class CalibragemRoupasActivity  extends Activity {
 	private boolean DEBUG = false;
 	private boolean modificarLargura = true;
 	private MyImageView myImageView;
+	private Calibragem2 calibragemRoupa;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		Roupa roupa = (Roupa) getIntent().getExtras().get("roupa");
-		
+
 		BDAdapter dao = new BDAdapter(this);
 		byte[] imagem = dao.getManequimPadrao();
+		calibragemRoupa = dao.getCalibragens2().get(roupa.getId());
 
 		Bitmap b = null;
 		if (DEBUG) {
@@ -60,7 +61,7 @@ public class CalibragemRoupasActivity  extends Activity {
 		myImageView = new MyImageView(this, roupa);
 		myImageView.setBackgroundDrawable(bd);
 		setContentView(myImageView);
-		
+
 		ImageButton zoomIn = new ImageButton(this);
 		zoomIn.setImageDrawable(getResources().getDrawable(R.drawable.zoom_in));
 		zoomIn.setBackgroundColor(Color.TRANSPARENT);
@@ -124,14 +125,11 @@ public class CalibragemRoupasActivity  extends Activity {
 		private float mScaleFactor = 1.f;
 
 		private boolean zoom = false;
-		
-		private Roupa roupa;
 
 		public MyImageView(Context context, Roupa roupa) {
 			this(context, null, 0);
-			this.roupa = roupa;
 			this.mImage = carregaDrawable(roupa.getImagem());
-			this.mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage.getIntrinsicHeight());
+			this.mImage.setBounds(calibragemRoupa.left, calibragemRoupa.top, calibragemRoupa.right, calibragemRoupa.bottom);
 
 			this.setFocusable(true);
 			this.requestFocus();
@@ -146,7 +144,7 @@ public class CalibragemRoupasActivity  extends Activity {
 			super(context, attrs, defStyle);
 			mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
 		}
-		
+
 		private Drawable carregaDrawable(byte[] imagem) {
 			Bitmap b = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
 			Matrix matrix = new Matrix();
@@ -253,9 +251,13 @@ public class CalibragemRoupasActivity  extends Activity {
 
 		public void salvarCalibragem() {
 			BDAdapter dao = new BDAdapter(getApplicationContext());
-			Rect bounds = mImage.getBounds();
-			
-			dao.insertCalibragem2(new Calibragem2(roupa, bounds.left+(int)mPosX, bounds.top+(int)mPosY, bounds.right+(int)mPosX, bounds.bottom+(int)mPosY));
+
+			calibragemRoupa.left += (int)mPosX;
+			calibragemRoupa.top += (int)mPosY;
+			calibragemRoupa.right += (int)mPosX;
+			calibragemRoupa.bottom += (int)mPosY;
+			dao.atualizaCalibragem2(calibragemRoupa);
+
 			finish();
 		}
 
@@ -268,11 +270,11 @@ public class CalibragemRoupasActivity  extends Activity {
 			canvas.scale(mScaleFactor, mScaleFactor);
 
 			if (zoom) {
-				int left = mImage.getBounds().left;
-				int top = mImage.getBounds().top;
-				int right = mImage.getBounds().right;
-				int bottom = mImage.getBounds().bottom;
-				mImage.setBounds(left-zoomControler_w, top-zoomControler_h, right+zoomControler_w, bottom+zoomControler_h);
+				calibragemRoupa.left = mImage.getBounds().left - zoomControler_w;
+				calibragemRoupa.top = mImage.getBounds().top - zoomControler_h;
+				calibragemRoupa.right = mImage.getBounds().right + zoomControler_w;
+				calibragemRoupa.bottom = mImage.getBounds().bottom + zoomControler_h;
+				mImage.setBounds(calibragemRoupa.left, calibragemRoupa.top, calibragemRoupa.right, calibragemRoupa.bottom);
 				zoom = false;
 			}
 			mImage.draw(canvas);

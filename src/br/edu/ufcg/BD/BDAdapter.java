@@ -9,7 +9,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 import br.edu.ufcg.model.Calibragem;
 import br.edu.ufcg.model.Calibragem2;
 import br.edu.ufcg.model.Categoria;
@@ -93,7 +92,6 @@ public class BDAdapter {
 		cv.put("categoria", roupa.getCategoria().name());
 		banco.insert("roupa", null, cv);
 		banco.close();
-		Log.e("salvei", "roupa");
 	}
 
 	public void removeRoupa(Roupa roupa) {
@@ -127,6 +125,17 @@ public class BDAdapter {
 		return roupas;
 	}
 
+	public Roupa getRoupa(Integer id) {
+		SQLiteDatabase banco = bdHelper.getReadableDatabase();
+		Cursor c = banco.rawQuery("SELECT r.* FROM roupa r WHERE r.id = " + id + ";", null);
+		c.moveToFirst();
+		Roupa roupa = new Roupa(c.getInt(c.getColumnIndex("id")), c.getBlob(c.getColumnIndex("imagem")),Categoria.valueOf(c.getString(c.getColumnIndex("categoria"))));
+		c.close();
+		banco.close();
+		return roupa;
+		
+	}
+
 	public Map<Categoria, Calibragem> getCalibragens() {
 		SQLiteDatabase banco = bdHelper.getReadableDatabase();
 		Map<Categoria, Calibragem> calibragens = new HashMap<Categoria, Calibragem>();
@@ -158,20 +167,16 @@ public class BDAdapter {
 	
 	//----------------tentativa de calibragem de roupa---------------------------------------------------------------
 	
-	public Map<Roupa, Calibragem2> getCalibragens2() {
-		Log.e("chamei", "getCalibragens2");
-		SQLiteDatabase banco = bdHelper.getReadableDatabase();
-		Map<Roupa, Calibragem2> calibragens = new HashMap<Roupa, Calibragem2>();
-		Cursor c = banco.query("calibragem2", new String[] {"roupa", "left", "top", "right", "bottom"}, null, null, null, null, null);
+	public Map<Integer, Calibragem2> getCalibragens2() {
+		SQLiteDatabase banco = bdHelper.getWritableDatabase();
+		Map<Integer, Calibragem2> calibragens = new HashMap<Integer, Calibragem2>();
+		Cursor c = banco.query("calibragem2", new String[] {"id", "roupa", "left", "top", "right", "bottom"}, null, null, null, null, null);
 		while (c.moveToNext()) {
 			int idRoupa = c.getInt(c.getColumnIndex("roupa"));
 			
-			Cursor c2 = banco.rawQuery(String.format("SELECT r.id, r.imagem, r.categoria FROM roupa r WHERE r.id = %d;", idRoupa), null);
-			c2.moveToFirst();
-			Roupa roupa = new Roupa(c2.getInt(c2.getColumnIndex("id")), c2.getBlob(c2.getColumnIndex("imagem")),Categoria.valueOf(c2.getString(c2.getColumnIndex("categoria"))));					
-			Calibragem2 calibragem = new Calibragem2(roupa, c.getInt(c.getColumnIndex("left")), c.getInt(c.getColumnIndex("top")),  c.getInt(c.getColumnIndex("right")), c.getInt(c.getColumnIndex("bottom")));
-			calibragens.put(roupa, calibragem);
-			c2.close();
+			Calibragem2 calibragem = new Calibragem2(idRoupa, c.getInt(c.getColumnIndex("left")), c.getInt(c.getColumnIndex("top")),  c.getInt(c.getColumnIndex("right")), c.getInt(c.getColumnIndex("bottom")));
+			calibragem.setId(c.getInt(c.getColumnIndex("id")));
+			calibragens.put(idRoupa, calibragem);
 		}
 		c.close();
 		banco.close();
@@ -181,16 +186,17 @@ public class BDAdapter {
 	public void insertCalibragem2(Calibragem2 calibragem) {
 		SQLiteDatabase banco = bdHelper.getWritableDatabase();
 		String sql = String.format("INSERT INTO calibragem2(roupa, left, top, right, bottom) VALUES(%d, %d, %d, %d, %d);",
-				calibragem.getRoupa().getId(), calibragem.left, calibragem.top, calibragem.right, calibragem.bottom);
+				calibragem.getRoupa(), calibragem.left, calibragem.top, calibragem.right, calibragem.bottom);
 		banco.execSQL(sql);
 		banco.close();
-		Log.e("inseri", "calibragem2");
 	}
 	
 	public void atualizaCalibragem2(Calibragem2 calibragem) {
 		SQLiteDatabase banco = bdHelper.getWritableDatabase();
-		String sql = String.format("UPDATE calibragem2 SET left=%d, top=%d, right=%d, bottom=%d WHERE roupa=%d;",
-				calibragem.left, calibragem.top, calibragem.right, calibragem.bottom,calibragem.getRoupa().getId());
+		
+		banco.execSQL("DELETE FROM calibragem2 WHERE roupa = " + calibragem.getRoupa() + ";");
+		String sql = String.format("INSERT INTO calibragem2(roupa, left, top, right, bottom) VALUES(%d, %d, %d, %d, %d);",
+				calibragem.getRoupa(), calibragem.left, calibragem.top, calibragem.right, calibragem.bottom);
 		banco.execSQL(sql);
 		banco.close();
 	}
