@@ -210,8 +210,10 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 
 		this.finish();
 		
-		Intent i = new Intent(this, CalibragemRoupasActivity.class);
 		roupa = getRoupaCadastrada();
+		
+		dao.insertCalibragem2(new Calibragem2(roupa.getId(), 0, 0, 150, 150));
+		Intent i = new Intent(this, CalibragemRoupasActivity.class);
 		i.putExtra("roupa", roupa);
 		i.putExtra("background", dao.getManequimPadrao());
 		startActivity(i);

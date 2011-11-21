@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -53,17 +55,38 @@ public class VerRoupasActivity extends Activity {
 		anteriorButton.setImageResource(R.drawable.previous_cinza);
 		anteriorButton.setBackgroundColor(Color.TRANSPARENT);
 		anteriorButton.setOnClickListener(new VoltaListener());
-
-		RelativeLayout layout = new RelativeLayout(this);
-		LinearLayout linear = new LinearLayout(this);
-		linear.addView(anteriorButton);
-		linear.addView(proximaButton);
-		linear.setGravity(Gravity.RIGHT);
-		linear.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-		layout.addView(linear);
-		layout.setGravity(Gravity.BOTTOM);
 		
-		addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		Button meioButton = new Button(this);
+		meioButton.setText("Calibrar");
+		meioButton.setOnClickListener(new CalibrarListener());
+
+		RelativeLayout layoutProximo = new RelativeLayout(this);
+		LinearLayout linearProximo = new LinearLayout(this);
+		linearProximo.addView(proximaButton);
+		linearProximo.setGravity(Gravity.RIGHT);
+		linearProximo.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		layoutProximo.addView(linearProximo);
+		layoutProximo.setGravity(Gravity.BOTTOM);
+		
+		RelativeLayout layoutAnterior = new RelativeLayout(this);
+		LinearLayout linearAnterior = new LinearLayout(this);
+		linearAnterior.addView(anteriorButton);
+		linearAnterior.setGravity(Gravity.LEFT);
+		linearAnterior.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		layoutAnterior.addView(linearAnterior);
+		layoutAnterior.setGravity(Gravity.BOTTOM);
+		
+		RelativeLayout layoutMeio = new RelativeLayout(this);
+		LinearLayout linearMeio = new LinearLayout(this);
+		linearMeio.addView(meioButton);
+		linearMeio.setGravity(Gravity.CENTER);
+		linearMeio.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		layoutMeio.addView(linearMeio);
+		layoutMeio.setGravity(Gravity.BOTTOM);
+
+		addContentView(layoutAnterior, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		addContentView(layoutMeio, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		addContentView(layoutProximo, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}
@@ -80,6 +103,16 @@ public class VerRoupasActivity extends Activity {
 
 		public void onClick(View arg0) {
 			visualizadorRoupa.voltaRoupaSuperior();
+		}
+
+	}
+
+	private class CalibrarListener implements OnClickListener {
+
+		public void onClick(View arg0) {
+			Intent i = new Intent(getApplicationContext(), CalibragemRoupasActivity.class);
+			i.putExtra("roupa", visualizadorRoupa.getRoupaAtual());
+			startActivity(i);
 		}
 
 	}

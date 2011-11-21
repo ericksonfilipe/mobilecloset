@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class BDHelper extends SQLiteOpenHelper {
 
 	private static final String NOME_DB = "mobileCloset";
-	private static final int VERSAO_DB = 21;
+	private static final int VERSAO_DB = 30;
 	private final String SQL_CRIA_MANEQUIM = "CREATE TABLE manequim (id INTEGER PRIMARY KEY AUTOINCREMENT, imagem BLOB NOT NULL);";
 	private final String SQL_CRIA_MANEQUIM_PADRAO = "CREATE TABLE manequim_padrao (id INTEGER PRIMARY KEY);";
 	private final String SQL_CRIA_ROUPA	= "CREATE TABLE roupa (id INTEGER PRIMARY KEY AUTOINCREMENT, imagem BLOB NOT NULL, categoria TEXT NOT NULL);";
@@ -26,7 +26,6 @@ public class BDHelper extends SQLiteOpenHelper {
 		bd.execSQL(SQL_CRIA_ROUPA);
 		bd.execSQL(SQL_CALIBRAGEM);
 		bd.execSQL(SQL_CALIBRAGEM2);
-		bd.execSQL("CREATE TABLE plecas (id INTEGER PRIMARY KEY AUTOINCREMENT, imagem BLOB NOT NULL);");
 	}
 
 	@Override
@@ -36,7 +35,6 @@ public class BDHelper extends SQLiteOpenHelper {
 		bd.execSQL("DROP TABLE IF EXISTS roupa;");
 		bd.execSQL("DROP TABLE IF EXISTS calibragem;");
 		bd.execSQL("DROP TABLE IF EXISTS calibragem2;");
-		bd.execSQL("DROP TABLE IF EXISTS plecas;");
 		this.onCreate(bd);
 	}
 }

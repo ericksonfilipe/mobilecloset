@@ -35,7 +35,7 @@ public class ProvadorActivity extends Activity {
 
 	private BDAdapter dao;
 
-	private Map<Roupa, Calibragem2> calibragens;
+	private Map<Integer, Calibragem2> calibragens;
 
 	private Provador provador;
 
@@ -161,7 +161,8 @@ public class ProvadorActivity extends Activity {
 	private List<Roupa> carregaRoupasSuperiores() {
 		List<Categoria> superiores = Arrays.asList(new Categoria[] {Categoria.CAMISA, Categoria.CAMISETA, Categoria.CAMISA_MANGA_LONGA, Categoria.VESTIDO});
 		List<Roupa> roupas = new ArrayList<Roupa>();
-		for (Roupa roupa : calibragens.keySet()) {
+		for (Integer idRoupa : calibragens.keySet()) {
+			Roupa roupa = dao.getRoupa(idRoupa);
 			if (superiores.contains(roupa.getCategoria())) {
 				roupas.add(roupa);
 			}
@@ -172,7 +173,8 @@ public class ProvadorActivity extends Activity {
 	private List<Roupa> carregaRoupasInferiores() {
 		List<Categoria> inferiores = Arrays.asList(new Categoria[] {Categoria.BERMUDA, Categoria.CALCA, Categoria.SAIA, Categoria.SHORT});
 		List<Roupa> roupas = new ArrayList<Roupa>();
-		for (Roupa roupa : calibragens.keySet()) {
+		for (Integer idRoupa : calibragens.keySet()) {
+			Roupa roupa = dao.getRoupa(idRoupa);
 			if (inferiores.contains(roupa.getCategoria())) {
 				roupas.add(roupa);
 			}
@@ -205,13 +207,13 @@ public class ProvadorActivity extends Activity {
 			this.roupasInferiores = roupasInferiores;
 
 			if (!roupasSuperiores.isEmpty()) {
-				Calibragem2 calibragemS = calibragens.get(roupasSuperiores.get(posicaoRoupaSuperior));
+				Calibragem2 calibragemS = calibragens.get(roupasSuperiores.get(posicaoRoupaSuperior).getId());
 				roupaSuperior = carregaDrawable(roupasSuperiores.get(posicaoRoupaSuperior).getImagem());
 				roupaSuperior.setBounds(calibragemS.left, calibragemS.top, calibragemS.right, calibragemS.bottom);
 			}
 
 			if (!roupasInferiores.isEmpty()) {
-				Calibragem2 calibragemI = calibragens.get(roupasInferiores.get(posicaoRoupaInferior));
+				Calibragem2 calibragemI = calibragens.get(roupasInferiores.get(posicaoRoupaInferior).getId());
 				roupaInferior = carregaDrawable(roupasInferiores.get(posicaoRoupaInferior).getImagem());
 				roupaInferior.setBounds(calibragemI.left, calibragemI.top, calibragemI.right, calibragemI.bottom);
 			}
@@ -236,7 +238,7 @@ public class ProvadorActivity extends Activity {
 				posicaoRoupaSuperior++;
 				Roupa roupa = roupasSuperiores.get(posicaoRoupaSuperior);
 				roupaSuperior = carregaDrawable(roupa.getImagem());
-				Calibragem2 calibragemS = calibragens.get(roupa);
+				Calibragem2 calibragemS = calibragens.get(roupa.getId());
 				roupaSuperior.setBounds(calibragemS.left, calibragemS.top, calibragemS.right, calibragemS.bottom);
 				invalidate();
 			}
@@ -248,7 +250,7 @@ public class ProvadorActivity extends Activity {
 				posicaoRoupaSuperior--;
 				Roupa roupa = roupasSuperiores.get(posicaoRoupaSuperior);
 				roupaSuperior = carregaDrawable(roupa.getImagem());
-				Calibragem2 calibragemS = calibragens.get(roupa);
+				Calibragem2 calibragemS = calibragens.get(roupa.getId());
 				roupaSuperior.setBounds(calibragemS.left, calibragemS.top, calibragemS.right, calibragemS.bottom);
 				invalidate();
 			}
@@ -260,7 +262,7 @@ public class ProvadorActivity extends Activity {
 				posicaoRoupaInferior++;
 				Roupa roupa = roupasInferiores.get(posicaoRoupaInferior);
 				roupaInferior = carregaDrawable(roupa.getImagem());
-				Calibragem2 calibragemI = calibragens.get(roupa);
+				Calibragem2 calibragemI = calibragens.get(roupa.getId());
 				roupaInferior.setBounds(calibragemI.left, calibragemI.top, calibragemI.right, calibragemI.bottom);
 				invalidate();
 			}
@@ -272,7 +274,7 @@ public class ProvadorActivity extends Activity {
 				posicaoRoupaInferior--;
 				Roupa roupa = roupasInferiores.get(posicaoRoupaInferior);
 				roupaInferior = carregaDrawable(roupa.getImagem());
-				Calibragem2 calibragemI = calibragens.get(roupa);
+				Calibragem2 calibragemI = calibragens.get(roupa.getCategoria());
 				roupaInferior.setBounds(calibragemI.left, calibragemI.top, calibragemI.right, calibragemI.bottom);
 				invalidate();
 			}
