@@ -26,6 +26,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import br.edu.ufcg.BD.BDAdapter;
+import br.edu.ufcg.model.Calibragem2;
 import br.edu.ufcg.model.Roupa;
 
 public class VerRoupasActivity extends Activity {
@@ -102,7 +103,7 @@ public class VerRoupasActivity extends Activity {
 	private class VoltaListener implements OnClickListener {
 
 		public void onClick(View arg0) {
-			visualizadorRoupa.voltaRoupaSuperior();
+			visualizadorRoupa.voltaRoupa();
 		}
 
 	}
@@ -120,7 +121,7 @@ public class VerRoupasActivity extends Activity {
 	private class ProximoListener implements OnClickListener {
 
 		public void onClick(View arg0) {
-			visualizadorRoupa.proximaRoupaSuperior();
+			visualizadorRoupa.proximaRoupa();
 		}
 	}
 
@@ -141,6 +142,12 @@ public class VerRoupasActivity extends Activity {
 		return true;
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		visualizadorRoupa.invalidate();
+	}
+
 	public class VisualizadorRoupa extends View {
 
 		private List<Roupa> roupas;
@@ -154,7 +161,9 @@ public class VerRoupasActivity extends Activity {
 			this.roupas = roupas;
 			if (!roupas.isEmpty()) {
 				roupaAtual = carregaDrawable(roupas.get(posicaoRoupa).getImagem());
-				roupaAtual.setBounds(0, 0, getApplicationContext().getResources().getDisplayMetrics().widthPixels, getApplicationContext().getResources().getDisplayMetrics().heightPixels);
+				
+				Calibragem2 calibragemRoupa = dao.getCalibragens2().get(getRoupaAtual().getId());
+				roupaAtual.setBounds(calibragemRoupa.left, calibragemRoupa.top, calibragemRoupa.right, calibragemRoupa.bottom);
 			}
 
 			setFocusable(true);
@@ -180,29 +189,24 @@ public class VerRoupasActivity extends Activity {
 		@Override
 		protected void onDraw(Canvas canvas) {
 			super.onDraw(canvas);
-			if (roupaAtual != null) {
-				roupaAtual.draw(canvas);
-			}
+			Roupa roupa = roupas.get(posicaoRoupa);
+			roupaAtual = carregaDrawable(roupa.getImagem());
+			Calibragem2 calibragemRoupa = dao.getCalibragens2().get(getRoupaAtual().getId());
+			roupaAtual.setBounds(calibragemRoupa.left, calibragemRoupa.top, calibragemRoupa.right, calibragemRoupa.bottom);
+			roupaAtual.draw(canvas);
 		}
 
-		public void proximaRoupaSuperior() {
+		public void proximaRoupa() {
 			if (posicaoRoupa < roupas.size()-1) {
 				posicaoRoupa++;
-				Roupa roupa = roupas.get(posicaoRoupa);
-				roupaAtual = carregaDrawable(roupa.getImagem());
-				roupaAtual.setBounds(0, 0, getWidth(), getHeight());
 				invalidate();
 			}
 			atualizaImagensBotoes();
 		}
 
-		public void voltaRoupaSuperior() {
+		public void voltaRoupa() {
 			if (posicaoRoupa > 0) {
 				posicaoRoupa--;
-				Roupa roupa = roupas.get(posicaoRoupa);
-				roupaAtual = carregaDrawable(roupa.getImagem());
-				roupaAtual.setBounds(0, 0, getWidth(), getHeight());
-				invalidate();
 			}
 			atualizaImagensBotoes();
 		}
