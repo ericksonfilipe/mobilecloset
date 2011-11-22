@@ -207,6 +207,7 @@ public class VerRoupasActivity extends Activity {
 		public void voltaRoupa() {
 			if (posicaoRoupa > 0) {
 				posicaoRoupa--;
+				invalidate();
 			}
 			atualizaImagensBotoes();
 		}
