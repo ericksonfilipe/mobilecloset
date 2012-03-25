@@ -17,6 +17,9 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		
+		Button bTeste = (Button) findViewById(R.id.button_teste);
+		bTeste.setOnClickListener(this);
 
 		Button bManequim = (Button) findViewById(R.id.button_manequim);
 		bManequim.setOnClickListener(this);
@@ -66,6 +69,10 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.button_sair:
 			finish();
+			break;
+		case R.id.button_teste:
+			i = new Intent(v.getContext(), TesteDeteccaoFace.class);
+			startActivity(i);
 			break;
 		}
 	}

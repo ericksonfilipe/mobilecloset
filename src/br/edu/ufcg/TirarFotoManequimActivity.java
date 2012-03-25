@@ -7,6 +7,8 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
+import android.media.FaceDetector;
+import android.media.FaceDetector.Face;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -55,6 +57,7 @@ public class TirarFotoManequimActivity extends Activity implements ImageListener
 
 	public void takeImage(byte[] image) { 
 		// Cleaning memory 
+		
 		System.gc(); 
 		mPreview.setVisibility(View.INVISIBLE);
 		mPreview.freezeCamera();
