@@ -35,6 +35,8 @@
         
         <activity android:name=".ProvadorActivity" ></activity>
         
+        <activity android:name=".TesteDeteccaoFace" ></activity>
+        
         
     </application>
     
