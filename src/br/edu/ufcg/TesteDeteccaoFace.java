@@ -14,13 +14,16 @@ import android.media.FaceDetector;
 import android.media.FaceDetector.Face;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 public class TesteDeteccaoFace extends Activity {
 	private br.edu.ufcg.TesteDeteccaoFace.MyImageView myImageView;
 	private Face[] arrayFaces;
+//	private RelativeLayout layout;
 	private LinearLayout layout;
 
 
@@ -28,27 +31,24 @@ public class TesteDeteccaoFace extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		
+				
 		Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.pessoa2);
-		 
-		 FaceDetector f = new FaceDetector(b.getWidth(), b.getHeight(), 1);
-		 arrayFaces = new Face[1];
-		 int numFace = f.findFaces(b,arrayFaces);
+		
+		FaceDetector f = new FaceDetector(b.getWidth(), b.getHeight(), 1);
+		arrayFaces = new Face[1];
+		int numFace = f.findFaces(b,arrayFaces);
 		
 		
-		 System.err.println("-------------- aqui: numero de faces: " + numFace);
+		System.err.println("-------------- aqui: numero de faces: " + numFace);
 		
-		
-		 Matrix matrix = new Matrix();
-		 Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(),
+		Matrix matrix = new Matrix();
+		Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(),
 		 matrix, true);
 		
 		BitmapDrawable bd = new BitmapDrawable(girado);
 		myImageView = new MyImageView(this);
 		myImageView.setBackgroundDrawable(bd);
 		setContentView(myImageView);
-		
 		
 		Bitmap camisa = BitmapFactory.decodeResource(getResources(), R.drawable.camisa_preta);
 		Matrix matrix1 = new Matrix();
@@ -63,12 +63,25 @@ public class TesteDeteccaoFace extends Activity {
 		System.out.println("y: " + point.y);
 		System.out.println((int)point.y);
 		
+		Drawable drawCamisa = new BitmapDrawable(girado1);
+		
+//		drawCamisa.setBounds(0, 0, 0, 0);
+		
 		layout = new LinearLayout(this);
+//		layout = new RelativeLayout(this);
+		
+//		LinearLayout camisapreta = new LinearLayout(this);
+//		camisapreta.setOrientation(LinearLayout.VERTICAL);
+		
+		
 		layout.scrollTo(3*(int)point.x, 100+(int)point.y);
+//		camisapreta.scrollTo(3*(int)point.x, 100+(int)point.y);
 		layout.setBackgroundDrawable(new BitmapDrawable(girado1));
+//		camisapreta.setBackgroundDrawable(drawCamisa);
 //	    layout.setBackgroundResource(R.drawable.camisa_preta);
 	        
-	    addContentView(layout, new LayoutParams(camisa.getWidth(), camisa.getHeight()));
+//	    layout.addView(camisapreta, new LayoutParams(camisa.getWidth(), camisa.getHeight()));
+		addContentView(layout, new LayoutParams(camisa.getWidth(), camisa.getHeight()));
 
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
