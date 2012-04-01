@@ -385,3 +385,4 @@ public class TesteDeteccaoFace  extends Activity {
 		}
 	}
 }
+

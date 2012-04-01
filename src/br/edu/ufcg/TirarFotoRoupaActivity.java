@@ -7,7 +7,6 @@ import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -27,7 +26,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import br.edu.ufcg.BD.BDAdapter;
-//import br.edu.ufcg.model.Calibragem2;
 import br.edu.ufcg.model.Categoria;
 import br.edu.ufcg.model.Roupa;
 
