@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -109,6 +110,7 @@ public class EscolherManequimActivity extends Activity {
 			Manequim manequimEscolhido = visualizadorManequim.getManequim();
 			dao.inserirManequimPadrao(manequimEscolhido);
 			finish();
+			startActivity(new Intent(arg0.getContext(), TesteDeteccaoFace.class));
 		}
 	}
 

@@ -26,6 +26,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import br.edu.ufcg.BD.BDAdapter;
+import br.edu.ufcg.model.Calibragem;
 import br.edu.ufcg.model.Calibragem2;
 import br.edu.ufcg.model.Roupa;
 
@@ -56,7 +57,7 @@ public class VerRoupasActivity extends Activity {
 		anteriorButton.setImageResource(R.drawable.previous_cinza);
 		anteriorButton.setBackgroundColor(Color.TRANSPARENT);
 		anteriorButton.setOnClickListener(new VoltaListener());
-		
+
 		Button meioButton = new Button(this);
 		meioButton.setText("Calibrar");
 		meioButton.setOnClickListener(new CalibrarListener());
@@ -65,38 +66,45 @@ public class VerRoupasActivity extends Activity {
 		LinearLayout linearProximo = new LinearLayout(this);
 		linearProximo.addView(proximaButton);
 		linearProximo.setGravity(Gravity.RIGHT);
-		linearProximo.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		linearProximo.setLayoutParams(new LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		layoutProximo.addView(linearProximo);
 		layoutProximo.setGravity(Gravity.BOTTOM);
-		
+
 		RelativeLayout layoutAnterior = new RelativeLayout(this);
 		LinearLayout linearAnterior = new LinearLayout(this);
 		linearAnterior.addView(anteriorButton);
 		linearAnterior.setGravity(Gravity.LEFT);
-		linearAnterior.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		linearAnterior.setLayoutParams(new LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		layoutAnterior.addView(linearAnterior);
 		layoutAnterior.setGravity(Gravity.BOTTOM);
-		
+
 		RelativeLayout layoutMeio = new RelativeLayout(this);
 		LinearLayout linearMeio = new LinearLayout(this);
 		linearMeio.addView(meioButton);
 		linearMeio.setGravity(Gravity.CENTER);
-		linearMeio.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		linearMeio.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
+				LayoutParams.WRAP_CONTENT));
 		layoutMeio.addView(linearMeio);
 		layoutMeio.setGravity(Gravity.BOTTOM);
 
-		addContentView(layoutAnterior, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-		addContentView(layoutMeio, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-		addContentView(layoutProximo, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		addContentView(layoutAnterior, new LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		addContentView(layoutMeio, new LayoutParams(LayoutParams.FILL_PARENT,
+				LayoutParams.FILL_PARENT));
+		addContentView(layoutProximo, new LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}
-	
+
 	private Drawable carregaDrawable(byte[] imagem) {
 		Bitmap b = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
 		Matrix matrix = new Matrix();
 		matrix.setRotate(90);
-		Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
+		Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(),
+				b.getHeight(), matrix, true);
 		return new BitmapDrawable(girado);
 	}
 
@@ -111,7 +119,8 @@ public class VerRoupasActivity extends Activity {
 	private class CalibrarListener implements OnClickListener {
 
 		public void onClick(View arg0) {
-			Intent i = new Intent(getApplicationContext(), CalibragemRoupasActivity.class);
+			Intent i = new Intent(getApplicationContext(),
+					CalibragemRoupasActivity.class);
 			i.putExtra("roupa", visualizadorRoupa.getRoupaAtual());
 			startActivity(i);
 		}
@@ -155,15 +164,23 @@ public class VerRoupasActivity extends Activity {
 		private int posicaoRoupa;
 		private Drawable roupaAtual;
 
-
 		public VisualizadorRoupa(Context context, List<Roupa> roupas) {
 			super(context);
 			this.roupas = roupas;
 			if (!roupas.isEmpty()) {
-				roupaAtual = carregaDrawable(roupas.get(posicaoRoupa).getImagem());
-				
-				Calibragem2 calibragemRoupa = dao.getCalibragens2().get(getRoupaAtual().getId());
-				roupaAtual.setBounds(calibragemRoupa.left, calibragemRoupa.top, calibragemRoupa.right, calibragemRoupa.bottom);
+				roupaAtual = carregaDrawable(roupas.get(posicaoRoupa)
+						.getImagem());
+
+				Calibragem calibragemModelo = dao.getCalibragens().get(getRoupaAtual().getCategoria());
+				Calibragem2 calibragemRoupa = dao.getCalibragens2().get(
+						getRoupaAtual().getId());
+				if (calibragemRoupa != null) {
+					roupaAtual.setBounds(calibragemRoupa.left, calibragemRoupa.top,
+							calibragemRoupa.right, calibragemRoupa.bottom);					
+				} else {
+					roupaAtual.setBounds(calibragemModelo.left, calibragemModelo.top,
+							calibragemModelo.right, calibragemModelo.bottom);	
+				}
 			}
 
 			setFocusable(true);
@@ -191,13 +208,21 @@ public class VerRoupasActivity extends Activity {
 			super.onDraw(canvas);
 			Roupa roupa = roupas.get(posicaoRoupa);
 			roupaAtual = carregaDrawable(roupa.getImagem());
-			Calibragem2 calibragemRoupa = dao.getCalibragens2().get(getRoupaAtual().getId());
-			roupaAtual.setBounds(calibragemRoupa.left, calibragemRoupa.top, calibragemRoupa.right, calibragemRoupa.bottom);
+			Calibragem calibragemModelo = dao.getCalibragens().get(getRoupaAtual().getCategoria());
+			Calibragem2 calibragemRoupa = dao.getCalibragens2().get(
+					getRoupaAtual().getId());
+			if (calibragemRoupa != null) {
+				roupaAtual.setBounds(calibragemRoupa.left, calibragemRoupa.top,
+						calibragemRoupa.right, calibragemRoupa.bottom);					
+			} else {
+				roupaAtual.setBounds(calibragemModelo.left, calibragemModelo.top,
+						calibragemModelo.right, calibragemModelo.bottom);	
+			}
 			roupaAtual.draw(canvas);
 		}
 
 		public void proximaRoupa() {
-			if (posicaoRoupa < roupas.size()-1) {
+			if (posicaoRoupa < roupas.size() - 1) {
 				posicaoRoupa++;
 				invalidate();
 			}
@@ -230,10 +255,11 @@ public class VerRoupasActivity extends Activity {
 			Bitmap b = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
 			Matrix matrix = new Matrix();
 			matrix.setRotate(90);
-			Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
+			Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(),
+					b.getHeight(), matrix, true);
 			return new BitmapDrawable(girado);
 		}
-		
+
 		public Roupa getRoupaAtual() {
 			return roupas.get(posicaoRoupa);
 		}

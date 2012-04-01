@@ -25,6 +25,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import br.edu.ufcg.BD.BDAdapter;
+import br.edu.ufcg.model.Calibragem;
 import br.edu.ufcg.model.Calibragem2;
 import br.edu.ufcg.model.Roupa;
 
@@ -34,6 +35,7 @@ public class CalibragemRoupasActivity  extends Activity {
 	private boolean modificarLargura = true;
 	private MyImageView myImageView;
 	private Calibragem2 calibragemRoupa;
+	private Calibragem calibragemModelo;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,12 @@ public class CalibragemRoupasActivity  extends Activity {
 
 		BDAdapter dao = new BDAdapter(this);
 		byte[] imagem = dao.getManequimPadrao();
+		calibragemModelo = dao.getCalibragens().get(roupa.getCategoria());
+		
 		calibragemRoupa = dao.getCalibragens2().get(roupa.getId());
+		if(calibragemRoupa == null) {
+			calibragemRoupa = new Calibragem2(roupa.getId(), calibragemModelo.left, calibragemModelo.top, calibragemModelo.right, calibragemModelo.bottom);
+		}
 
 		Bitmap b = null;
 		if (DEBUG) {

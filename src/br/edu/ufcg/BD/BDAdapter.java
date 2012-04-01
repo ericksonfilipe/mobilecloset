@@ -136,13 +136,15 @@ public class BDAdapter {
 		
 	}
 
+	//----------------calibragem de categoria -----------------------------------------------------
+	
 	public Map<Categoria, Calibragem> getCalibragens() {
 		SQLiteDatabase banco = bdHelper.getReadableDatabase();
 		Map<Categoria, Calibragem> calibragens = new HashMap<Categoria, Calibragem>();
 		Cursor c = banco.query("calibragem", new String[] {"categoria", "left", "top", "right", "bottom"}, null, null, null, null, null);
 		while (c.moveToNext()) {
 			String cat = c.getString(c.getColumnIndex("categoria"));
-			Categoria categoria = Categoria.valueOf(cat);
+			Categoria categoria = Categoria.valueOf(cat.toUpperCase());
 			Calibragem calibragem = new Calibragem(categoria, c.getInt(c.getColumnIndex("left")), c.getInt(c.getColumnIndex("top")),  c.getInt(c.getColumnIndex("right")), c.getInt(c.getColumnIndex("bottom")));
 			calibragens.put(categoria, calibragem);
 		}
@@ -154,7 +156,19 @@ public class BDAdapter {
 	public void insertCalibragem(Calibragem calibragem) {
 		SQLiteDatabase banco = bdHelper.getWritableDatabase();
 		String sql = String.format("INSERT INTO calibragem(categoria, left, top, right, bottom) VALUES('%s', %d, %d, %d, %d);",
-				calibragem.getCategoria().name(), calibragem.left, calibragem.top, calibragem.right, calibragem.bottom);
+				calibragem.getCategoria(), calibragem.left, calibragem.top, calibragem.right, calibragem.bottom);
+		banco.execSQL(sql);
+//		System.out.println(sql);
+//		System.out.println("inserindo...: " + calibragem.getCategoria().name());
+		banco.close();
+	}
+	
+	public void atualizaCalibragem(Calibragem calibragem) {
+		SQLiteDatabase banco = bdHelper.getWritableDatabase();
+		
+		banco.execSQL("DELETE FROM calibragem WHERE categoria = '" + calibragem.getCategoria() + "';");
+		String sql = String.format("INSERT INTO calibragem(categoria, left, top, right, bottom) VALUES('%s', %d, %d, %d, %d);",
+				calibragem.getCategoria(), calibragem.left, calibragem.top, calibragem.right, calibragem.bottom);
 		banco.execSQL(sql);
 		banco.close();
 	}

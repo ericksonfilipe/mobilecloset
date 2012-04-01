@@ -27,7 +27,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import br.edu.ufcg.BD.BDAdapter;
-import br.edu.ufcg.model.Calibragem2;
+//import br.edu.ufcg.model.Calibragem2;
 import br.edu.ufcg.model.Categoria;
 import br.edu.ufcg.model.Roupa;
 
@@ -212,11 +212,11 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 		
 		roupa = getRoupaCadastrada();
 		
-		dao.insertCalibragem2(new Calibragem2(roupa.getId(), 0, 0, 150, 150));
-		Intent i = new Intent(this, CalibragemRoupasActivity.class);
-		i.putExtra("roupa", roupa);
-		i.putExtra("background", dao.getManequimPadrao());
-		startActivity(i);
+//		dao.insertCalibragem2(new Calibragem2(roupa.getId(), 0, 0, 150, 150));
+//		Intent i = new Intent(this, CalibragemRoupasActivity.class);
+//		i.putExtra("roupa", roupa);
+//		i.putExtra("background", dao.getManequimPadrao());
+//		startActivity(i);
 	}
 	
 	 private Roupa getRoupaCadastrada() {
