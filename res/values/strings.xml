@@ -2,4 +2,8 @@
 <resources>
     <string name="app_name">Mobile Closet</string>
     <string name="hello">n00b</string>
+    <string name="Sobre">Sobre</string>
+    <string name="EscolherManequim">Escolher Manequim</string>
+    <string name="DownloadColecoes">Download de Coleções</string>
+    <string name="VisualizadorRoupas">Visualizador de Roupas</string>
 </resources>

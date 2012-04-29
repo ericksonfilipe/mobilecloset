@@ -10,20 +10,30 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MobileclosetActivity extends Activity implements OnClickListener {
+public class OpcoesActivity extends Activity implements OnClickListener {
 	/** Called when the activity is first created. */
 
 	//criado para a v2
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main_v2);
+		setContentView(R.layout.opcoes_v2);
 
+		Button bVisualizadorRoupas = (Button) findViewById(R.id.button1);
+		bVisualizadorRoupas.setOnClickListener(this);
+		
+		Button bDownloadColecoes = (Button) findViewById(R.id.button2);
+		bDownloadColecoes.setOnClickListener(this);
+		
+		Button bEscolherManequim = (Button) findViewById(R.id.button3);
+		bEscolherManequim.setOnClickListener(this);
+		
+		Button bSobre = (Button) findViewById(R.id.button4);
+		bSobre.setOnClickListener(this);
+		
 		Button bSair = (Button) findViewById(R.id.button_sair_v2);
 		bSair.setOnClickListener(this);
 
-		Button bOpcoes = (Button) findViewById(R.id.button_opcoes_v2);
-		bOpcoes.setOnClickListener(this);
 
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}	
@@ -33,8 +43,28 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		Intent i;
 		switch (v.getId()) {
-		case R.id.button_opcoes_v2:
-			i = new Intent(v.getContext(), OpcoesActivity.class);
+		case R.id.button3:
+			i = new Intent(v.getContext(), ManequimActivity.class);
+			startActivity(i);
+			break;
+		case R.id.button2:
+			i = new Intent(v.getContext(), RoupasActivity.class);
+			startActivity(i);
+			break;
+		case R.id.button1:
+			i = new Intent(v.getContext(), ProvadorActivity.class);
+			BDAdapter dao = new BDAdapter(this);
+			if (dao.getManequimPadrao() == null) {
+//			i.putExtra("manequimFaltando", true);
+//			startActivity(i);
+				Toast.makeText(this, "Não há manequim escolhido!", Toast.LENGTH_LONG).show();
+			} else {
+				i.putExtra("background", dao.getManequimPadrao());
+				startActivity(i);
+			}
+			break;
+		case R.id.button4:
+			i = new Intent(v.getContext(), Sobre_v2_Activity.class);
 			startActivity(i);
 			break;
 		case R.id.button_sair_v2:

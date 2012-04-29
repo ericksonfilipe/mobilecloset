@@ -17,6 +17,10 @@
         
         <activity android:name=".EscolherManequimActivity" />
         
+        <activity android:name=".OpcoesActivity" />
+        
+        <activity android:name=".Sobre_v2_Activity" />
+        
         <activity android:name=".Creditos" android:theme="@android:style/Theme.Dialog" ></activity>
         
         <activity android:name=".TirarFotoManequimActivity" ></activity>
