@@ -19,16 +19,22 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.opcoes_v2);
 
-		Button bVisualizadorRoupas = (Button) findViewById(R.id.button1);
+		Button bVisualizadorRoupas = (Button) findViewById(R.id.button_VisualizadorRoupas);
 		bVisualizadorRoupas.setOnClickListener(this);
 		
-		Button bDownloadColecoes = (Button) findViewById(R.id.button2);
+		Button bLooksSalvos = (Button) findViewById(R.id.button_LooksSalvos);
+		bLooksSalvos.setOnClickListener(this);
+		
+		Button bDownloadColecoes = (Button) findViewById(R.id.button_DownloadColecoes);
 		bDownloadColecoes.setOnClickListener(this);
 		
-		Button bEscolherManequim = (Button) findViewById(R.id.button3);
+		Button bEscolherManequim = (Button) findViewById(R.id.button_EscolherManequim);
 		bEscolherManequim.setOnClickListener(this);
 		
-		Button bSobre = (Button) findViewById(R.id.button4);
+		Button bCadastrarRoupas = (Button) findViewById(R.id.button_CadastrarRoupas);
+		bCadastrarRoupas.setOnClickListener(this);
+		
+		Button bSobre = (Button) findViewById(R.id.button_Sobre);
 		bSobre.setOnClickListener(this);
 		
 		Button bSair = (Button) findViewById(R.id.button_sair_v2);
@@ -43,15 +49,7 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		Intent i;
 		switch (v.getId()) {
-		case R.id.button3:
-			i = new Intent(v.getContext(), ManequimActivity.class);
-			startActivity(i);
-			break;
-		case R.id.button2:
-			i = new Intent(v.getContext(), RoupasActivity.class);
-			startActivity(i);
-			break;
-		case R.id.button1:
+		case R.id.button_VisualizadorRoupas:
 			i = new Intent(v.getContext(), ProvadorActivity.class);
 			BDAdapter dao = new BDAdapter(this);
 			if (dao.getManequimPadrao() == null) {
@@ -63,7 +61,23 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 				startActivity(i);
 			}
 			break;
-		case R.id.button4:
+		case R.id.button_LooksSalvos:
+			//i = new Intent(v.getContext(), ManequimActivity.class);
+			//startActivity(i);
+			break;
+		case R.id.button_DownloadColecoes:
+			//i = new Intent(v.getContext(), ManequimActivity.class);
+			//startActivity(i);
+			break;
+		case R.id.button_EscolherManequim:
+			i = new Intent(v.getContext(), ManequimActivity.class);
+			startActivity(i);
+			break;
+		case R.id.button_CadastrarRoupas:
+			i = new Intent(v.getContext(), RoupasActivity.class);
+			startActivity(i);
+			break;
+		case R.id.button_Sobre:
 			i = new Intent(v.getContext(), Sobre_v2_Activity.class);
 			startActivity(i);
 			break;
