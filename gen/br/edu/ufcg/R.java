@@ -81,12 +81,14 @@ public final class R {
         public static final int zoom_out=0x7f020043;
     }
     public static final class id {
-        public static final int alterarDimensoes=0x7f06001e;
-        public static final int button1=0x7f060011;
-        public static final int button2=0x7f060012;
-        public static final int button3=0x7f060013;
-        public static final int button4=0x7f060014;
-        public static final int button_cadastrar_roupa=0x7f06001b;
+        public static final int alterarDimensoes=0x7f060020;
+        public static final int button_CadastrarRoupas=0x7f060015;
+        public static final int button_DownloadColecoes=0x7f060013;
+        public static final int button_EscolherManequim=0x7f060014;
+        public static final int button_LooksSalvos=0x7f060012;
+        public static final int button_Sobre=0x7f060016;
+        public static final int button_VisualizadorRoupas=0x7f060011;
+        public static final int button_cadastrar_roupa=0x7f06001d;
         public static final int button_creditos=0x7f06000a;
         public static final int button_escolher_manequim=0x7f06000f;
         public static final int button_manequim=0x7f060007;
@@ -97,7 +99,7 @@ public final class R {
         public static final int button_sair_v2=0x7f06000d;
         public static final int button_teste=0x7f060004;
         public static final int button_tirar_foto=0x7f06000e;
-        public static final int button_ver_roupas=0x7f06001c;
+        public static final int button_ver_roupas=0x7f06001e;
         public static final int gallery=0x7f060003;
         public static final int imageView1=0x7f060000;
         public static final int imagem_camera=0x7f060001;
@@ -105,17 +107,17 @@ public final class R {
         public static final int linearLayout1=0x7f060006;
         public static final int linearLayout2=0x7f060009;
         public static final int linearLayout3=0x7f060010;
-        public static final int passar_mais=0x7f060019;
-        public static final int passar_maiss=0x7f06001a;
-        public static final int passar_menos=0x7f060016;
-        public static final int passar_menoss=0x7f060017;
-        public static final int pbl=0x7f060015;
-        public static final int removerManequim=0x7f060020;
-        public static final int removerRoupa=0x7f060022;
-        public static final int salvarCalibragem=0x7f06001f;
-        public static final int salvarFoto=0x7f060021;
-        public static final int textView2=0x7f06001d;
-        public static final int xpto=0x7f060018;
+        public static final int passar_mais=0x7f06001b;
+        public static final int passar_maiss=0x7f06001c;
+        public static final int passar_menos=0x7f060018;
+        public static final int passar_menoss=0x7f060019;
+        public static final int pbl=0x7f060017;
+        public static final int removerManequim=0x7f060022;
+        public static final int removerRoupa=0x7f060024;
+        public static final int salvarCalibragem=0x7f060021;
+        public static final int salvarFoto=0x7f060023;
+        public static final int textView2=0x7f06001f;
+        public static final int xpto=0x7f06001a;
     }
     public static final class layout {
         public static final int camera_preview=0x7f030000;
@@ -139,8 +141,10 @@ public final class R {
         public static final int ver_roupa_menu=0x7f050003;
     }
     public static final class string {
+        public static final int CadastrarRoupas=0x7f040007;
         public static final int DownloadColecoes=0x7f040004;
         public static final int EscolherManequim=0x7f040003;
+        public static final int LooksSalvos=0x7f040006;
         public static final int Sobre=0x7f040002;
         public static final int VisualizadorRoupas=0x7f040005;
         public static final int app_name=0x7f040000;

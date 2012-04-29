@@ -5,7 +5,8 @@
     android:background="@drawable/background_v2"
     android:orientation="vertical"
     android:weightSum="1" >
-
+
+
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
@@ -20,37 +21,57 @@
             android:orientation="vertical" >
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
+
+
+    <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="329dp"
         android:orientation="vertical" >
-        <Button
-            android:id="@+id/button1"
+
+        <Button
+            android:id="@+id/button_VisualizadorRoupas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:text="@string/VisualizadorRoupas" />
 
+
+
+
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/button_LooksSalvos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/LooksSalvos" />
+
+        <Button
+            android:id="@+id/button_DownloadColecoes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/DownloadColecoes" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/button_EscolherManequim"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:text="@string/EscolherManequim" />
 
+
+
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/button_CadastrarRoupas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/CadastrarRoupas" />
+
+        <Button
+            android:id="@+id/button_Sobre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/Sobre" />
-
-        		<LinearLayout
+        
+		<LinearLayout
 		        android:id="@+id/linearLayout1"
 		        android:layout_width="wrap_content"
 		        android:layout_height="329dp"
