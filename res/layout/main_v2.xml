@@ -1,61 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="fill_parent" android:layout_width="fill_parent"
-	android:orientation="vertical" android:background="@drawable/background_v2"
-	android:weightSum="1">
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="200dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:weightSum="1" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_v2"
+    android:orientation="vertical"
+    android:weightSum="1" >
 
-		<LinearLayout
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_gravity="bottom"
-		    android:orientation="vertical"
-		    android:weightSum="1" >
+    <Button
+        android:id="@+id/button_opcoes_v2"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/button_opcoes_v2" />
 
-		</LinearLayout>
-	</LinearLayout>
-	
-	<LinearLayout
-	    android:id="@+id/linearLayout2"
-	    android:layout_width="match_parent"
-	    android:layout_height="80dp" >
+    <Button
+        android:id="@+id/button_sair_v2"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/button_sair_v2" />
 
-	    <LinearLayout
-	        android:layout_width="156dp"
-	        android:layout_height="fill_parent"
-	        android:orientation="horizontal" >
-
-	        <LinearLayout
-	            android:layout_width="140dp"
-	            android:layout_height="wrap_content"
-	            android:layout_gravity="bottom"
-	            android:orientation="vertical" >
-	            
-	            <Button
-	                android:id="@+id/button_opcoes_v2"
-	                android:layout_width="150dp"
-	                android:layout_height="match_parent"
-	                android:layout_gravity="right"
-	                android:background="@drawable/button_opcoes_v2" >
-	            </Button>
-
-	            
-	        </LinearLayout>
-	    </LinearLayout>
-	            <Button
-	            	android:id="@+id/button_sair_v2"
-	        		android:layout_width="match_parent"
-	       			android:layout_height="match_parent"
-	        		android:layout_gravity="left"
-	        		android:background="@drawable/button_sair_v2" >
-				</Button>
-	    
-	</LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>
