@@ -19,22 +19,22 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.opcoes_v2);
 
-		Button bVisualizadorRoupas = (Button) findViewById(R.id.button_VisualizadorRoupas);
+		Button bVisualizadorRoupas = (Button) findViewById(R.id.button_visualizadorroupas);
 		bVisualizadorRoupas.setOnClickListener(this);
 		
-		Button bLooksSalvos = (Button) findViewById(R.id.button_LooksSalvos);
+		Button bLooksSalvos = (Button) findViewById(R.id.button_lookssalvos);
 		bLooksSalvos.setOnClickListener(this);
 		
-		Button bDownloadColecoes = (Button) findViewById(R.id.button_DownloadColecoes);
+		Button bDownloadColecoes = (Button) findViewById(R.id.button_downloadcolecoes);
 		bDownloadColecoes.setOnClickListener(this);
 		
-		Button bEscolherManequim = (Button) findViewById(R.id.button_EscolherManequim);
+		Button bEscolherManequim = (Button) findViewById(R.id.button_escolhermanequim);
 		bEscolherManequim.setOnClickListener(this);
 		
-		Button bCadastrarRoupas = (Button) findViewById(R.id.button_CadastrarRoupas);
+		Button bCadastrarRoupas = (Button) findViewById(R.id.button_cadastrarroupas);
 		bCadastrarRoupas.setOnClickListener(this);
 		
-		Button bSobre = (Button) findViewById(R.id.button_Sobre);
+		Button bSobre = (Button) findViewById(R.id.button_sobre);
 		bSobre.setOnClickListener(this);
 		
 		Button bSair = (Button) findViewById(R.id.button_sair_v2);
@@ -49,7 +49,7 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		Intent i;
 		switch (v.getId()) {
-		case R.id.button_VisualizadorRoupas:
+		case R.id.button_visualizadorroupas:
 			i = new Intent(v.getContext(), ProvadorActivity.class);
 			BDAdapter dao = new BDAdapter(this);
 			if (dao.getManequimPadrao() == null) {
@@ -61,23 +61,23 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 				startActivity(i);
 			}
 			break;
-		case R.id.button_LooksSalvos:
-			//i = new Intent(v.getContext(), ManequimActivity.class);
-			//startActivity(i);
-			break;
-		case R.id.button_DownloadColecoes:
-			//i = new Intent(v.getContext(), ManequimActivity.class);
-			//startActivity(i);
-			break;
-		case R.id.button_EscolherManequim:
-			i = new Intent(v.getContext(), ManequimActivity.class);
-			startActivity(i);
-			break;
-		case R.id.button_CadastrarRoupas:
+		case R.id.button_lookssalvos:
 			i = new Intent(v.getContext(), RoupasActivity.class);
 			startActivity(i);
 			break;
-		case R.id.button_Sobre:
+		case R.id.button_downloadcolecoes:
+			i = new Intent(v.getContext(), RoupasActivity.class);
+			startActivity(i);
+			break;
+		case R.id.button_escolhermanequim:
+			i = new Intent(v.getContext(), ManequimActivity.class);
+			startActivity(i);
+			break;
+		case R.id.button_cadastrarroupas:
+			i = new Intent(v.getContext(), TirarFotoRoupaActivity.class);
+			startActivity(i);
+			break;
+		case R.id.button_sobre:
 			i = new Intent(v.getContext(), Sobre_v2_Activity.class);
 			startActivity(i);
 			break;
