@@ -7,6 +7,7 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +18,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -58,8 +62,9 @@ public class ProvadorActivity extends Activity {
 			byte[] imagem = (byte[]) getIntent().getExtras().get("background");
 
 			Bitmap b = null;
-			if (DEBUG) {
-				b = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+			//if (DEBUG) {
+			if (imagem == null) {
+				b = BitmapFactory.decodeResource(getResources(), R.drawable.manequim_padrao);
 			} else {
 				b = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
 			}
@@ -345,4 +350,26 @@ public class ProvadorActivity extends Activity {
 			}
 		}
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflate = new MenuInflater(this);
+		inflate.inflate(R.menu.provador_menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.colecoes:
+			Toast.makeText(this, "Falta implementar, bebê!", Toast.LENGTH_LONG).show();
+			startActivity(new Intent(this, Creditos.class));
+			break;
+		case R.id.opcoes:
+			startActivity(new Intent(this, OpcoesActivity.class));
+			break;
+		}
+		return true;
+	}
+	
 }

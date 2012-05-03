@@ -4,6 +4,8 @@ import br.edu.ufcg.BD.BDAdapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,11 +21,11 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_v2);
 
-		Button bSair = (Button) findViewById(R.id.button_sair_v2);
-		bSair.setOnClickListener(this);
+		Button bIniciar = (Button) findViewById(R.id.button_iniciar);
+		bIniciar.setOnClickListener(this);
 
-		Button bOpcoes = (Button) findViewById(R.id.button_opcoes_v2);
-		bOpcoes.setOnClickListener(this);
+//		Button bOpcoes = (Button) findViewById(R.id.button_opcoes_v2);
+//		bOpcoes.setOnClickListener(this);
 
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}	
@@ -33,12 +35,11 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		Intent i;
 		switch (v.getId()) {
-		case R.id.button_opcoes_v2:
-			i = new Intent(v.getContext(), OpcoesActivity.class);
+		case R.id.button_iniciar:
+			i = new Intent(v.getContext(), ProvadorActivity.class);
+			BDAdapter dao = new BDAdapter(this);
+			i.putExtra("background", dao.getManequimPadrao());
 			startActivity(i);
-			break;
-		case R.id.button_sair_v2:
-			finish();
 			break;
 		}
 	}	

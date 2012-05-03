@@ -19,27 +19,23 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.opcoes_v2);
 
-		Button bVisualizadorRoupas = (Button) findViewById(R.id.button_visualizadorroupas);
+		Button bVisualizadorRoupas = (Button) findViewById(R.id.button_provador);
 		bVisualizadorRoupas.setOnClickListener(this);
-		
-		Button bLooksSalvos = (Button) findViewById(R.id.button_lookssalvos);
-		bLooksSalvos.setOnClickListener(this);
-		
-		Button bDownloadColecoes = (Button) findViewById(R.id.button_downloadcolecoes);
+				
+		Button bDownloadColecoes = (Button) findViewById(R.id.button_colecoes);
 		bDownloadColecoes.setOnClickListener(this);
 		
-		Button bEscolherManequim = (Button) findViewById(R.id.button_escolhermanequim);
-		bEscolherManequim.setOnClickListener(this);
-		
-		Button bCadastrarRoupas = (Button) findViewById(R.id.button_cadastrarroupas);
+		Button bCadastrarRoupas = (Button) findViewById(R.id.button_closet);
 		bCadastrarRoupas.setOnClickListener(this);
 		
+		Button bLooksSalvos = (Button) findViewById(R.id.button_looks);
+		bLooksSalvos.setOnClickListener(this);
+		
+		Button bEscolherManequim = (Button) findViewById(R.id.button_manequim);
+		bEscolherManequim.setOnClickListener(this);
+				
 		Button bSobre = (Button) findViewById(R.id.button_sobre);
 		bSobre.setOnClickListener(this);
-		
-		Button bSair = (Button) findViewById(R.id.button_sair_v2);
-		bSair.setOnClickListener(this);
-
 
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}	
@@ -49,40 +45,51 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		Intent i;
 		switch (v.getId()) {
-		case R.id.button_visualizadorroupas:
+		case R.id.button_provador:
 			i = new Intent(v.getContext(), ProvadorActivity.class);
 			BDAdapter dao = new BDAdapter(this);
-			if (dao.getManequimPadrao() == null) {
-//			i.putExtra("manequimFaltando", true);
-//			startActivity(i);
-				Toast.makeText(this, "Não há manequim escolhido!", Toast.LENGTH_LONG).show();
+//			if (dao.getManequimPadrao() == null) {
+//				Toast.makeText(this, "Não há manequim escolhido!", Toast.LENGTH_LONG).show();
+//			} else {
+//				i.putExtra("background", dao.getManequimPadrao());
+//				startActivity(i);
+//			}
+			i.putExtra("background", dao.getManequimPadrao());
+			startActivity(i);
+			break;
+		case R.id.button_colecoes:
+			i = new Intent(v.getContext(), Creditos.class);
+			Toast.makeText(this, "Falta implementar, bebê!", Toast.LENGTH_LONG).show();
+			startActivity(i);
+			break;
+		case R.id.button_closet:
+			BDAdapter dao1 = new BDAdapter(this);
+			if (dao1.getRoupas().isEmpty()) {
+				Toast.makeText(this, "Não há roupas cadastradas!", Toast.LENGTH_LONG).show();
 			} else {
-				i.putExtra("background", dao.getManequimPadrao());
+				i = new Intent(v.getContext(), VerRoupasActivity.class);
 				startActivity(i);
 			}
+			Toast.makeText(this, "Falta ajeitar, bebê!", Toast.LENGTH_LONG).show();
 			break;
-		case R.id.button_lookssalvos:
-			i = new Intent(v.getContext(), RoupasActivity.class);
+		case R.id.button_looks:
+			i = new Intent(v.getContext(), Creditos.class);
+			Toast.makeText(this, "Falta implementar, bebê!", Toast.LENGTH_LONG).show();
 			startActivity(i);
 			break;
-		case R.id.button_downloadcolecoes:
-			i = new Intent(v.getContext(), RoupasActivity.class);
-			startActivity(i);
-			break;
-		case R.id.button_escolhermanequim:
-			i = new Intent(v.getContext(), ManequimActivity.class);
-			startActivity(i);
-			break;
-		case R.id.button_cadastrarroupas:
-			i = new Intent(v.getContext(), TirarFotoRoupaActivity.class);
-			startActivity(i);
+		case R.id.button_manequim:
+			BDAdapter dao2 = new BDAdapter(this);
+			if (dao2.getManequins().isEmpty()) {
+				Toast.makeText(this, "Não há manequins cadastrados!", Toast.LENGTH_LONG).show();
+			} else {
+				i = new Intent(v.getContext(), EscolherManequimActivity.class);
+				Toast.makeText(this, "Tem que mostrar pelo menos o manequim padrão! Ajeitar!", Toast.LENGTH_LONG).show();
+				startActivity(i);
+			}
 			break;
 		case R.id.button_sobre:
 			i = new Intent(v.getContext(), Sobre_v2_Activity.class);
 			startActivity(i);
-			break;
-		case R.id.button_sair_v2:
-			finish();
 			break;
 		}
 	}	
