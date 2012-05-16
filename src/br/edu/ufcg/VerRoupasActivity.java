@@ -15,9 +15,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -25,6 +22,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Calibragem;
 import br.edu.ufcg.model.Calibragem2;
@@ -36,6 +34,8 @@ public class VerRoupasActivity extends Activity {
 	private VisualizadorRoupa visualizadorRoupa;
 	public ImageButton anteriorButton;
 	public ImageButton proximaButton;
+	public ImageButton addButton;
+	public ImageButton deleteButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,12 +44,40 @@ public class VerRoupasActivity extends Activity {
 		dao = new BDAdapter(getApplicationContext());
 		byte[] manequim = dao.getManequimPadrao();
 
+		
 		visualizadorRoupa = new VisualizadorRoupa(this, dao.getRoupas());
 		visualizadorRoupa.setBackgroundDrawable(carregaDrawable(manequim));
+		
 		setContentView(visualizadorRoupa);
 
+		addButton = new ImageButton(this);
+		addButton.setImageResource(R.drawable.add);
+		addButton.setBackgroundColor(Color.TRANSPARENT);
+		addButton.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				Intent i = new Intent(v.getContext(), TirarFotoRoupaActivity.class);
+				startActivity(i);				
+			}
+		});
+		
+		
+		deleteButton = new ImageButton(this);
+		deleteButton.setImageResource(R.drawable.delete);
+		deleteButton.setBackgroundColor(Color.TRANSPARENT);
+		deleteButton.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				visualizadorRoupa.removeImagem();			
+			}
+		});
+		
 		proximaButton = new ImageButton(this);
-		proximaButton.setImageResource(R.drawable.next);
+		if (dao.getRoupas().isEmpty()) {
+			proximaButton.setImageResource(R.drawable.next_cinza);
+		} else {			
+			proximaButton.setImageResource(R.drawable.next);
+		}
 		proximaButton.setBackgroundColor(Color.TRANSPARENT);
 		proximaButton.setOnClickListener(new ProximoListener());
 
@@ -62,6 +90,25 @@ public class VerRoupasActivity extends Activity {
 		meioButton.setText("Calibrar");
 		meioButton.setOnClickListener(new CalibrarListener());
 
+		
+		RelativeLayout layoutAdd = new RelativeLayout(this);
+		LinearLayout linearAdd = new LinearLayout(this);
+		linearAdd.addView(addButton);
+		linearAdd.setGravity(Gravity.LEFT);
+		linearAdd.setLayoutParams(new LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		layoutAdd.addView(linearAdd);
+		layoutAdd.setGravity(Gravity.BOTTOM);
+		
+		RelativeLayout layoutDelete = new RelativeLayout(this);
+		LinearLayout linearDelete = new LinearLayout(this);
+		linearDelete.addView(deleteButton);
+		linearDelete.setGravity(Gravity.RIGHT);
+		linearDelete.setLayoutParams(new LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		layoutDelete.addView(linearDelete);
+		layoutDelete.setGravity(Gravity.BOTTOM);
+		
 		RelativeLayout layoutProximo = new RelativeLayout(this);
 		LinearLayout linearProximo = new LinearLayout(this);
 		linearProximo.addView(proximaButton);
@@ -69,7 +116,7 @@ public class VerRoupasActivity extends Activity {
 		linearProximo.setLayoutParams(new LayoutParams(
 				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		layoutProximo.addView(linearProximo);
-		layoutProximo.setGravity(Gravity.BOTTOM);
+		layoutProximo.setGravity(Gravity.CENTER);
 
 		RelativeLayout layoutAnterior = new RelativeLayout(this);
 		LinearLayout linearAnterior = new LinearLayout(this);
@@ -78,7 +125,7 @@ public class VerRoupasActivity extends Activity {
 		linearAnterior.setLayoutParams(new LayoutParams(
 				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		layoutAnterior.addView(linearAnterior);
-		layoutAnterior.setGravity(Gravity.BOTTOM);
+		layoutAnterior.setGravity(Gravity.CENTER);
 
 		RelativeLayout layoutMeio = new RelativeLayout(this);
 		LinearLayout linearMeio = new LinearLayout(this);
@@ -95,6 +142,10 @@ public class VerRoupasActivity extends Activity {
 				LayoutParams.FILL_PARENT));
 		addContentView(layoutProximo, new LayoutParams(
 				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		addContentView(layoutAdd, new LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		addContentView(layoutDelete, new LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}
@@ -102,6 +153,7 @@ public class VerRoupasActivity extends Activity {
 	private Drawable carregaDrawable(byte[] imagem) {
 		Bitmap b = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
 		Matrix matrix = new Matrix();
+		
 		matrix.setRotate(90);
 		Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(),
 				b.getHeight(), matrix, true);
@@ -134,27 +186,30 @@ public class VerRoupasActivity extends Activity {
 		}
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflate = new MenuInflater(this);
-		inflate.inflate(R.menu.ver_roupa_menu, menu);
-		return true;
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		MenuInflater inflate = new MenuInflater(this);
+//		inflate.inflate(R.menu.ver_roupa_menu, menu);
+//		return true;
+//	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.removerRoupa:
-			visualizadorRoupa.removeImagem();
-			break;
-		}
-		return true;
-	}
+//	@Override
+//	public boolean onOptionsItemSelected(MenuItem item) {
+//		switch (item.getItemId()) {
+//		case R.id.removerRoupa:
+//			visualizadorRoupa.removeImagem();
+//			break;
+//		}
+//		return true;
+//	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		visualizadorRoupa.invalidate();
+		visualizadorRoupa.setRoupas(dao.getRoupas());
+		visualizadorRoupa.setPosicaoRoupa(dao.getRoupas().size() - 1);
+		visualizadorRoupa.atualizaImagensBotoes();
+		
 	}
 
 	public class VisualizadorRoupa extends View {
@@ -177,9 +232,12 @@ public class VerRoupasActivity extends Activity {
 				if (calibragemRoupa != null) {
 					roupaAtual.setBounds(calibragemRoupa.left, calibragemRoupa.top,
 							calibragemRoupa.right, calibragemRoupa.bottom);					
-				} else {
+				} else if (calibragemModelo != null){
 					roupaAtual.setBounds(calibragemModelo.left, calibragemModelo.top,
 							calibragemModelo.right, calibragemModelo.bottom);	
+				} else {
+					roupaAtual.setBounds(0, 0,
+							 100, 100);
 				}
 			}
 
@@ -189,36 +247,44 @@ public class VerRoupasActivity extends Activity {
 		}
 
 		public void removeImagem() {
-			dao.removeRoupa(roupas.get(posicaoRoupa));
-			roupas.remove(posicaoRoupa);
-			if (roupas.isEmpty()) {
-				finish();
-				return;
-			} else if (posicaoRoupa == roupas.size()) {
-				posicaoRoupa--;
+			if (!roupas.isEmpty()) {
+				dao.removeRoupa(roupas.get(posicaoRoupa));
+				roupas.remove(posicaoRoupa);
+				if (roupas.isEmpty()) {
+					atualizaImagensBotoes();
+					return;
+				} else if (posicaoRoupa == roupas.size()) {
+					posicaoRoupa--;
+				}
+				Roupa roupa = roupas.get(posicaoRoupa);
+				roupaAtual = carregaDrawable(roupa.getImagem());
+				roupaAtual.setBounds(0, 0, getWidth(), getHeight());
+				invalidate();				
+			} else {
+				Toast.makeText(getContext(), "Não há roupas cadastradas para serem excluídas!", Toast.LENGTH_LONG).show();
 			}
-			Roupa roupa = roupas.get(posicaoRoupa);
-			roupaAtual = carregaDrawable(roupa.getImagem());
-			roupaAtual.setBounds(0, 0, getWidth(), getHeight());
-			invalidate();
 		}
 
 		@Override
 		protected void onDraw(Canvas canvas) {
 			super.onDraw(canvas);
-			Roupa roupa = roupas.get(posicaoRoupa);
-			roupaAtual = carregaDrawable(roupa.getImagem());
-			Calibragem calibragemModelo = dao.getCalibragens().get(getRoupaAtual().getCategoria());
-			Calibragem2 calibragemRoupa = dao.getCalibragens2().get(
-					getRoupaAtual().getId());
-			if (calibragemRoupa != null) {
-				roupaAtual.setBounds(calibragemRoupa.left, calibragemRoupa.top,
-						calibragemRoupa.right, calibragemRoupa.bottom);					
-			} else {
-				roupaAtual.setBounds(calibragemModelo.left, calibragemModelo.top,
-						calibragemModelo.right, calibragemModelo.bottom);	
+			if (!roupas.isEmpty()) {
+				Roupa roupa = roupas.get(posicaoRoupa);
+				roupaAtual = carregaDrawable(roupa.getImagem());
+				Calibragem calibragemModelo = dao.getCalibragens().get(getRoupaAtual().getCategoria());
+				Calibragem2 calibragemRoupa = dao.getCalibragens2().get(
+						getRoupaAtual().getId());
+				if (calibragemRoupa != null) {
+					roupaAtual.setBounds(calibragemRoupa.left, calibragemRoupa.top,
+							calibragemRoupa.right, calibragemRoupa.bottom);					
+				} else if (calibragemModelo != null){
+					roupaAtual.setBounds(calibragemModelo.left, calibragemModelo.top,
+							calibragemModelo.right, calibragemModelo.bottom);	
+				} else {
+					roupaAtual.setBounds(0, 0, 100, 100);
+				}
+				roupaAtual.draw(canvas);				
 			}
-			roupaAtual.draw(canvas);
 		}
 
 		public void proximaRoupa() {
@@ -237,7 +303,7 @@ public class VerRoupasActivity extends Activity {
 			atualizaImagensBotoes();
 		}
 
-		private void atualizaImagensBotoes() {
+		public void atualizaImagensBotoes() {
 			if (posicaoRoupa > 0) {
 				anteriorButton.setImageResource(R.drawable.previous);
 			} else {
@@ -262,6 +328,22 @@ public class VerRoupasActivity extends Activity {
 
 		public Roupa getRoupaAtual() {
 			return roupas.get(posicaoRoupa);
+		}
+
+		public List<Roupa> getRoupas() {
+			return roupas;
+		}
+
+		public void setRoupas(List<Roupa> roupas) {
+			this.roupas = roupas;
+		}
+
+		public int getPosicaoRoupa() {
+			return posicaoRoupa;
+		}
+
+		public void setPosicaoRoupa(int posicaoRoupa) {
+			this.posicaoRoupa = posicaoRoupa;
 		}
 	}
 }

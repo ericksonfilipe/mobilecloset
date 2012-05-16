@@ -49,7 +49,11 @@ public class CalibragemRoupasActivity  extends Activity {
 		
 		calibragemRoupa = dao.getCalibragens2().get(roupa.getId());
 		if(calibragemRoupa == null) {
-			calibragemRoupa = new Calibragem2(roupa.getId(), calibragemModelo.left, calibragemModelo.top, calibragemModelo.right, calibragemModelo.bottom);
+			if (calibragemModelo == null) {
+				calibragemRoupa = new Calibragem2(roupa.getId(), 0, 0, 100, 100);	
+			} else {
+				calibragemRoupa = new Calibragem2(roupa.getId(), calibragemModelo.left, calibragemModelo.top, calibragemModelo.right, calibragemModelo.bottom);				
+			}
 		}
 
 		Bitmap b = null;

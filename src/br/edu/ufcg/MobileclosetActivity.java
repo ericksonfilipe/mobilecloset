@@ -1,20 +1,24 @@
 package br.edu.ufcg;
 
-import br.edu.ufcg.BD.BDAdapter;
+import java.io.ByteArrayOutputStream;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Bitmap.CompressFormat;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
+import br.edu.ufcg.BD.BDAdapter;
 
 public class MobileclosetActivity extends Activity implements OnClickListener {
 	/** Called when the activity is first created. */
 
+	private BDAdapter dao;
+	
 	//criado para a v2
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -23,6 +27,24 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 
 		Button bIniciar = (Button) findViewById(R.id.button_iniciar);
 		bIniciar.setOnClickListener(this);
+		
+		dao = new BDAdapter(this);
+		
+		Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.manequim_padrao);
+		
+		ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
+		b.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos); 
+		byte[] bitmapdata = bos.toByteArray();
+		
+		if (dao.getManequins().isEmpty()) {
+			dao.inserirManequim(bitmapdata);
+			dao.inserirManequimPadrao(dao.getManequins().get(0));
+		} else {
+			if (dao.getManequimPadrao() == null) {
+				dao.inserirManequimPadrao(dao.getManequins().get(0));
+			}
+		}
+		
 
 //		Button bOpcoes = (Button) findViewById(R.id.button_opcoes_v2);
 //		bOpcoes.setOnClickListener(this);
@@ -36,10 +58,14 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 		Intent i;
 		switch (v.getId()) {
 		case R.id.button_iniciar:
-			i = new Intent(v.getContext(), ProvadorActivity.class);
-			BDAdapter dao = new BDAdapter(this);
-			i.putExtra("background", dao.getManequimPadrao());
-			startActivity(i);
+			if (dao.getRoupas().isEmpty()) {
+				i = new Intent(v.getContext(), OpcoesActivity.class);
+				startActivity(i);
+			} else {
+				i = new Intent(v.getContext(), ProvadorActivity.class);
+				i.putExtra("background", dao.getManequimPadrao());				
+				startActivity(i);
+			}
 			break;
 		}
 	}	
@@ -89,7 +115,7 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 //			if (dao.getManequimPadrao() == null) {
 ////				i.putExtra("manequimFaltando", true);
 ////				startActivity(i);
-//				Toast.makeText(this, "Não há manequim escolhido!", Toast.LENGTH_LONG).show();
+//				Toast.makeText(this, "Nï¿½o hï¿½ manequim escolhido!", Toast.LENGTH_LONG).show();
 //			} else {
 //				i.putExtra("background", dao.getManequimPadrao());
 //				startActivity(i);

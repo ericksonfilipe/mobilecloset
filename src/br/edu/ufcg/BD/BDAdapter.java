@@ -9,6 +9,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
+import br.edu.ufcg.R;
 import br.edu.ufcg.model.Calibragem;
 import br.edu.ufcg.model.Calibragem2;
 import br.edu.ufcg.model.Categoria;
@@ -24,6 +26,7 @@ public class BDAdapter {
 	public BDAdapter(Context context) {
 		this.context = context;
 		this.bdHelper = new BDHelper(context);
+		
 	}
 
 	public void inserirManequim(byte[] imagem) {
@@ -58,8 +61,8 @@ public class BDAdapter {
 	}
 	
 	/**
-	 * Método que recupera o id do manequim padrão
-	 * @return id manequim padrão, -1 se não houver
+	 * Mï¿½todo que recupera o id do manequim padrï¿½o
+	 * @return id manequim padrï¿½o, -1 se nï¿½o houver
 	 */
 	public int getIdManequimPadrao() {
 		SQLiteDatabase banco = bdHelper.getReadableDatabase();
@@ -75,7 +78,7 @@ public class BDAdapter {
 	}
 
 	/**
-	 * deleta o antigo manequim padrão e salva o manequim passado por parâmetro como padrão.
+	 * deleta o antigo manequim padrï¿½o e salva o manequim passado por parï¿½metro como padrï¿½o.
 	 */
 	public void inserirManequimPadrao(Manequim manequim) {
 		SQLiteDatabase banco = bdHelper.getWritableDatabase();
