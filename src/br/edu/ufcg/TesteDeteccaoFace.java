@@ -29,6 +29,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Calibragem;
 import br.edu.ufcg.model.Categoria;
@@ -311,8 +312,9 @@ public class TesteDeteccaoFace  extends Activity {
 
                 posicao++;
                 if (posicao >= imagens.length) {
-                        finish();
-                        return;
+                	Toast.makeText(getContext(), "Manequim escolhido com sucesso!", Toast.LENGTH_LONG).show();
+                    finish();
+                    return;
                 }
 
                 mImage = getResources().getDrawable(imagens[posicao]);
