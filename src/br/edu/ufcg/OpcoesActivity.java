@@ -49,7 +49,7 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 			i = new Intent(v.getContext(), ProvadorActivity.class);
 			BDAdapter dao = new BDAdapter(this);
 //			if (dao.getManequimPadrao() == null) {
-//				Toast.makeText(this, "Não há manequim escolhido!", Toast.LENGTH_LONG).show();
+//				Toast.makeText(this, "Nï¿½o hï¿½ manequim escolhido!", Toast.LENGTH_LONG).show();
 //			} else {
 //				i.putExtra("background", dao.getManequimPadrao());
 //				startActivity(i);
@@ -59,31 +59,31 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.button_colecoes:
 			i = new Intent(v.getContext(), Creditos.class);
-			Toast.makeText(this, "Falta implementar, bebê!", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Falta implementar, bebï¿½!", Toast.LENGTH_LONG).show();
 			startActivity(i);
 			break;
 		case R.id.button_closet:
 			BDAdapter dao1 = new BDAdapter(this);
 			if (dao1.getRoupas().isEmpty()) {
-				Toast.makeText(this, "Não há roupas cadastradas!", Toast.LENGTH_LONG).show();
-			} else {
-				i = new Intent(v.getContext(), VerRoupasActivity.class);
-				startActivity(i);
+				Toast.makeText(this, "NÃ£o hÃ¡ roupas cadastradas", Toast.LENGTH_LONG).show();
 			}
-			Toast.makeText(this, "Falta ajeitar, bebê!", Toast.LENGTH_LONG).show();
+			i = new Intent(v.getContext(), VerRoupasActivity.class);
+			startActivity(i);
+			
+//			Toast.makeText(this, "Falta ajeitar, bebï¿½!", Toast.LENGTH_LONG).show();
 			break;
 		case R.id.button_looks:
 			i = new Intent(v.getContext(), Creditos.class);
-			Toast.makeText(this, "Falta implementar, bebê!", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Falta implementar, bebï¿½!", Toast.LENGTH_LONG).show();
 			startActivity(i);
 			break;
 		case R.id.button_manequim:
 			BDAdapter dao2 = new BDAdapter(this);
 			if (dao2.getManequins().isEmpty()) {
-				Toast.makeText(this, "Não há manequins cadastrados!", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "Nï¿½o hï¿½ manequins cadastrados!", Toast.LENGTH_LONG).show();
 			} else {
 				i = new Intent(v.getContext(), EscolherManequimActivity.class);
-				Toast.makeText(this, "Tem que mostrar pelo menos o manequim padrão! Ajeitar!", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "Tem que mostrar pelo menos o manequim padrï¿½o! Ajeitar!", Toast.LENGTH_LONG).show();
 				startActivity(i);
 			}
 			break;
@@ -139,7 +139,7 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 //			if (dao.getManequimPadrao() == null) {
 ////				i.putExtra("manequimFaltando", true);
 ////				startActivity(i);
-//				Toast.makeText(this, "Não há manequim escolhido!", Toast.LENGTH_LONG).show();
+//				Toast.makeText(this, "Nï¿½o hï¿½ manequim escolhido!", Toast.LENGTH_LONG).show();
 //			} else {
 //				i.putExtra("background", dao.getManequimPadrao());
 //				startActivity(i);

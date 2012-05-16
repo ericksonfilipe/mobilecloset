@@ -78,7 +78,7 @@ public class ProvadorActivity extends Activity {
 			List<Roupa> roupasInferiores = carregaRoupasInferiores();
 
 			if (roupasSuperiores.isEmpty() && roupasInferiores.isEmpty()) {
-				Toast.makeText(this, "Não há roupas cadastradas!", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "NÃ£o hÃ¡ roupas cadastradas!", Toast.LENGTH_LONG).show();
 			}
 
 			provador = new Provador(this, roupasSuperiores, roupasInferiores);
@@ -220,7 +220,11 @@ public class ProvadorActivity extends Activity {
 					roupaSuperior.setBounds(cS.left, cS.top, cS.right, cS.bottom);
 				} else {
 					Calibragem calibragemS = calibragens.get(roupasSuperiores.get(posicaoRoupaSuperior).getCategoria());
-					roupaSuperior.setBounds(calibragemS.left, calibragemS.top, calibragemS.right, calibragemS.bottom);					
+					if (calibragemS == null) {
+						roupaSuperior.setBounds(0, 0,  100, 100);					
+					} else {
+						roupaSuperior.setBounds(calibragemS.left, calibragemS.top, calibragemS.right, calibragemS.bottom);					
+					}
 				}
 				
 			}
@@ -232,7 +236,12 @@ public class ProvadorActivity extends Activity {
 					roupaInferior.setBounds(cI.left, cI.top, cI.right, cI.bottom);
 				} else {
 					Calibragem calibragemI = calibragens.get(roupasInferiores.get(posicaoRoupaInferior).getCategoria());
-					roupaInferior.setBounds(calibragemI.left, calibragemI.top, calibragemI.right, calibragemI.bottom);
+					if (calibragemI == null) {
+						roupaInferior.setBounds(0, 0,  100, 100);
+					} else {
+						roupaInferior.setBounds(calibragemI.left, calibragemI.top, calibragemI.right, calibragemI.bottom);
+						
+					}
 				}
 			}
 
@@ -362,7 +371,7 @@ public class ProvadorActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.colecoes:
-			Toast.makeText(this, "Falta implementar, bebê!", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Falta implementar, bebÃª!", Toast.LENGTH_LONG).show();
 			startActivity(new Intent(this, Creditos.class));
 			break;
 		case R.id.opcoes:

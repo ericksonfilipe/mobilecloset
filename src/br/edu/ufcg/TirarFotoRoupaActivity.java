@@ -7,6 +7,7 @@ import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -211,7 +212,7 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 		roupa = getRoupaCadastrada();
 		
 //		dao.insertCalibragem2(new Calibragem2(roupa.getId(), 0, 0, 150, 150));
-//		Intent i = new Intent(this, CalibragemRoupasActivity.class);
+//		Intent i = new Intent(this, VerRoupasActivity.class);
 //		i.putExtra("roupa", roupa);
 //		i.putExtra("background", dao.getManequimPadrao());
 //		startActivity(i);
