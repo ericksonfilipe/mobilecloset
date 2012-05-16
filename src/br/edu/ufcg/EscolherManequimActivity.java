@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Manequim;
 
@@ -34,6 +35,8 @@ public class EscolherManequimActivity extends Activity {
 	private VisualizadorManequim visualizadorManequim;
 	public ImageButton anteriorButton;
 	public ImageButton proximoButton;
+	public ImageButton addButton;
+	public ImageButton deleteButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,8 +47,34 @@ public class EscolherManequimActivity extends Activity {
 		visualizadorManequim = new VisualizadorManequim(this, dao.getManequins());
 		setContentView(visualizadorManequim);
 
+		
+		addButton = new ImageButton(this);
+		addButton.setImageResource(R.drawable.add);
+		addButton.setBackgroundColor(Color.TRANSPARENT);
+		addButton.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				Intent i = new Intent(v.getContext(), TirarFotoManequimActivity.class);
+				startActivity(i);				
+			}
+		});
+		
+		deleteButton = new ImageButton(this);
+		deleteButton.setImageResource(R.drawable.delete);
+		deleteButton.setBackgroundColor(Color.TRANSPARENT);
+		deleteButton.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				visualizadorManequim.removeImagem();			
+			}
+		});
+		
 		proximoButton = new ImageButton(this);
-		proximoButton.setImageResource(R.drawable.next);
+		if (dao.getManequins().size() > 1) {
+			proximoButton.setImageResource(R.drawable.next);
+		} else {			
+			proximoButton.setImageResource(R.drawable.next_cinza);
+		}
 		proximoButton.setBackgroundColor(Color.TRANSPARENT);
 		proximoButton.setOnClickListener(new ProximoListener());
 
@@ -57,6 +86,24 @@ public class EscolherManequimActivity extends Activity {
 		Button meioButton = new Button(this);
 		meioButton.setText("Escolher!");
 		meioButton.setOnClickListener(new CalibrarListener());
+		
+		RelativeLayout layoutAdd = new RelativeLayout(this);
+		LinearLayout linearAdd = new LinearLayout(this);
+		linearAdd.addView(addButton);
+		linearAdd.setGravity(Gravity.LEFT);
+		linearAdd.setLayoutParams(new LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		layoutAdd.addView(linearAdd);
+		layoutAdd.setGravity(Gravity.BOTTOM);
+		
+		RelativeLayout layoutDelete = new RelativeLayout(this);
+		LinearLayout linearDelete = new LinearLayout(this);
+		linearDelete.addView(deleteButton);
+		linearDelete.setGravity(Gravity.RIGHT);
+		linearDelete.setLayoutParams(new LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		layoutDelete.addView(linearDelete);
+		layoutDelete.setGravity(Gravity.BOTTOM);
 
 		RelativeLayout layoutProximo = new RelativeLayout(this);
 		LinearLayout linearProximo = new LinearLayout(this);
@@ -64,7 +111,7 @@ public class EscolherManequimActivity extends Activity {
 		linearProximo.setGravity(Gravity.RIGHT);
 		linearProximo.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		layoutProximo.addView(linearProximo);
-		layoutProximo.setGravity(Gravity.BOTTOM);
+		layoutProximo.setGravity(Gravity.CENTER);
 		
 		RelativeLayout layoutAnterior = new RelativeLayout(this);
 		LinearLayout linearAnterior = new LinearLayout(this);
@@ -72,7 +119,7 @@ public class EscolherManequimActivity extends Activity {
 		linearAnterior.setGravity(Gravity.LEFT);
 		linearAnterior.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		layoutAnterior.addView(linearAnterior);
-		layoutAnterior.setGravity(Gravity.BOTTOM);
+		layoutAnterior.setGravity(Gravity.CENTER);
 		
 		RelativeLayout layoutMeio = new RelativeLayout(this);
 		LinearLayout linearMeio = new LinearLayout(this);
@@ -85,8 +132,21 @@ public class EscolherManequimActivity extends Activity {
 		addContentView(layoutAnterior, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		addContentView(layoutMeio, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		addContentView(layoutProximo, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		addContentView(layoutAdd, new LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		addContentView(layoutDelete, new LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		visualizadorManequim.setManequins(dao.getManequins());
+		visualizadorManequim.setPosicao(dao.getManequins().size() - 1);
+		visualizadorManequim.atualizaImagensBotoes();
+		
 	}
 
 	private class VoltaListener implements OnClickListener {
@@ -149,38 +209,74 @@ public class EscolherManequimActivity extends Activity {
 		}
 
 		public void removeImagem() {
-			dao.removeManequim(manequins.get(posicao));
-			manequins.remove(posicao);
-			if (manequins.isEmpty()) {
-				finish();
-				return;
-			} else if (posicao == manequins.size()) {
-				posicao--;
+			if (posicao == 0) {
+				Toast.makeText(getContext(), "Este manequim é padrão do MobileCloset. Não pode ser excluído.", Toast.LENGTH_LONG).show();
+			} else {
+				if (dao.getIdManequimPadrao() == manequins.get(posicao).getId()) {
+					dao.inserirManequimPadrao(manequins.get(0));
+				}
+				
+				dao.removeManequim(manequins.get(posicao));
+				manequins.remove(posicao);
+				if (manequins.isEmpty()) {
+					finish();
+					return;
+				} else if (posicao == manequins.size()) {
+					posicao--;
+				}
+				Manequim manequim = manequins.get(posicao);
+				manequimAtual = carregaDrawable(manequim.getImagem());
+				manequimAtual.setBounds(0, 0, getWidth(), getHeight());
+				invalidate();
+				atualizaImagensBotoes();
 			}
-			Manequim manequim = manequins.get(posicao);
-			manequimAtual = carregaDrawable(manequim.getImagem());
-			manequimAtual.setBounds(0, 0, getWidth(), getHeight());
-			invalidate();
 		}
 
-		@Override
-		protected void onDraw(Canvas canvas) {
-			super.onDraw(canvas);
-			if (manequimAtual != null) {
-				manequimAtual.draw(canvas);
-			}
-		}
+//		@Override
+//		protected void onDraw(Canvas canvas) {
+//			super.onDraw(canvas);
+//			if (manequimAtual != null) {
+//				manequimAtual.draw(canvas);
+//			}
+//		}
 		
 		public Manequim getManequim() {
 			return manequins.get(posicao);
 		}
 
-		public void proximoManequim() {
-			if (posicao < manequins.size()-1) {
-				posicao++;
+		public List<Manequim> getManequins() {
+			return manequins;
+		}
+
+		public void setManequins(List<Manequim> manequins) {
+			this.manequins = manequins;
+		}
+
+		public int getPosicao() {
+			return posicao;
+		}
+
+		public void setPosicao(int posicao) {
+			this.posicao = posicao;
+		}
+		
+		@Override
+		protected void onDraw(Canvas canvas) {
+			super.onDraw(canvas);
+			if (!manequins.isEmpty()) {
 				Manequim manequim = manequins.get(posicao);
 				manequimAtual = carregaDrawable(manequim.getImagem());
 				manequimAtual.setBounds(0, 0, getWidth(), getHeight());
+				manequimAtual.draw(canvas);				
+			}
+		}
+
+		public void proximoManequim() {
+			if (posicao < manequins.size()-1) {
+				posicao++;
+//				Manequim manequim = manequins.get(posicao);
+//				manequimAtual = carregaDrawable(manequim.getImagem());
+//				manequimAtual.setBounds(0, 0, getWidth(), getHeight());
 				invalidate();
 			}
 			atualizaImagensBotoes();
@@ -197,7 +293,7 @@ public class EscolherManequimActivity extends Activity {
 			atualizaImagensBotoes();
 		}
 
-		private void atualizaImagensBotoes() {
+		public void atualizaImagensBotoes() {
 			if (posicao > 0) {
 				anteriorButton.setImageResource(R.drawable.previous);
 			} else {

@@ -69,8 +69,6 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 			}
 			i = new Intent(v.getContext(), VerRoupasActivity.class);
 			startActivity(i);
-			
-//			Toast.makeText(this, "Falta ajeitar, beb�!", Toast.LENGTH_LONG).show();
 			break;
 		case R.id.button_looks:
 			i = new Intent(v.getContext(), Creditos.class);
@@ -78,14 +76,8 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 			startActivity(i);
 			break;
 		case R.id.button_manequim:
-			BDAdapter dao2 = new BDAdapter(this);
-			if (dao2.getManequins().isEmpty()) {
-				Toast.makeText(this, "N�o h� manequins cadastrados!", Toast.LENGTH_LONG).show();
-			} else {
-				i = new Intent(v.getContext(), EscolherManequimActivity.class);
-				Toast.makeText(this, "Tem que mostrar pelo menos o manequim padr�o! Ajeitar!", Toast.LENGTH_LONG).show();
-				startActivity(i);
-			}
+			i = new Intent(v.getContext(), EscolherManequimActivity.class);
+			startActivity(i);
 			break;
 		case R.id.button_sobre:
 			i = new Intent(v.getContext(), Sobre_v2_Activity.class);
