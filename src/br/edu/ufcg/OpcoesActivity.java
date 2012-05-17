@@ -43,11 +43,11 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 	//criado para v2
 	//@Override
 	public void onClick(View v) {
+		BDAdapter dao = new BDAdapter(this);
 		Intent i;
 		switch (v.getId()) {
 		case R.id.button_provador:
 			i = new Intent(v.getContext(), ProvadorActivity.class);
-			BDAdapter dao = new BDAdapter(this);
 //			if (dao.getManequimPadrao() == null) {
 //				Toast.makeText(this, "N�o h� manequim escolhido!", Toast.LENGTH_LONG).show();
 //			} else {
@@ -63,16 +63,19 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 			startActivity(i);
 			break;
 		case R.id.button_closet:
-			BDAdapter dao1 = new BDAdapter(this);
-			if (dao1.getRoupas().isEmpty()) {
+			if (dao.getRoupas().isEmpty()) {
 				Toast.makeText(this, "Não há roupas cadastradas", Toast.LENGTH_LONG).show();
 			}
 			i = new Intent(v.getContext(), VerRoupasActivity.class);
 			startActivity(i);
 			break;
 		case R.id.button_looks:
-			i = new Intent(v.getContext(), FavoritosActivity.class);
-			startActivity(i);
+			if (dao.getLooks().isEmpty()) {
+				Toast.makeText(this, "Não há looks cadastrados", Toast.LENGTH_LONG).show();
+			} else {
+				i = new Intent(v.getContext(), FavoritosActivity.class);
+				startActivity(i);				
+			}
 			break;
 		case R.id.button_manequim:
 			i = new Intent(v.getContext(), EscolherManequimActivity.class);
