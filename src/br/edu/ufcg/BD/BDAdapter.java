@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 import br.edu.ufcg.model.Calibragem;
 import br.edu.ufcg.model.Calibragem2;
 import br.edu.ufcg.model.Categoria;
+import br.edu.ufcg.model.Loja;
 import br.edu.ufcg.model.Look;
 import br.edu.ufcg.model.Manequim;
 import br.edu.ufcg.model.Roupa;
@@ -27,6 +28,31 @@ public class BDAdapter {
 		this.bdHelper = new BDHelper(context);
 		
 	}
+
+	public void inserirLoja(Loja loja) {
+		SQLiteDatabase banco = bdHelper.getWritableDatabase();
+		ContentValues cv = new ContentValues();
+		cv.put("nome", loja.getNome());
+		cv.put("logo", loja.getLogo());
+		banco.insert("loja", null, cv);
+		banco.close();
+	}
+
+	public Loja getLoja(String nome) {
+		SQLiteDatabase banco = bdHelper.getReadableDatabase();
+		Cursor c = banco.rawQuery(String.format("SELECT l.* FROM loja l WHERE l.nome = '%s';", nome), null);
+		if (c == null || c.getCount() == 0) {
+			return null;
+		}
+		c.moveToFirst();
+		int id = c.getInt(c.getColumnIndex("id"));
+		String nomeL = c.getString(c.getColumnIndex("nome"));
+		byte[] logo = c.getBlob(c.getColumnIndex("logo"));
+		c.close();
+		banco.close();
+		return new Loja(id, nomeL, logo);
+	}
+
 
 	public void inserirManequim(byte[] imagem) {
 		SQLiteDatabase banco = bdHelper.getWritableDatabase();
@@ -123,6 +149,8 @@ public class BDAdapter {
 		ContentValues cv = new ContentValues();
 		cv.put("imagem", roupa.getImagem());
 		cv.put("categoria", roupa.getCategoria().name());
+		cv.put("codigo", roupa.getCodigo());
+		cv.put("loja", roupa.getLoja().getId());
 		banco.insert("roupa", null, cv);
 		banco.close();
 	}
@@ -145,16 +173,20 @@ public class BDAdapter {
 		
 		if (categoria == null) {
 			c = banco.query("roupa", 
-                    new String[] {"id", "imagem", "categoria"}, null, null, null, null, "id");
+                    new String[] {"id"}, null, null, null, null, "id");
 		} else {
-			c = banco.rawQuery("SELECT r.* FROM roupa r WHERE r.categoria LIKE '%"+categoria.getNome()+"%'", null); //isso funciona?
+			c = banco.rawQuery("SELECT r.id FROM roupa r WHERE r.categoria LIKE '%"+categoria.getNome()+"%'", null); //isso funciona?
 		}
+		List<Integer> ids = new ArrayList<Integer>();
 		while (c.moveToNext()) {
-			Roupa roupa = new Roupa(c.getInt(c.getColumnIndex("id")), c.getBlob(c.getColumnIndex("imagem")),Categoria.valueOf(c.getString(c.getColumnIndex("categoria"))));
-			roupas.add(roupa);
+			ids.add(c.getInt(c.getColumnIndex("id")));
 		}
 		c.close();
 		banco.close();
+		
+		for (Integer id : ids) {
+			roupas.add(getRoupa(id));
+		}
 		return roupas;
 	}
 
@@ -163,10 +195,21 @@ public class BDAdapter {
 		Cursor c = banco.rawQuery("SELECT r.* FROM roupa r WHERE r.id = " + id + ";", null);
 		c.moveToFirst();
 		Roupa roupa = new Roupa(c.getInt(c.getColumnIndex("id")), c.getBlob(c.getColumnIndex("imagem")),Categoria.valueOf(c.getString(c.getColumnIndex("categoria"))));
+		roupa.setCodigo(c.getString(c.getColumnIndex("codigo")));
+		int cdLoja = c.getInt(c.getColumnIndex("loja")); 
 		c.close();
-		banco.close();
-		return roupa;
 		
+		Cursor c2 = banco.rawQuery("SELECT l.* FROM loja l WHERE l.id = " + cdLoja + ";", null);
+		c2.moveToFirst();
+		int idL = c2.getInt(c2.getColumnIndex("id"));
+		String nomeL = c2.getString(c2.getColumnIndex("nome"));
+		byte[] logo = c2.getBlob(c2.getColumnIndex("logo"));
+		Loja loja = new Loja(idL, nomeL, logo);
+		c2.close();
+		
+		banco.close();
+		roupa.setLoja(loja);
+		return roupa;
 	}
 
 	//----------------calibragem de categoria -----------------------------------------------------
