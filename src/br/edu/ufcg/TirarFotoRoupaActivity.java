@@ -59,7 +59,7 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 		
 		this.dao = new BDAdapter(this);
 
-		//FIXME o segundo molde de short deveria ser um molde espec�fico pra bermuda, j� que h� diferen�a entre eles.
+		//FIXME o segundo molde de short deveria ser um molde especifico pra bermuda, jah que ha diferenca entre eles.
 		moldes = new int[] {R.drawable.molde_short, R.drawable.molde_calca,
 				R.drawable.molde_camisa, R.drawable.molde_camisao, R.drawable.molde_camiseta,
 				R.drawable.molde_saia, R.drawable.molde_short, R.drawable.molde_camiseta};

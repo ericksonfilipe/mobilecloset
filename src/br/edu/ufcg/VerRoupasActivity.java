@@ -36,6 +36,7 @@ public class VerRoupasActivity extends Activity {
 	public ImageButton proximaButton;
 	public ImageButton addButton;
 	public ImageButton deleteButton;
+	public ImageButton calibrarButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -68,7 +69,8 @@ public class VerRoupasActivity extends Activity {
 		deleteButton.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
-				visualizadorRoupa.removeImagem();			
+				visualizadorRoupa.removeImagem();
+				
 			}
 		});
 		
@@ -86,11 +88,11 @@ public class VerRoupasActivity extends Activity {
 		anteriorButton.setBackgroundColor(Color.TRANSPARENT);
 		anteriorButton.setOnClickListener(new VoltaListener());
 
-		Button meioButton = new Button(this);
-		meioButton.setText("Calibrar");
-		meioButton.setOnClickListener(new CalibrarListener());
-
-		
+		calibrarButton = new ImageButton(this);
+		calibrarButton.setImageResource(R.drawable.calibrar);
+		calibrarButton.setBackgroundColor(Color.TRANSPARENT);
+		calibrarButton.setOnClickListener(new CalibrarListener());
+				
 		RelativeLayout layoutAdd = new RelativeLayout(this);
 		LinearLayout linearAdd = new LinearLayout(this);
 		linearAdd.addView(addButton);
@@ -99,15 +101,8 @@ public class VerRoupasActivity extends Activity {
 				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		layoutAdd.addView(linearAdd);
 		layoutAdd.setGravity(Gravity.BOTTOM);
-		
-		RelativeLayout layoutDelete = new RelativeLayout(this);
-		LinearLayout linearDelete = new LinearLayout(this);
-		linearDelete.addView(deleteButton);
-		linearDelete.setGravity(Gravity.RIGHT);
-		linearDelete.setLayoutParams(new LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-		layoutDelete.addView(linearDelete);
-		layoutDelete.setGravity(Gravity.BOTTOM);
+
+
 		
 		RelativeLayout layoutProximo = new RelativeLayout(this);
 		LinearLayout linearProximo = new LinearLayout(this);
@@ -117,7 +112,7 @@ public class VerRoupasActivity extends Activity {
 				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		layoutProximo.addView(linearProximo);
 		layoutProximo.setGravity(Gravity.CENTER);
-
+		
 		RelativeLayout layoutAnterior = new RelativeLayout(this);
 		LinearLayout linearAnterior = new LinearLayout(this);
 		linearAnterior.addView(anteriorButton);
@@ -126,25 +121,35 @@ public class VerRoupasActivity extends Activity {
 				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		layoutAnterior.addView(linearAnterior);
 		layoutAnterior.setGravity(Gravity.CENTER);
-
+		
 		RelativeLayout layoutMeio = new RelativeLayout(this);
 		LinearLayout linearMeio = new LinearLayout(this);
-		linearMeio.addView(meioButton);
+		linearMeio.addView(calibrarButton);
 		linearMeio.setGravity(Gravity.CENTER);
 		linearMeio.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
 				LayoutParams.WRAP_CONTENT));
 		layoutMeio.addView(linearMeio);
 		layoutMeio.setGravity(Gravity.BOTTOM);
-
-		addContentView(layoutAnterior, new LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+			
+		RelativeLayout layoutDelete = new RelativeLayout(this);
+		LinearLayout linearDelete = new LinearLayout(this);
+		linearDelete.addView(deleteButton);
+		linearDelete.setGravity(Gravity.RIGHT);
+		linearDelete.setLayoutParams(new LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		layoutDelete.addView(linearDelete);
+		layoutDelete.setGravity(Gravity.BOTTOM);
+		
+		
 		addContentView(layoutMeio, new LayoutParams(LayoutParams.FILL_PARENT,
 				LayoutParams.FILL_PARENT));
+		addContentView(layoutDelete, new LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		addContentView(layoutAnterior, new LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		addContentView(layoutProximo, new LayoutParams(
 				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		addContentView(layoutAdd, new LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-		addContentView(layoutDelete, new LayoutParams(
 				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -171,10 +176,14 @@ public class VerRoupasActivity extends Activity {
 	private class CalibrarListener implements OnClickListener {
 
 		public void onClick(View arg0) {
-			Intent i = new Intent(getApplicationContext(),
-					CalibragemRoupasActivity.class);
-			i.putExtra("roupa", visualizadorRoupa.getRoupaAtual());
-			startActivity(i);
+			try {
+				Intent i = new Intent(getApplicationContext(),
+						CalibragemRoupasActivity.class);
+				i.putExtra("roupa", visualizadorRoupa.getRoupaAtual());
+				startActivity(i);
+			} catch (Exception e) {
+				Toast.makeText(visualizadorRoupa.getContext(), "N„o h· roupas cadastradas para serem calibradas!", Toast.LENGTH_LONG).show();
+			}
 		}
 
 	}
@@ -203,14 +212,16 @@ public class VerRoupasActivity extends Activity {
 //		return true;
 //	}
 
+
+	
 	@Override
 	protected void onResume() {
 		super.onResume();
 		visualizadorRoupa.setRoupas(dao.getRoupas());
 		visualizadorRoupa.setPosicaoRoupa(dao.getRoupas().size() - 1);
 		visualizadorRoupa.atualizaImagensBotoes();
-		
 	}
+
 
 	public class VisualizadorRoupa extends View {
 
@@ -239,6 +250,7 @@ public class VerRoupasActivity extends Activity {
 					roupaAtual.setBounds(0, 0,
 							 100, 100);
 				}
+
 			}
 
 			setFocusable(true);
@@ -261,7 +273,7 @@ public class VerRoupasActivity extends Activity {
 				roupaAtual.setBounds(0, 0, getWidth(), getHeight());
 				invalidate();				
 			} else {
-				Toast.makeText(getContext(), "N√£o h√° roupas cadastradas para serem exclu√≠das!", Toast.LENGTH_LONG).show();
+				Toast.makeText(getContext(), "N„o h· roupas cadastradas para serem excluÌdas!", Toast.LENGTH_LONG).show();
 			}
 		}
 
@@ -316,7 +328,7 @@ public class VerRoupasActivity extends Activity {
 				proximaButton.setImageResource(R.drawable.next_cinza);
 			}
 		}
-
+		
 		private Drawable carregaDrawable(byte[] imagem) {
 			Bitmap b = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
 			Matrix matrix = new Matrix();

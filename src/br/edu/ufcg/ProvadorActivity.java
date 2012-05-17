@@ -82,7 +82,7 @@ public class ProvadorActivity extends Activity {
 			List<Roupa> roupasInferiores = carregaRoupasInferiores();
 
 			if (roupasSuperiores.isEmpty() && roupasInferiores.isEmpty()) {
-				Toast.makeText(this, "NÃ£o hÃ¡ roupas cadastradas!", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "Não há roupas cadastradas!", Toast.LENGTH_LONG).show();
 			}
 
 			provador = new Provador(this, roupasSuperiores, roupasInferiores);
@@ -435,7 +435,7 @@ public class ProvadorActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.colecoes:
-			Toast.makeText(this, "Falta implementar, bebÃª!", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Falta implementar!", Toast.LENGTH_LONG).show();
 			startActivity(new Intent(this, Creditos.class));
 			break;
 		case R.id.opcoes:
