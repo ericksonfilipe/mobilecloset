@@ -23,6 +23,7 @@ public class LojasActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Button requisicao = new Button(this);
+		requisicao.setText("Marisa");
 		requisicao.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View arg0) {
@@ -32,14 +33,29 @@ public class LojasActivity extends Activity {
 
 		});
 
+		Button loja = new Button(this);
+		loja.setText("C&A");
+		loja.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View arg0) {
+				handler = new GetRoupasHandler(new RetornoListener());
+				Connection.get("roupa/getRoupas/C&A", handler);				
+			}
+			
+		});
+		
 		LinearLayout l = new LinearLayout(this);
 		l.addView(requisicao);
+		l.addView(loja);
 		addContentView(l, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 	}
 
 	public class RetornoListener implements Listener {
 
 		public void notifica() {
+			
+			
+			
 			List<Roupa> roupas = handler.getRoupas();
 			
 			BDAdapter dao = new BDAdapter(LojasActivity.this);
