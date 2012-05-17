@@ -210,7 +210,7 @@ public class EscolherManequimActivity extends Activity {
 
 		public void removeImagem() {
 			if (posicao == 0) {
-				Toast.makeText(getContext(), "Este manequim √© padr√£o do MobileCloset. N√£o pode ser exclu√≠do.", Toast.LENGTH_LONG).show();
+				Toast.makeText(getContext(), "Este manequim È padr„o do MobileCloset. N„o pode ser excluÌdo.", Toast.LENGTH_LONG).show();
 			} else {
 				if (dao.getIdManequimPadrao() == manequins.get(posicao).getId()) {
 					dao.inserirManequimPadrao(manequins.get(0));

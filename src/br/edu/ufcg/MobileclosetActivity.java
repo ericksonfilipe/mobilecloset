@@ -115,7 +115,7 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 //			if (dao.getManequimPadrao() == null) {
 ////				i.putExtra("manequimFaltando", true);
 ////				startActivity(i);
-//				Toast.makeText(this, "Nï¿½o hï¿½ manequim escolhido!", Toast.LENGTH_LONG).show();
+//				Toast.makeText(this, "Não há manequim escolhido!", Toast.LENGTH_LONG).show();
 //			} else {
 //				i.putExtra("background", dao.getManequimPadrao());
 //				startActivity(i);
