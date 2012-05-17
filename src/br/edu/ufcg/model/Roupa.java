@@ -4,13 +4,12 @@ import java.io.Serializable;
 
 public class Roupa implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1575837948040959794L;
 	private int id;
+	private String codigo;
 	private byte[] imagem;
 	private Categoria categoria;
+	private Loja loja;
 
 	public Roupa() {}
 
@@ -42,6 +41,22 @@ public class Roupa implements Serializable {
 
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public Loja getLoja() {
+		return loja;
+	}
+
+	public void setLoja(Loja loja) {
+		this.loja = loja;
 	}
 
 	@Override
