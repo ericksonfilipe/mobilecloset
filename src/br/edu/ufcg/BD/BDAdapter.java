@@ -9,11 +9,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.BitmapFactory;
-import br.edu.ufcg.R;
 import br.edu.ufcg.model.Calibragem;
 import br.edu.ufcg.model.Calibragem2;
 import br.edu.ufcg.model.Categoria;
+import br.edu.ufcg.model.Look;
 import br.edu.ufcg.model.Manequim;
 import br.edu.ufcg.model.Roupa;
 
@@ -58,6 +57,37 @@ public class BDAdapter {
 		c.close();
 		banco.close();
 		return manequins;
+	}
+	
+	public void inserirLook(byte[] imagem) {
+		SQLiteDatabase banco = bdHelper.getWritableDatabase();
+		ContentValues cv = new ContentValues();
+		cv.put("imagem", imagem);
+		banco.insert("look", null, cv);
+		banco.close();
+	}
+
+	public void removeLook(Look look) {
+		SQLiteDatabase banco = bdHelper.getWritableDatabase();
+		banco.execSQL(String.format("DELETE FROM look WHERE id = %d;", look.getId()));
+		banco.close();
+	}
+
+	/**
+	 * Retorna todos os manequins cadastrados, ordenados por id.
+	 * @return List<Manequim>
+	 */
+	public List<Look> getLooks() {
+		SQLiteDatabase banco = bdHelper.getReadableDatabase();
+		List<Look> looks = new ArrayList<Look>();
+		Cursor c = banco.query("look", 
+				new String[] {"id", "imagem"}, null, null, null, null, "id");
+		while(c.moveToNext()) {
+			looks.add(new Look(c.getInt(c.getColumnIndex("id")), c.getBlob(c.getColumnIndex("imagem"))));
+		}
+		c.close();
+		banco.close();
+		return looks;
 	}
 	
 	/**

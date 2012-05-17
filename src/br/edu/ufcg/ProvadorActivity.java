@@ -1,5 +1,6 @@
 package br.edu.ufcg;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -48,6 +50,8 @@ public class ProvadorActivity extends Activity {
 	private ImageButton voltaInferiorButton;
 	private ImageButton proximaSuperiorButton;
 	private ImageButton proximaInferiorButton;
+	
+	public ImageButton favoritoButton;
 
 	private Map<Integer, Calibragem2> calibragens2;
 
@@ -84,12 +88,41 @@ public class ProvadorActivity extends Activity {
 			provador = new Provador(this, roupasSuperiores, roupasInferiores);
 			provador.setBackgroundDrawable(bd);
 			setContentView(provador);
+			
+			favoritoButton = new ImageButton(this);
+			favoritoButton.setImageResource(R.drawable.estrela);
+			favoritoButton.setBackgroundColor(Color.TRANSPARENT);
+			favoritoButton.setOnClickListener(new OnClickListener() {
+				
+				public void onClick(View v) {
+					provador.salvaComoFavorito();			
+				}
+			});
+			
+			RelativeLayout layoutFavorito = new RelativeLayout(this);
+			LinearLayout linearFavorito = new LinearLayout(this);
+			linearFavorito.addView(favoritoButton);
+			linearFavorito.setGravity(Gravity.RIGHT);
+			linearFavorito.setLayoutParams(new LayoutParams(
+					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+			layoutFavorito.addView(linearFavorito);
+			layoutFavorito.setGravity(Gravity.BOTTOM);
 
 			addContentView(getLayoutBotoesEsquerda(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 			addContentView(getLayoutBotoesDireita(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+			addContentView(layoutFavorito, new LayoutParams(
+					LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 
 			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}
+	
+		public static Bitmap loadBitmapFromView(View v) {
+		   Bitmap b = Bitmap.createBitmap( v.getLayoutParams().width, v.getLayoutParams().height, Bitmap.Config.ARGB_8888);                
+		   Canvas c = new Canvas(b);
+		   v.layout(0, 0, v.getLayoutParams().width, v.getLayoutParams().height);
+		   v.draw(c);
+		   return b;
+		}
 
 	private RelativeLayout getLayoutBotoesEsquerda() {
 		RelativeLayout layout = new RelativeLayout(this);
@@ -258,6 +291,19 @@ public class ProvadorActivity extends Activity {
 			if (roupaSuperior != null) {
 				roupaSuperior.draw(canvas);
 			}
+		}
+		
+		public void salvaComoFavorito() {
+			this.setDrawingCacheEnabled(true);
+			this.getDrawingCache();
+			this.buildDrawingCache(); 
+			Bitmap bm = this.getDrawingCache();
+			
+			ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
+			bm.compress(CompressFormat.PNG, 0 /*IGNORED FOR PNG*/, bos); 
+			byte[] bitmapData = bos.toByteArray();
+			
+			dao.inserirLook(bitmapData);
 		}
 
 		public void proximaRoupaSuperior() {
