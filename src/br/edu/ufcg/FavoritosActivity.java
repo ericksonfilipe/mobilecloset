@@ -20,8 +20,10 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Look;
+import br.edu.ufcg.model.Manequim;
 
 public class FavoritosActivity extends Activity {
 
@@ -34,6 +36,7 @@ public class FavoritosActivity extends Activity {
 	private ImageButton voltaButton;
 	private ImageButton proximaButton;
 	
+	public ImageButton deleteButton;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -57,11 +60,32 @@ public class FavoritosActivity extends Activity {
 //			BitmapDrawable bd = new BitmapDrawable(girado);
 //
 			favorito = new Favoritos(this);
-//			favorito.setBackgroundDrawable(bd);
+			favorito.setBackgroundDrawable(carregaDrawable(dao.getLooks().get(0).getImagem()));
 			setContentView(favorito);
+			
+			deleteButton = new ImageButton(this);
+			deleteButton.setImageResource(R.drawable.delete);
+			deleteButton.setBackgroundColor(Color.TRANSPARENT);
+			deleteButton.setOnClickListener(new OnClickListener() {
+				
+				public void onClick(View v) {
+					favorito.removeImagem();			
+				}
+			});
+			
+			RelativeLayout layoutDelete = new RelativeLayout(this);
+			LinearLayout linearDelete = new LinearLayout(this);
+			linearDelete.addView(deleteButton);
+			linearDelete.setGravity(Gravity.RIGHT);
+			linearDelete.setLayoutParams(new LayoutParams(
+					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+			layoutDelete.addView(linearDelete);
+			layoutDelete.setGravity(Gravity.BOTTOM);
 			
 			addContentView(getLayoutBotoesEsquerda(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 			addContentView(getLayoutBotoesDireita(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+			addContentView(layoutDelete, new LayoutParams(
+					LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 
 			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}
@@ -120,7 +144,7 @@ public class FavoritosActivity extends Activity {
 	private Drawable carregaDrawable(byte[] imagem) {
 		Bitmap b = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
 		Matrix matrix = new Matrix();
-		matrix.setRotate(90);
+//		matrix.setRotate(90);
 		Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
 		return new BitmapDrawable(girado);
 	}
@@ -142,6 +166,28 @@ public class FavoritosActivity extends Activity {
 
 			setFocusable(true);
 			this.requestFocus();
+		}
+
+		public void removeImagem() {
+			dao.removeLook(listaLooks.get(posicao));
+			listaLooks.remove(posicao);
+			
+			if (listaLooks.size() == 0) {
+				Toast.makeText(getContext(), "Não há mais looks salvos", Toast.LENGTH_LONG).show();
+				finish();
+				return;
+			} else {
+				if (posicao == listaLooks.size()) {
+					posicao--;
+				}
+				
+				Look novoLook = listaLooks.get(posicao);
+				look = carregaDrawable(novoLook.getImagem());
+				look.setBounds(0, 0, getWidth(), getHeight());
+				
+				invalidate();
+				atualizaImagensBotoes();
+			}
 		}
 
 		@Override

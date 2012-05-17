@@ -95,7 +95,8 @@ public class ProvadorActivity extends Activity {
 			favoritoButton.setOnClickListener(new OnClickListener() {
 				
 				public void onClick(View v) {
-					provador.salvaComoFavorito();			
+					Bitmap bitmap = loadBitmapFromView(provador);
+					salvaLookBanco(bitmap);
 				}
 			});
 			
@@ -116,13 +117,25 @@ public class ProvadorActivity extends Activity {
 			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}
 	
-		public static Bitmap loadBitmapFromView(View v) {
-		   Bitmap b = Bitmap.createBitmap( v.getLayoutParams().width, v.getLayoutParams().height, Bitmap.Config.ARGB_8888);                
-		   Canvas c = new Canvas(b);
-		   v.layout(0, 0, v.getLayoutParams().width, v.getLayoutParams().height);
-		   v.draw(c);
-		   return b;
-		}
+	private void salvaLookBanco(Bitmap bitmap) {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
+		bitmap.compress(CompressFormat.PNG, 0 /*IGNORED FOR PNG*/, bos); 
+		byte[] bitmapData = bos.toByteArray();
+		
+		dao.inserirLook(bitmapData);
+		
+		Toast.makeText(this, "Look salvo com sucesso!", Toast.LENGTH_LONG).show();
+	}
+	
+//	Metodo que Ed disse que salvava o canvas
+	public static Bitmap loadBitmapFromView(View v) {
+		Bitmap b = Bitmap.createBitmap(v.getWidth(),
+				v.getHeight(), Bitmap.Config.ARGB_8888);
+		Canvas c = new Canvas(b);
+		v.layout(0, 0, v.getWidth(), v.getHeight());
+		v.draw(c);
+		return b;
+	}
 
 	private RelativeLayout getLayoutBotoesEsquerda() {
 		RelativeLayout layout = new RelativeLayout(this);
@@ -293,19 +306,6 @@ public class ProvadorActivity extends Activity {
 			}
 		}
 		
-		public void salvaComoFavorito() {
-			this.setDrawingCacheEnabled(true);
-			this.getDrawingCache();
-			this.buildDrawingCache(); 
-			Bitmap bm = this.getDrawingCache();
-			
-			ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
-			bm.compress(CompressFormat.PNG, 0 /*IGNORED FOR PNG*/, bos); 
-			byte[] bitmapData = bos.toByteArray();
-			
-			dao.inserirLook(bitmapData);
-		}
-
 		public void proximaRoupaSuperior() {
 			if (posicaoRoupaSuperior < roupasSuperiores.size()-1) {
 				posicaoRoupaSuperior++;
@@ -317,7 +317,11 @@ public class ProvadorActivity extends Activity {
 					roupaSuperior.setBounds(calibragem2S.left, calibragem2S.top, calibragem2S.right, calibragem2S.bottom);
 					
 				} else {
-					roupaSuperior.setBounds(calibragemS.left, calibragemS.top, calibragemS.right, calibragemS.bottom);
+					if (calibragemS == null) {
+						roupaSuperior.setBounds(0, 0,  100, 100);					
+					} else {
+						roupaSuperior.setBounds(calibragemS.left, calibragemS.top, calibragemS.right, calibragemS.bottom);					
+					}
 					
 				}
 				invalidate();
@@ -336,7 +340,11 @@ public class ProvadorActivity extends Activity {
 					roupaSuperior.setBounds(calibragem2S.left, calibragem2S.top, calibragem2S.right, calibragem2S.bottom);
 					
 				} else {
-					roupaSuperior.setBounds(calibragemS.left, calibragemS.top, calibragemS.right, calibragemS.bottom);
+					if (calibragemS == null) {
+						roupaSuperior.setBounds(0, 0,  100, 100);					
+					} else {
+						roupaSuperior.setBounds(calibragemS.left, calibragemS.top, calibragemS.right, calibragemS.bottom);					
+					}
 				}
 				invalidate();
 			}
@@ -354,7 +362,12 @@ public class ProvadorActivity extends Activity {
 					roupaInferior.setBounds(calibragem2S.left, calibragem2S.top, calibragem2S.right, calibragem2S.bottom);
 					
 				} else {
-					roupaInferior.setBounds(calibragemI.left, calibragemI.top, calibragemI.right, calibragemI.bottom);
+					if (calibragemI == null) {
+						roupaInferior.setBounds(0, 0,  100, 100);
+					} else {
+						roupaInferior.setBounds(calibragemI.left, calibragemI.top, calibragemI.right, calibragemI.bottom);
+						
+					}
 				}
 				invalidate();
 			}
@@ -372,7 +385,12 @@ public class ProvadorActivity extends Activity {
 					roupaInferior.setBounds(calibragem2S.left, calibragem2S.top, calibragem2S.right, calibragem2S.bottom);
 					
 				} else {
-					roupaInferior.setBounds(calibragemI.left, calibragemI.top, calibragemI.right, calibragemI.bottom);
+					if (calibragemI == null) {
+						roupaInferior.setBounds(0, 0,  100, 100);
+					} else {
+						roupaInferior.setBounds(calibragemI.left, calibragemI.top, calibragemI.right, calibragemI.bottom);
+						
+					}
 				}
 				invalidate();
 			}

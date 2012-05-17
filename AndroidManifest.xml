@@ -19,7 +19,7 @@
         
         <activity android:name=".OpcoesActivity" />
         
-        <activity android:name=".Sobre_v2_Activity" />
+        <activity android:name=".Sobre_v2_Activity" android:theme="@android:style/Theme.Dialog"/>
         
         <activity android:name=".Creditos" android:theme="@android:style/Theme.Dialog" ></activity>
         
