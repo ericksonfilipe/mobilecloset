@@ -71,8 +71,7 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 			startActivity(i);
 			break;
 		case R.id.button_looks:
-			i = new Intent(v.getContext(), Creditos.class);
-			Toast.makeText(this, "Falta implementar, beb�!", Toast.LENGTH_LONG).show();
+			i = new Intent(v.getContext(), FavoritosActivity.class);
 			startActivity(i);
 			break;
 		case R.id.button_manequim:
