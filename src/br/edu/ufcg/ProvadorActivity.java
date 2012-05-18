@@ -435,8 +435,8 @@ public class ProvadorActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.colecoes:
+			startActivity(new Intent(this, LojasActivity.class));
 			Toast.makeText(this, "Falta implementar!", Toast.LENGTH_LONG).show();
-			startActivity(new Intent(this, Creditos.class));
 			break;
 		case R.id.opcoes:
 			startActivity(new Intent(this, OpcoesActivity.class));
