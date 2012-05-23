@@ -65,8 +65,76 @@ public class EscolherManequimActivity extends Activity {
 		deleteButton.setBackgroundColor(Color.TRANSPARENT);
 		deleteButton.setOnClickListener(new OnClickListener() {
 			
+			//Opcao "Deseja realmente excluir"
 			public void onClick(View v) {
-				visualizadorManequim.removeImagem();			
+				if (!visualizadorManequim.ehManequimPadrao()) {
+					final Button msgExcluir = new Button(v.getContext());
+					msgExcluir.setText("Deseja realmente excluir?");
+					msgExcluir.setBackgroundColor(Color.LTGRAY);
+					msgExcluir.setTextSize(12);
+					
+					final Button msgExcluir_sim = new Button(v.getContext());
+					msgExcluir_sim.setText("Sim");
+					msgExcluir_sim.setBackgroundColor(Color.LTGRAY);
+					msgExcluir_sim.setTextSize(12);
+					
+					final Button msgExcluir_nao = new Button(v.getContext());
+					msgExcluir_nao.setText("Não");
+					msgExcluir_nao.setBackgroundColor(Color.LTGRAY);
+					msgExcluir_nao.setTextSize(12);
+					
+					RelativeLayout layoutCentral = new RelativeLayout(v.getContext());
+					LinearLayout linearCentral = new LinearLayout(v.getContext());
+					linearCentral.addView(msgExcluir);
+					linearCentral.addView(msgExcluir_sim);
+					linearCentral.addView(msgExcluir_nao);
+					linearCentral.setGravity(Gravity.CENTER);
+					linearCentral.setLayoutParams(new LayoutParams(
+							LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+					layoutCentral.addView(linearCentral);
+					layoutCentral.setGravity(Gravity.CENTER);
+					
+					addContentView(layoutCentral, new LayoutParams(
+							LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+					
+					
+					msgExcluir_sim.setOnClickListener(new OnClickListener() {
+						public void onClick(View v) {
+							visualizadorManequim.removeImagem();
+							//nao mostrar mais os botoes TODO
+							
+							//gambiarra bugada...
+							msgExcluir.setClickable(false);
+							msgExcluir.setBackgroundColor(Color.TRANSPARENT);
+							msgExcluir.setTextColor(Color.TRANSPARENT);							
+							msgExcluir_sim.setClickable(false);
+							msgExcluir_sim.setBackgroundColor(Color.TRANSPARENT);
+							msgExcluir_sim.setTextColor(Color.TRANSPARENT);
+							msgExcluir_nao.setClickable(false);
+							msgExcluir_nao.setBackgroundColor(Color.TRANSPARENT);
+							msgExcluir_nao.setTextColor(Color.TRANSPARENT);
+						}
+
+					});
+					
+					msgExcluir_nao.setOnClickListener(new OnClickListener() {
+						public void onClick(View v) {
+							//nao mostrar mais os botoes TODO
+							
+							//gambiarra bugada...
+							msgExcluir.setClickable(false);
+							msgExcluir.setBackgroundColor(Color.TRANSPARENT);
+							msgExcluir.setTextColor(Color.TRANSPARENT);							
+							msgExcluir_sim.setClickable(false);
+							msgExcluir_sim.setBackgroundColor(Color.TRANSPARENT);
+							msgExcluir_sim.setTextColor(Color.TRANSPARENT);
+							msgExcluir_nao.setClickable(false);
+							msgExcluir_nao.setBackgroundColor(Color.TRANSPARENT);
+							msgExcluir_nao.setTextColor(Color.TRANSPARENT);
+						}
+					});
+
+				}
 			}
 		});
 		
@@ -222,9 +290,13 @@ public class EscolherManequimActivity extends Activity {
 			this.requestFocus();
 			this.requestLayout();
 		}
+		
+		public boolean ehManequimPadrao() {
+			return posicao == 0;
+		}
 
 		public void removeImagem() {
-			if (posicao == 0) {
+			if (ehManequimPadrao()) {
 				Toast.makeText(getContext(), "Este manequim é padrão do MobileCloset. Não pode ser excluído.", Toast.LENGTH_LONG).show();
 			} else {
 				if (dao.getIdManequimPadrao() == manequins.get(posicao).getId()) {
