@@ -46,6 +46,8 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 
 	private ImageButton voltaMoldeButton;
 	
+	private ImageButton fotografarButton;
+	
 	private ImageButton fundo;
 	
 	private boolean fundoClaro = true;
@@ -87,10 +89,10 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 		LinearLayout linear = new LinearLayout(this);
 		linear.addView(voltaMoldeButton);
 		linear.addView(proximoMoldeButton);
-		linear.setGravity(Gravity.RIGHT);
+		linear.setGravity(Gravity.CENTER);
 		linear.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		layout.addView(linear);
-		layout.setGravity(Gravity.BOTTOM);
+		layout.setGravity(Gravity.TOP);
 
 		
 		
@@ -131,6 +133,27 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 		layoutEsquerda.addView(linearEsq);
 		layoutEsquerda.setGravity(Gravity.BOTTOM);
 
+		
+		fotografarButton = new ImageButton(this);
+		fotografarButton.setImageResource(R.drawable.camera);
+		fotografarButton.setBackgroundColor(Color.TRANSPARENT);
+		fotografarButton.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				mPreview.takePicture();				
+			}
+		});
+
+		RelativeLayout layoutFotografar = new RelativeLayout(this);
+		LinearLayout linearFotografar = new LinearLayout(this);
+		linearFotografar.addView(fotografarButton);
+		linearFotografar.setGravity(Gravity.RIGHT);
+		linearFotografar.setLayoutParams(new LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		layoutFotografar.addView(linearFotografar);
+		layoutFotografar.setGravity(Gravity.BOTTOM);
+		addContentView(layoutFotografar, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		
 		
 		addContentView(layoutEsquerda, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
@@ -175,18 +198,18 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 		}
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflate = new MenuInflater(this);
-		inflate.inflate(R.menu.tirar_foto_menu, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		mPreview.takePicture();
-		return true;
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		MenuInflater inflate = new MenuInflater(this);
+//		inflate.inflate(R.menu.tirar_foto_menu, menu);
+//		return true;
+//	}
+//
+//	@Override
+//	public boolean onOptionsItemSelected(MenuItem item) {
+//		mPreview.takePicture();
+//		return true;
+//	}
 
 	public void takeImage(byte[] image) { 
 		// Cleaning memory 
