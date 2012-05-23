@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -37,7 +38,7 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 	private CameraView mPreview;
 
 	private LinearLayout layout;
-	private int[] moldes;
+	private String[] tipos;
 	private Categoria[] categorias;
 	
 	private int indice = 0;
@@ -47,6 +48,8 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 	private ImageButton voltaMoldeButton;
 	
 	private ImageButton fotografarButton;
+	
+	private Button tipoDeRoupa;
 	
 	private ImageButton fundo;
 	
@@ -62,15 +65,16 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 		this.dao = new BDAdapter(this);
 
 		//FIXME o segundo molde de short deveria ser um molde especifico pra bermuda, jah que ha diferenca entre eles.
-		moldes = new int[] {R.drawable.molde_short, R.drawable.molde_calca,
-				R.drawable.molde_camisa, R.drawable.molde_camisao, R.drawable.molde_camiseta,
-				R.drawable.molde_saia, R.drawable.molde_short, R.drawable.molde_camiseta};
+//		moldes = new int[] {R.drawable.molde_short, R.drawable.molde_calca,
+//				R.drawable.molde_camisa, R.drawable.molde_camisao, R.drawable.molde_camiseta,
+//				R.drawable.molde_saia, R.drawable.molde_short, R.drawable.molde_camiseta};
+		tipos = new String[] {"Short", "Bermuda", "Calça", "Camisa", "Camisa Manga Comprida", "Camiseta", "Saia", "Vestido"};		
 		categorias = Categoria.values();
 		
-		if (moldes.length != categorias.length) Log.e("ERRO NOSSO", "O NUMERO DE MOLDES TEM QUE SER IGUAL AO NUMERO DE CATEGORIAS! JAH PODE OLHAR NO ONCREATE DE TIRARFOTOROUPAACTIVITY");
+		if (tipos.length != categorias.length) Log.e("ERRO NOSSO", "O NUMERO DE MOLDES TEM QUE SER IGUAL AO NUMERO DE CATEGORIAS! JAH PODE OLHAR NO ONCREATE DE TIRARFOTOROUPAACTIVITY");
 		
         layout = new LinearLayout(this);
-        layout.setBackgroundResource(moldes[indice]);
+        //layout.setBackgroundResource(moldes[indice]);
         
         addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
         
@@ -84,10 +88,15 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 		voltaMoldeButton.setImageResource(R.drawable.previous_cinza);
 		voltaMoldeButton.setBackgroundColor(Color.TRANSPARENT);
 		voltaMoldeButton.setOnClickListener(new VoltaListener());
+		
+		tipoDeRoupa = new Button(this);
+		tipoDeRoupa.setText(tipos[indice]);
+		tipoDeRoupa.setBackgroundColor(Color.TRANSPARENT);
 
 		RelativeLayout layout = new RelativeLayout(this);
 		LinearLayout linear = new LinearLayout(this);
 		linear.addView(voltaMoldeButton);
+		linear.addView(tipoDeRoupa);
 		linear.addView(proximoMoldeButton);
 		linear.setGravity(Gravity.CENTER);
 		linear.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
@@ -166,7 +175,8 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 		public void onClick(View arg0) {
 			if (indice != 0) {
 				indice--;
-				layout.setBackgroundResource(moldes[indice]);
+				//layout.setBackgroundResource(moldes[indice]);
+				tipoDeRoupa.setText(tipos[indice]);
 			} 
 			atualizaImagensBotoes();
 		}
@@ -178,7 +188,8 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 		public void onClick(View arg0) {
 			if (indice != categorias.length - 1) {
 				indice++;
-				layout.setBackgroundResource(moldes[indice]);
+				//layout.setBackgroundResource(moldes[indice]);
+				tipoDeRoupa.setText(tipos[indice]);
 			}
 			atualizaImagensBotoes();
 		}
@@ -191,7 +202,7 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 			voltaMoldeButton.setImageResource(R.drawable.previous_cinza);
 		}
 
-		if (indice < moldes.length - 1) {
+		if (indice < tipos.length - 1) {
 			proximoMoldeButton.setImageResource(R.drawable.next);
 		} else {
 			proximoMoldeButton.setImageResource(R.drawable.next_cinza);

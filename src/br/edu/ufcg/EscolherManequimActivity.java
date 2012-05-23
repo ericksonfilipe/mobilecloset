@@ -37,6 +37,7 @@ public class EscolherManequimActivity extends Activity {
 	public ImageButton proximoButton;
 	public ImageButton addButton;
 	public ImageButton deleteButton;
+	public ImageButton escolherButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -83,9 +84,9 @@ public class EscolherManequimActivity extends Activity {
 		anteriorButton.setBackgroundColor(Color.TRANSPARENT);
 		anteriorButton.setOnClickListener(new VoltaListener());
 		
-		Button meioButton = new Button(this);
-		meioButton.setText("Escolher!");
-		meioButton.setOnClickListener(new CalibrarListener());
+//		Button meioButton = new Button(this);
+//		meioButton.setText("Escolher!");
+//		meioButton.setOnClickListener(new CalibrarListener());
 		
 		RelativeLayout layoutAdd = new RelativeLayout(this);
 		LinearLayout linearAdd = new LinearLayout(this);
@@ -121,11 +122,25 @@ public class EscolherManequimActivity extends Activity {
 		layoutAnterior.addView(linearAnterior);
 		layoutAnterior.setGravity(Gravity.CENTER);
 		
+//		RelativeLayout layoutMeio = new RelativeLayout(this);
+//		LinearLayout linearMeio = new LinearLayout(this);
+//		linearMeio.addView(meioButton);
+//		linearMeio.setGravity(Gravity.CENTER);
+//		linearMeio.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+//		layoutMeio.addView(linearMeio);
+//		layoutMeio.setGravity(Gravity.BOTTOM);
+		
+		escolherButton = new ImageButton(this);
+		escolherButton.setImageResource(R.drawable.escolher);
+		escolherButton.setBackgroundColor(Color.TRANSPARENT);
+		escolherButton.setOnClickListener(new CalibrarListener());
+		
 		RelativeLayout layoutMeio = new RelativeLayout(this);
 		LinearLayout linearMeio = new LinearLayout(this);
-		linearMeio.addView(meioButton);
+		linearMeio.addView(escolherButton);
 		linearMeio.setGravity(Gravity.CENTER);
-		linearMeio.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		linearMeio.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
+				LayoutParams.WRAP_CONTENT));
 		layoutMeio.addView(linearMeio);
 		layoutMeio.setGravity(Gravity.BOTTOM);
 
@@ -174,18 +189,18 @@ public class EscolherManequimActivity extends Activity {
 		}
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflate = new MenuInflater(this);
-		inflate.inflate(R.menu.escolher_manequim_menu, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		visualizadorManequim.removeImagem();
-		return true;
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		MenuInflater inflate = new MenuInflater(this);
+//		inflate.inflate(R.menu.escolher_manequim_menu, menu);
+//		return true;
+//	}
+//
+//	@Override
+//	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+//		visualizadorManequim.removeImagem();
+//		return true;
+//	}
 
 	public class VisualizadorManequim extends View {
 
