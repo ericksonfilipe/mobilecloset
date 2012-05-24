@@ -36,14 +36,14 @@ public class LojasActivity extends Activity {
 		Button loja = new Button(this);
 		loja.setText("C&A");
 		loja.setOnClickListener(new OnClickListener() {
-			
+
 			public void onClick(View arg0) {
 				handler = new GetRoupasHandler(new RetornoListener());
 				Connection.get("roupa/getRoupas/C&A", handler);				
 			}
-			
+
 		});
-		
+
 		LinearLayout l = new LinearLayout(this);
 		l.addView(requisicao);
 		l.addView(loja);
@@ -54,9 +54,9 @@ public class LojasActivity extends Activity {
 
 		public void notifica() {
 			List<Roupa> roupas = handler.getRoupas();
-			
+
 			BDAdapter dao = new BDAdapter(LojasActivity.this);
-			
+
 			if (roupas != null && !roupas.isEmpty()) {
 				Loja l = roupas.get(0).getLoja();
 				Loja loja = dao.getLoja(l.getNome());
@@ -69,7 +69,7 @@ public class LojasActivity extends Activity {
 					dao.inserirRoupa(roupa);
 				}
 				System.out.println(dao.getRoupas());
-				
+
 			}
 		}
 

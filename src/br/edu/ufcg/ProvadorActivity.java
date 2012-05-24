@@ -51,7 +51,7 @@ public class ProvadorActivity extends Activity {
 	private ImageButton proximaSuperiorButton;
 	private ImageButton proximaInferiorButton;
 	
-	public ImageButton favoritoButton;
+	public ImageButton favoritoButton, menuButton;
 
 	private Map<Integer, Calibragem2> calibragens2;
 
@@ -82,7 +82,7 @@ public class ProvadorActivity extends Activity {
 			List<Roupa> roupasInferiores = carregaRoupasInferiores();
 
 			if (roupasSuperiores.isEmpty() && roupasInferiores.isEmpty()) {
-				Toast.makeText(this, "N„o h· roupas cadastradas!", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "N√£o h√° roupas cadastradas!", Toast.LENGTH_LONG).show();
 			}
 
 			provador = new Provador(this, roupasSuperiores, roupasInferiores);
@@ -109,8 +109,27 @@ public class ProvadorActivity extends Activity {
 			layoutFavorito.addView(linearFavorito);
 			layoutFavorito.setGravity(Gravity.BOTTOM);
 
+			menuButton = new ImageButton(this);
+			menuButton.setImageResource(R.drawable.save);
+			menuButton.setBackgroundColor(Color.TRANSPARENT);
+			menuButton.setOnClickListener(new OnClickListener() {
+				public void onClick(View arg0) {
+					startActivity(new Intent(arg0.getContext(), OpcoesActivity.class));//TODO
+				}
+			});
+			
+			RelativeLayout layoutEsquerda = new RelativeLayout(this);
+			LinearLayout linearEsq = new LinearLayout(this);
+			linearEsq.addView(menuButton);
+			linearEsq.setGravity(Gravity.LEFT);
+			linearEsq.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+			layoutEsquerda.addView(linearEsq);
+			layoutEsquerda.setGravity(Gravity.BOTTOM);
+			
 			addContentView(getLayoutBotoesEsquerda(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 			addContentView(getLayoutBotoesDireita(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+			addContentView(layoutEsquerda, new LayoutParams(
+					LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 			addContentView(layoutFavorito, new LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 
@@ -424,25 +443,25 @@ public class ProvadorActivity extends Activity {
 		}
 	}
 	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflate = new MenuInflater(this);
-		inflate.inflate(R.menu.provador_menu, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.colecoes:
-			startActivity(new Intent(this, LojasActivity.class));
-			Toast.makeText(this, "Falta implementar!", Toast.LENGTH_LONG).show();
-			break;
-		case R.id.opcoes:
-			startActivity(new Intent(this, OpcoesActivity.class));
-			break;
-		}
-		return true;
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		MenuInflater inflate = new MenuInflater(this);
+//		inflate.inflate(R.menu.provador_menu, menu);
+//		return true;
+//	}
+//
+//	@Override
+//	public boolean onOptionsItemSelected(MenuItem item) {
+//		switch (item.getItemId()) {
+//		case R.id.colecoes:
+//			startActivity(new Intent(this, LojasActivity.class));
+//			Toast.makeText(this, "Falta implementar!", Toast.LENGTH_LONG).show();
+//			break;
+//		case R.id.opcoes:
+//			startActivity(new Intent(this, OpcoesActivity.class));
+//			break;
+//		}
+//		return true;
+//	}
 	
 }

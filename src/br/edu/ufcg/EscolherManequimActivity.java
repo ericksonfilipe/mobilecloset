@@ -1,5 +1,6 @@
 package br.edu.ufcg;
 
+import java.io.Serializable;
 import java.util.List;
 
 import android.app.Activity;
@@ -27,7 +28,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
+import br.edu.ufcg.async.Listener;
+import br.edu.ufcg.model.Loja;
 import br.edu.ufcg.model.Manequim;
+import br.edu.ufcg.model.Roupa;
 
 public class EscolherManequimActivity extends Activity {
 
@@ -39,6 +43,13 @@ public class EscolherManequimActivity extends Activity {
 	public ImageButton deleteButton;
 	public ImageButton escolherButton;
 
+	public class RetornoListener implements Listener, Serializable {
+
+		public void notifica() {
+			visualizadorManequim.removeImagem();
+		}
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,96 +59,35 @@ public class EscolherManequimActivity extends Activity {
 		visualizadorManequim = new VisualizadorManequim(this, dao.getManequins());
 		setContentView(visualizadorManequim);
 
-		
+
 		addButton = new ImageButton(this);
 		addButton.setImageResource(R.drawable.add);
 		addButton.setBackgroundColor(Color.TRANSPARENT);
 		addButton.setOnClickListener(new OnClickListener() {
-			
+
 			public void onClick(View v) {
 				Intent i = new Intent(v.getContext(), TirarFotoManequimActivity.class);
 				startActivity(i);				
 			}
 		});
-		
+
 		deleteButton = new ImageButton(this);
 		deleteButton.setImageResource(R.drawable.delete);
 		deleteButton.setBackgroundColor(Color.TRANSPARENT);
 		deleteButton.setOnClickListener(new OnClickListener() {
-			
+
 			//Opcao "Deseja realmente excluir"
 			public void onClick(View v) {
-				if (!visualizadorManequim.ehManequimPadrao()) {
-					final Button msgExcluir = new Button(v.getContext());
-					msgExcluir.setText("Deseja realmente excluir?");
-					msgExcluir.setBackgroundColor(Color.LTGRAY);
-					msgExcluir.setTextSize(12);
-					
-					final Button msgExcluir_sim = new Button(v.getContext());
-					msgExcluir_sim.setText("Sim");
-					msgExcluir_sim.setBackgroundColor(Color.LTGRAY);
-					msgExcluir_sim.setTextSize(12);
-					
-					final Button msgExcluir_nao = new Button(v.getContext());
-					msgExcluir_nao.setText("N„o");
-					msgExcluir_nao.setBackgroundColor(Color.LTGRAY);
-					msgExcluir_nao.setTextSize(12);
-					
-					RelativeLayout layoutCentral = new RelativeLayout(v.getContext());
-					LinearLayout linearCentral = new LinearLayout(v.getContext());
-					linearCentral.addView(msgExcluir);
-					linearCentral.addView(msgExcluir_sim);
-					linearCentral.addView(msgExcluir_nao);
-					linearCentral.setGravity(Gravity.CENTER);
-					linearCentral.setLayoutParams(new LayoutParams(
-							LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-					layoutCentral.addView(linearCentral);
-					layoutCentral.setGravity(Gravity.CENTER);
-					
-					addContentView(layoutCentral, new LayoutParams(
-							LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-					
-					
-					msgExcluir_sim.setOnClickListener(new OnClickListener() {
-						public void onClick(View v) {
-							visualizadorManequim.removeImagem();
-							//nao mostrar mais os botoes TODO
-							
-							//gambiarra bugada...
-							msgExcluir.setClickable(false);
-							msgExcluir.setBackgroundColor(Color.TRANSPARENT);
-							msgExcluir.setTextColor(Color.TRANSPARENT);							
-							msgExcluir_sim.setClickable(false);
-							msgExcluir_sim.setBackgroundColor(Color.TRANSPARENT);
-							msgExcluir_sim.setTextColor(Color.TRANSPARENT);
-							msgExcluir_nao.setClickable(false);
-							msgExcluir_nao.setBackgroundColor(Color.TRANSPARENT);
-							msgExcluir_nao.setTextColor(Color.TRANSPARENT);
-						}
-
-					});
-					
-					msgExcluir_nao.setOnClickListener(new OnClickListener() {
-						public void onClick(View v) {
-							//nao mostrar mais os botoes TODO
-							
-							//gambiarra bugada...
-							msgExcluir.setClickable(false);
-							msgExcluir.setBackgroundColor(Color.TRANSPARENT);
-							msgExcluir.setTextColor(Color.TRANSPARENT);							
-							msgExcluir_sim.setClickable(false);
-							msgExcluir_sim.setBackgroundColor(Color.TRANSPARENT);
-							msgExcluir_sim.setTextColor(Color.TRANSPARENT);
-							msgExcluir_nao.setClickable(false);
-							msgExcluir_nao.setBackgroundColor(Color.TRANSPARENT);
-							msgExcluir_nao.setTextColor(Color.TRANSPARENT);
-						}
-					});
-
+				if (visualizadorManequim.ehManequimPadrao()) {
+					Toast.makeText(v.getContext(), "Este manequim √© padr√£o do MobileCloset. N√£o pode ser exclu√≠do.", Toast.LENGTH_LONG).show();
+				} else {
+					Intent i = new Intent(v.getContext(), ExcluirManequim.class);
+					//i.putExtra("listener", new RetornoListener());
+					startActivity(i);
 				}
 			}
 		});
-		
+
 		proximoButton = new ImageButton(this);
 		if (dao.getManequins().size() > 1) {
 			proximoButton.setImageResource(R.drawable.next);
@@ -151,11 +101,11 @@ public class EscolherManequimActivity extends Activity {
 		anteriorButton.setImageResource(R.drawable.previous_cinza);
 		anteriorButton.setBackgroundColor(Color.TRANSPARENT);
 		anteriorButton.setOnClickListener(new VoltaListener());
-		
-//		Button meioButton = new Button(this);
-//		meioButton.setText("Escolher!");
-//		meioButton.setOnClickListener(new CalibrarListener());
-		
+
+		//		Button meioButton = new Button(this);
+		//		meioButton.setText("Escolher!");
+		//		meioButton.setOnClickListener(new CalibrarListener());
+
 		RelativeLayout layoutAdd = new RelativeLayout(this);
 		LinearLayout linearAdd = new LinearLayout(this);
 		linearAdd.addView(addButton);
@@ -164,7 +114,7 @@ public class EscolherManequimActivity extends Activity {
 				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		layoutAdd.addView(linearAdd);
 		layoutAdd.setGravity(Gravity.BOTTOM);
-		
+
 		RelativeLayout layoutDelete = new RelativeLayout(this);
 		LinearLayout linearDelete = new LinearLayout(this);
 		linearDelete.addView(deleteButton);
@@ -181,7 +131,7 @@ public class EscolherManequimActivity extends Activity {
 		linearProximo.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		layoutProximo.addView(linearProximo);
 		layoutProximo.setGravity(Gravity.CENTER);
-		
+
 		RelativeLayout layoutAnterior = new RelativeLayout(this);
 		LinearLayout linearAnterior = new LinearLayout(this);
 		linearAnterior.addView(anteriorButton);
@@ -189,20 +139,20 @@ public class EscolherManequimActivity extends Activity {
 		linearAnterior.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		layoutAnterior.addView(linearAnterior);
 		layoutAnterior.setGravity(Gravity.CENTER);
-		
-//		RelativeLayout layoutMeio = new RelativeLayout(this);
-//		LinearLayout linearMeio = new LinearLayout(this);
-//		linearMeio.addView(meioButton);
-//		linearMeio.setGravity(Gravity.CENTER);
-//		linearMeio.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-//		layoutMeio.addView(linearMeio);
-//		layoutMeio.setGravity(Gravity.BOTTOM);
-		
+
+		//		RelativeLayout layoutMeio = new RelativeLayout(this);
+		//		LinearLayout linearMeio = new LinearLayout(this);
+		//		linearMeio.addView(meioButton);
+		//		linearMeio.setGravity(Gravity.CENTER);
+		//		linearMeio.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		//		layoutMeio.addView(linearMeio);
+		//		layoutMeio.setGravity(Gravity.BOTTOM);
+
 		escolherButton = new ImageButton(this);
 		escolherButton.setImageResource(R.drawable.escolher);
 		escolherButton.setBackgroundColor(Color.TRANSPARENT);
 		escolherButton.setOnClickListener(new CalibrarListener());
-		
+
 		RelativeLayout layoutMeio = new RelativeLayout(this);
 		LinearLayout linearMeio = new LinearLayout(this);
 		linearMeio.addView(escolherButton);
@@ -222,14 +172,14 @@ public class EscolherManequimActivity extends Activity {
 
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 		visualizadorManequim.setManequins(dao.getManequins());
 		visualizadorManequim.setPosicao(dao.getManequins().size() - 1);
 		visualizadorManequim.atualizaImagensBotoes();
-		
+
 	}
 
 	private class VoltaListener implements OnClickListener {
@@ -246,7 +196,7 @@ public class EscolherManequimActivity extends Activity {
 			visualizadorManequim.proximoManequim();
 		}
 	}
-	
+
 	private class CalibrarListener implements OnClickListener {
 
 		public void onClick(View arg0) {
@@ -257,18 +207,18 @@ public class EscolherManequimActivity extends Activity {
 		}
 	}
 
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		MenuInflater inflate = new MenuInflater(this);
-//		inflate.inflate(R.menu.escolher_manequim_menu, menu);
-//		return true;
-//	}
-//
-//	@Override
-//	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-//		visualizadorManequim.removeImagem();
-//		return true;
-//	}
+	//	@Override
+	//	public boolean onCreateOptionsMenu(Menu menu) {
+	//		MenuInflater inflate = new MenuInflater(this);
+	//		inflate.inflate(R.menu.escolher_manequim_menu, menu);
+	//		return true;
+	//	}
+	//
+	//	@Override
+	//	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+	//		visualizadorManequim.removeImagem();
+	//		return true;
+	//	}
 
 	public class VisualizadorManequim extends View {
 
@@ -290,19 +240,19 @@ public class EscolherManequimActivity extends Activity {
 			this.requestFocus();
 			this.requestLayout();
 		}
-		
+
 		public boolean ehManequimPadrao() {
 			return posicao == 0;
 		}
 
 		public void removeImagem() {
 			if (ehManequimPadrao()) {
-				Toast.makeText(getContext(), "Este manequim È padr„o do MobileCloset. N„o pode ser excluÌdo.", Toast.LENGTH_LONG).show();
+				Toast.makeText(getContext(), "Este manequim √© padr√£o do MobileCloset. N√£o pode ser exclu√≠do.", Toast.LENGTH_LONG).show();
 			} else {
 				if (dao.getIdManequimPadrao() == manequins.get(posicao).getId()) {
 					dao.inserirManequimPadrao(manequins.get(0));
 				}
-				
+
 				dao.removeManequim(manequins.get(posicao));
 				manequins.remove(posicao);
 				if (manequins.isEmpty()) {
@@ -319,14 +269,14 @@ public class EscolherManequimActivity extends Activity {
 			}
 		}
 
-//		@Override
-//		protected void onDraw(Canvas canvas) {
-//			super.onDraw(canvas);
-//			if (manequimAtual != null) {
-//				manequimAtual.draw(canvas);
-//			}
-//		}
-		
+		//		@Override
+		//		protected void onDraw(Canvas canvas) {
+		//			super.onDraw(canvas);
+		//			if (manequimAtual != null) {
+		//				manequimAtual.draw(canvas);
+		//			}
+		//		}
+
 		public Manequim getManequim() {
 			return manequins.get(posicao);
 		}
@@ -346,7 +296,7 @@ public class EscolherManequimActivity extends Activity {
 		public void setPosicao(int posicao) {
 			this.posicao = posicao;
 		}
-		
+
 		@Override
 		protected void onDraw(Canvas canvas) {
 			super.onDraw(canvas);
@@ -361,9 +311,9 @@ public class EscolherManequimActivity extends Activity {
 		public void proximoManequim() {
 			if (posicao < manequins.size()-1) {
 				posicao++;
-//				Manequim manequim = manequins.get(posicao);
-//				manequimAtual = carregaDrawable(manequim.getImagem());
-//				manequimAtual.setBounds(0, 0, getWidth(), getHeight());
+				//				Manequim manequim = manequins.get(posicao);
+				//				manequimAtual = carregaDrawable(manequim.getImagem());
+				//				manequimAtual.setBounds(0, 0, getWidth(), getHeight());
 				invalidate();
 			}
 			atualizaImagensBotoes();
@@ -393,7 +343,7 @@ public class EscolherManequimActivity extends Activity {
 				proximoButton.setImageResource(R.drawable.next_cinza);
 			}
 		}
-	
+
 		private Drawable carregaDrawable(byte[] imagem) {
 			Bitmap b = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
 			Matrix matrix = new Matrix();
@@ -401,5 +351,7 @@ public class EscolherManequimActivity extends Activity {
 			Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
 			return new BitmapDrawable(girado);
 		}
+
 	}
+
 }

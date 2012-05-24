@@ -42,6 +42,7 @@ public class BDAdapter {
 		SQLiteDatabase banco = bdHelper.getReadableDatabase();
 		Cursor c = banco.rawQuery(String.format("SELECT l.* FROM loja l WHERE l.nome = '%s';", nome), null);
 		if (c == null || c.getCount() == 0) {
+			c.close();
 			return null;
 		}
 		c.moveToFirst();

@@ -49,7 +49,7 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 		case R.id.button_provador:
 			i = new Intent(v.getContext(), ProvadorActivity.class);
 //			if (dao.getManequimPadrao() == null) {
-//				Toast.makeText(this, "Não há manequim escolhido!", Toast.LENGTH_LONG).show();
+//				Toast.makeText(this, "Nï¿½o hï¿½ manequim escolhido!", Toast.LENGTH_LONG).show();
 //			} else {
 //				i.putExtra("background", dao.getManequimPadrao());
 //				startActivity(i);
@@ -64,14 +64,14 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.button_closet:
 			if (dao.getRoupas().isEmpty()) {
-				Toast.makeText(this, "Não há roupas cadastradas", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "NÃ£o hÃ¡ roupas cadastradas", Toast.LENGTH_LONG).show();
 			}
 			i = new Intent(v.getContext(), VerRoupasActivity.class);
 			startActivity(i);
 			break;
 		case R.id.button_looks:
 			if (dao.getLooks().isEmpty()) {
-				Toast.makeText(this, "Não há looks cadastrados", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "NÃ£o hÃ¡ looks cadastrados", Toast.LENGTH_LONG).show();
 			} else {
 				i = new Intent(v.getContext(), FavoritosActivity.class);
 				startActivity(i);				
@@ -133,7 +133,7 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 //			if (dao.getManequimPadrao() == null) {
 ////				i.putExtra("manequimFaltando", true);
 ////				startActivity(i);
-//				Toast.makeText(this, "Não há manequim escolhido!", Toast.LENGTH_LONG).show();
+//				Toast.makeText(this, "Nï¿½o hï¿½ manequim escolhido!", Toast.LENGTH_LONG).show();
 //			} else {
 //				i.putExtra("background", dao.getManequimPadrao());
 //				startActivity(i);

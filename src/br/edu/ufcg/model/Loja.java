@@ -1,8 +1,14 @@
 package br.edu.ufcg.model;
 
+import java.io.Serializable;
 
-public class Loja {
 
+public class Loja implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8944231349838203962L;
 	private int id;
 	private String nome;
 	private byte[] logo;

@@ -31,7 +31,6 @@ import br.edu.ufcg.model.Roupa;
 public class CalibragemRoupasActivity  extends Activity {
 
 	private boolean DEBUG = false;
-//	private boolean modificarLargura = true;
 	private MyImageView myImageView;
 	private Calibragem2 calibragemRoupa;
 	private Calibragem calibragemModelo;
@@ -57,7 +56,7 @@ public class CalibragemRoupasActivity  extends Activity {
 
 		Bitmap b = null;
 		if (DEBUG) {
-			b = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+			b = BitmapFactory.decodeResource(getResources(), R.drawable.background_opcoes);
 			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		} else {
 			b = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
@@ -93,7 +92,7 @@ public class CalibragemRoupasActivity  extends Activity {
 		zoomOutLargura.setOnClickListener(new DiminuirListener(myImageView, true));
 		
 		ImageButton salvaButton = new ImageButton(this);
-		salvaButton.setImageDrawable(getResources().getDrawable(R.drawable.add));
+		salvaButton.setImageDrawable(getResources().getDrawable(R.drawable.save));
 		salvaButton.setBackgroundColor(Color.TRANSPARENT);
 		salvaButton.setOnClickListener(new OnClickListener() {
 			
@@ -109,7 +108,7 @@ public class CalibragemRoupasActivity  extends Activity {
 		linearDireito.setGravity(Gravity.RIGHT);
 		linearDireito.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		layoutDireito.addView(linearDireito);
-		layoutDireito.setGravity(Gravity.BOTTOM);
+		layoutDireito.setGravity(Gravity.TOP);
 		
 		RelativeLayout layoutEsquerdo = new RelativeLayout(this);
 		LinearLayout linearEsquerdo = new LinearLayout(this);
@@ -119,12 +118,12 @@ public class CalibragemRoupasActivity  extends Activity {
 		linearEsquerdo.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		linearEsquerdo.setOrientation(LinearLayout.VERTICAL);
 		layoutEsquerdo.addView(linearEsquerdo);
-		layoutEsquerdo.setGravity(Gravity.BOTTOM);
+		layoutEsquerdo.setGravity(Gravity.TOP);
 		
 		RelativeLayout layoutCentral = new RelativeLayout(this);
 		LinearLayout linearCentral = new LinearLayout(this);
 		linearCentral.addView(salvaButton);
-		linearCentral.setGravity(Gravity.CENTER);
+		linearCentral.setGravity(Gravity.RIGHT);
 		linearCentral.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		layoutCentral.addView(linearCentral);
 		layoutCentral.setGravity(Gravity.BOTTOM);
@@ -140,20 +139,6 @@ public class CalibragemRoupasActivity  extends Activity {
 		inflate.inflate(R.menu.calibragem_menu, menu);
 		return true;
 	}
-
-//	@Override
-//	public boolean onOptionsItemSelected(MenuItem item) {
-//		switch (item.getItemId()) {
-//		case R.id.salvarCalibragem:
-//			myImageView.salvarCalibragem();
-//			break;
-//		case R.id.alterarDimensoes:
-//			modificarLargura = !modificarLargura;
-//			item.setTitle(modificarLargura ? "Alterar Altura" : "Alterar Largura");
-//			break;
-//		}
-//		return true;
-//	}
 
 	public class MyImageView extends View {
 
