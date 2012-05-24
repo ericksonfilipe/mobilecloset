@@ -14,6 +14,7 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -67,8 +68,8 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 		//FIXME o segundo molde de short deveria ser um molde especifico pra bermuda, jah que ha diferenca entre eles.
 //		moldes = new int[] {R.drawable.molde_short, R.drawable.molde_calca,
 //				R.drawable.molde_camisa, R.drawable.molde_camisao, R.drawable.molde_camiseta,
-//				R.drawable.molde_saia, R.drawable.molde_short, R.drawable.molde_camiseta};
-		tipos = new String[] {"Short", "Bermuda", "Calça", "Camisa", "Camisa Manga Comprida", "Camiseta", "Saia", "Vestido"};		
+//				R.drawable.molde_saia, R.drawable.molde_camiseta};
+		tipos = new String[] {"Short", "Calça", "Camisa", "Camisa Manga Comprida", "Camiseta", "Saia", "Vestido"};		
 		categorias = Categoria.values();
 		
 		if (tipos.length != categorias.length) Log.e("ERRO NOSSO", "O NUMERO DE MOLDES TEM QUE SER IGUAL AO NUMERO DE CATEGORIAS! JAH PODE OLHAR NO ONCREATE DE TIRARFOTOROUPAACTIVITY");
@@ -77,7 +78,6 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
         //layout.setBackgroundResource(moldes[indice]);
         
         addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-        
         
         proximoMoldeButton = new ImageButton(this);
         proximoMoldeButton.setImageResource(R.drawable.next);
@@ -91,7 +91,12 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 		
 		tipoDeRoupa = new Button(this);
 		tipoDeRoupa.setText(tipos[indice]);
-		tipoDeRoupa.setBackgroundColor(Color.TRANSPARENT);
+		tipoDeRoupa.setTextSize(18);
+		tipoDeRoupa.setTextColor(Color.WHITE);
+		tipoDeRoupa.setTypeface(Typeface.DEFAULT_BOLD);
+		tipoDeRoupa.setWidth(120);
+		tipoDeRoupa.setHeight(45);
+		tipoDeRoupa.setBackgroundColor(R.drawable.quadro);
 
 		RelativeLayout layout = new RelativeLayout(this);
 		LinearLayout linear = new LinearLayout(this);

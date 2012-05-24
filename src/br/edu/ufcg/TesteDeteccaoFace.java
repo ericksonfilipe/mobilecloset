@@ -31,6 +31,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
+//import br.edu.ufcg.CalibragemRoupasActivity.AumentarListener;
+//import br.edu.ufcg.CalibragemRoupasActivity.DiminuirListener;
+import br.edu.ufcg.CalibragemRoupasActivity.MyImageView;
 import br.edu.ufcg.model.Calibragem;
 import br.edu.ufcg.model.Categoria;
 //import br.edu.ufcg.model.Roupa;
@@ -70,26 +73,66 @@ public class TesteDeteccaoFace  extends Activity {
 		myImageView.setBackgroundDrawable(bd);
 		setContentView(myImageView);
 
-		ImageButton zoomIn = new ImageButton(this);
-		zoomIn.setImageDrawable(getResources().getDrawable(R.drawable.zoom_in));
-		zoomIn.setBackgroundColor(Color.TRANSPARENT);
-		zoomIn.setOnClickListener(new AumentarListener(myImageView));
+		ImageButton zoomInAltura = new ImageButton(this);
+		zoomInAltura.setImageDrawable(getResources().getDrawable(R.drawable.up));
+		zoomInAltura.setBackgroundColor(Color.TRANSPARENT);
+		zoomInAltura.setOnClickListener(new AumentarListener(myImageView, false));
 
-		ImageButton zoomOut = new ImageButton(this);
-		zoomOut.setImageDrawable(getResources().getDrawable(R.drawable.zoom_out));
-		zoomOut.setBackgroundColor(Color.TRANSPARENT);
-		zoomOut.setOnClickListener(new DiminuirListener(myImageView));
+		ImageButton zoomOutAltura = new ImageButton(this);
+		zoomOutAltura.setImageDrawable(getResources().getDrawable(R.drawable.bottom));
+		zoomOutAltura.setBackgroundColor(Color.TRANSPARENT);
+		zoomOutAltura.setOnClickListener(new DiminuirListener(myImageView, false));
+		
+		ImageButton zoomInLargura = new ImageButton(this);
+		zoomInLargura.setImageDrawable(getResources().getDrawable(R.drawable.right));
+		zoomInLargura.setBackgroundColor(Color.TRANSPARENT);
+		zoomInLargura.setOnClickListener(new AumentarListener(myImageView, true));
 
-		RelativeLayout layout = new RelativeLayout(this);
-		LinearLayout linear = new LinearLayout(this);
-		linear.addView(zoomOut);
-		linear.addView(zoomIn);
-		linear.setGravity(Gravity.RIGHT);
-		linear.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-		layout.addView(linear);
-		layout.setGravity(Gravity.BOTTOM);
+		ImageButton zoomOutLargura = new ImageButton(this);
+		zoomOutLargura.setImageDrawable(getResources().getDrawable(R.drawable.left));
+		zoomOutLargura.setBackgroundColor(Color.TRANSPARENT);
+		zoomOutLargura.setOnClickListener(new DiminuirListener(myImageView, true));
+		
+		ImageButton salvaButton = new ImageButton(this);
+		salvaButton.setImageDrawable(getResources().getDrawable(R.drawable.save));
+		salvaButton.setBackgroundColor(Color.TRANSPARENT);
+		salvaButton.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View arg0) {
+				myImageView.salvarCalibragem();
+			}
+		});
 
-		addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		RelativeLayout layoutDireito = new RelativeLayout(this);
+		LinearLayout linearDireito = new LinearLayout(this);
+		linearDireito.addView(zoomOutLargura);
+		linearDireito.addView(zoomInLargura);
+		linearDireito.setGravity(Gravity.RIGHT);
+		linearDireito.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		layoutDireito.addView(linearDireito);
+		layoutDireito.setGravity(Gravity.TOP);
+		
+		RelativeLayout layoutEsquerdo = new RelativeLayout(this);
+		LinearLayout linearEsquerdo = new LinearLayout(this);
+		linearEsquerdo.addView(zoomInAltura);
+		linearEsquerdo.addView(zoomOutAltura);
+		linearEsquerdo.setGravity(Gravity.LEFT);
+		linearEsquerdo.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		linearEsquerdo.setOrientation(LinearLayout.VERTICAL);
+		layoutEsquerdo.addView(linearEsquerdo);
+		layoutEsquerdo.setGravity(Gravity.TOP);
+		
+		RelativeLayout layoutCentral = new RelativeLayout(this);
+		LinearLayout linearCentral = new LinearLayout(this);
+		linearCentral.addView(salvaButton);
+		linearCentral.setGravity(Gravity.RIGHT);
+		linearCentral.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		layoutCentral.addView(linearCentral);
+		layoutCentral.setGravity(Gravity.BOTTOM);
+
+		addContentView(layoutDireito, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		addContentView(layoutEsquerdo, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		addContentView(layoutCentral, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 	}
 	
 //	public void cadastrarModelosRoupas() {
@@ -106,26 +149,26 @@ public class TesteDeteccaoFace  extends Activity {
 //		
 //	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflate = new MenuInflater(this);
-		inflate.inflate(R.menu.calibragem_menu, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.salvarCalibragem:
-			myImageView.salvarCalibragem();
-			break;
-		case R.id.alterarDimensoes:
-			modificarLargura = !modificarLargura;
-			item.setTitle(modificarLargura ? "Alterar Altura" : "Alterar Largura");
-			break;
-		}
-		return true;
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		MenuInflater inflate = new MenuInflater(this);
+//		inflate.inflate(R.menu.calibragem_menu, menu);
+//		return true;
+//	}
+//
+//	@Override
+//	public boolean onOptionsItemSelected(MenuItem item) {
+//		switch (item.getItemId()) {
+//		case R.id.salvarCalibragem:
+//			myImageView.salvarCalibragem();
+//			break;
+//		case R.id.alterarDimensoes:
+//			modificarLargura = !modificarLargura;
+//			item.setTitle(modificarLargura ? "Alterar Altura" : "Alterar Largura");
+//			break;
+//		}
+//		return true;
+//	}
 
 	public class MyImageView extends View {
 
@@ -278,25 +321,25 @@ public class TesteDeteccaoFace  extends Activity {
                 Categoria[] categorias = new Categoria[] {};
                 switch (posicao) {
                 case 0:
-                        categorias = new Categoria[] {Categoria.CAMISA};
-                        break;
+                	categorias = new Categoria[] {Categoria.SHORT};
+                	break;
                 case 1:
-                        categorias = new Categoria[] {Categoria.CALCA};
-                        break;
+                	categorias = new Categoria[] {Categoria.CALCA};
+                	break;
                 case 2:
-                        categorias = new Categoria[] {Categoria.SAIA};
-                        break;
+                	categorias = new Categoria[] {Categoria.CAMISA};
+                	break;
                 case 3:
-                		categorias = new Categoria[] {Categoria.CAMISA_MANGA_LONGA};
-                		break;
+                	categorias = new Categoria[] {Categoria.CAMISA_MANGA_LONGA};
+                	break;
                 case 4:
-            			categorias = new Categoria[] {Categoria.VESTIDO};
-            			break;
+                	categorias = new Categoria[] {Categoria.CAMISETA};
+                	break;
                 case 5:
-                    categorias = new Categoria[] {Categoria.CAMISETA};
-                    break;
+                	categorias = new Categoria[] {Categoria.SAIA};
+                	break;
                 case 6:
-                    categorias = new Categoria[] {Categoria.SHORT, Categoria.BERMUDA};
+                	categorias = new Categoria[] {Categoria.VESTIDO};
                     break;
                 }
                 
@@ -312,7 +355,7 @@ public class TesteDeteccaoFace  extends Activity {
 
                 posicao++;
                 if (posicao >= imagens.length) {
-                	Toast.makeText(getContext(), "Manequim escolhido com sucesso!", Toast.LENGTH_LONG).show();
+                	Toast.makeText(getContext(), "Manequim escolhido com sucesso!", Toast.LENGTH_SHORT).show();
                     finish();
                     return;
                 }
@@ -359,8 +402,11 @@ public class TesteDeteccaoFace  extends Activity {
 }
 	private class AumentarListener implements OnClickListener {
 		private MyImageView view;
-		public AumentarListener(MyImageView view) {
+		private boolean modificarLargura;
+		
+		public AumentarListener(MyImageView view, boolean modificarLargura) {
 			this.view = view;
+			this.modificarLargura = modificarLargura;
 		}
 
 		public void onClick(View arg0) {
@@ -374,8 +420,11 @@ public class TesteDeteccaoFace  extends Activity {
 
 	private class DiminuirListener implements OnClickListener {
 		private MyImageView view;
-		public DiminuirListener(MyImageView view) {
+		private boolean modificarLargura;
+		
+		public DiminuirListener(MyImageView view, boolean modificarLargura) {
 			this.view = view;
+			this.modificarLargura = modificarLargura;
 		}
 
 		public void onClick(View arg0) {

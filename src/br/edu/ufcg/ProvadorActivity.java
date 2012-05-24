@@ -82,7 +82,7 @@ public class ProvadorActivity extends Activity {
 			List<Roupa> roupasInferiores = carregaRoupasInferiores();
 
 			if (roupasSuperiores.isEmpty() && roupasInferiores.isEmpty()) {
-				Toast.makeText(this, "N√£o h√° roupas cadastradas!", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "N„o h· roupas cadastradas!", Toast.LENGTH_SHORT).show();
 			}
 
 			provador = new Provador(this, roupasSuperiores, roupasInferiores);
@@ -110,7 +110,7 @@ public class ProvadorActivity extends Activity {
 			layoutFavorito.setGravity(Gravity.BOTTOM);
 
 			menuButton = new ImageButton(this);
-			menuButton.setImageResource(R.drawable.save);
+			menuButton.setImageResource(R.drawable.options);
 			menuButton.setBackgroundColor(Color.TRANSPARENT);
 			menuButton.setOnClickListener(new OnClickListener() {
 				public void onClick(View arg0) {
@@ -143,7 +143,7 @@ public class ProvadorActivity extends Activity {
 		
 		dao.inserirLook(bitmapData);
 		
-		Toast.makeText(this, "Look salvo com sucesso!", Toast.LENGTH_LONG).show();
+		Toast.makeText(this, "Look salvo com sucesso!", Toast.LENGTH_SHORT).show();
 	}
 	
 //	Metodo que Ed disse que salvava o canvas
@@ -233,7 +233,7 @@ public class ProvadorActivity extends Activity {
 	}
 
 	private List<Roupa> carregaRoupasSuperiores() {
-		List<Categoria> superiores = Arrays.asList(new Categoria[] {Categoria.CAMISA, Categoria.CAMISETA, Categoria.CAMISA_MANGA_LONGA, Categoria.VESTIDO});
+		List<Categoria> superiores = Arrays.asList(new Categoria[] {Categoria.CAMISA, Categoria.CAMISA_MANGA_LONGA, Categoria.CAMISETA, Categoria.VESTIDO});
 		List<Roupa> roupas = new ArrayList<Roupa>();
 		for (Roupa roupa : dao.getRoupas()) {
 			if (superiores.contains(roupa.getCategoria())) {
@@ -244,7 +244,7 @@ public class ProvadorActivity extends Activity {
 	}
 
 	private List<Roupa> carregaRoupasInferiores() {
-		List<Categoria> inferiores = Arrays.asList(new Categoria[] {Categoria.BERMUDA, Categoria.CALCA, Categoria.SAIA, Categoria.SHORT});
+		List<Categoria> inferiores = Arrays.asList(new Categoria[] {Categoria.SHORT, Categoria.CALCA, Categoria.SAIA});
 		List<Roupa> roupas = new ArrayList<Roupa>();
 		for (Roupa roupa : dao.getRoupas()) {
 			if (inferiores.contains(roupa.getCategoria())) {
@@ -385,7 +385,6 @@ public class ProvadorActivity extends Activity {
 						roupaInferior.setBounds(0, 0,  100, 100);
 					} else {
 						roupaInferior.setBounds(calibragemI.left, calibragemI.top, calibragemI.right, calibragemI.bottom);
-						
 					}
 				}
 				invalidate();

@@ -2,9 +2,12 @@ package br.edu.ufcg;
 
 import br.edu.ufcg.BD.BDAdapter;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -49,7 +52,7 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 		case R.id.button_provador:
 			i = new Intent(v.getContext(), ProvadorActivity.class);
 //			if (dao.getManequimPadrao() == null) {
-//				Toast.makeText(this, "Nï¿½o hï¿½ manequim escolhido!", Toast.LENGTH_LONG).show();
+//				Toast.makeText(this, "Não há manequim escolhido!", Toast.LENGTH_SHORT).show();
 //			} else {
 //				i.putExtra("background", dao.getManequimPadrao());
 //				startActivity(i);
@@ -58,20 +61,23 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 			startActivity(i);
 			break;
 		case R.id.button_colecoes:
-			i = new Intent(v.getContext(), LojasActivity.class);
-			startActivity(i);
-			Toast.makeText(this, "Falta implementar!", Toast.LENGTH_LONG).show();
+			if(temConexao()){
+				i = new Intent(v.getContext(), LojasActivity.class);
+				startActivity(i);
+			}else{
+				Toast.makeText (getApplicationContext(), "Sem conexão com a Internet!", Toast.LENGTH_SHORT).show();
+			}
 			break;
 		case R.id.button_closet:
 			if (dao.getRoupas().isEmpty()) {
-				Toast.makeText(this, "NÃ£o hÃ¡ roupas cadastradas", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "Não há roupas cadastradas", Toast.LENGTH_SHORT).show();
 			}
 			i = new Intent(v.getContext(), VerRoupasActivity.class);
 			startActivity(i);
 			break;
 		case R.id.button_looks:
 			if (dao.getLooks().isEmpty()) {
-				Toast.makeText(this, "NÃ£o hÃ¡ looks cadastrados", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "Não há looks cadastrados", Toast.LENGTH_SHORT).show();
 			} else {
 				i = new Intent(v.getContext(), FavoritosActivity.class);
 				startActivity(i);				
@@ -82,11 +88,28 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 			startActivity(i);
 			break;
 		case R.id.button_sobre:
-			i = new Intent(v.getContext(), Sobre_v2_Activity.class);
+			i = new Intent(v.getContext(), SobreActivity.class);
 			startActivity(i);
 			break;
 		}
-	}	
+	}
+	
+	private boolean temConexao() {
+        boolean lblnRet = false;
+        try
+        {
+            ConnectivityManager cm = (ConnectivityManager)
+            getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isAvailable() && cm.getActiveNetworkInfo().isConnected()) {
+                lblnRet = true;
+            } else {
+                lblnRet = false;
+            }
+        }catch (Exception e) {
+        	e.getMessage();
+        }
+        return lblnRet;
+    }
 
 //	@Override
 //	public void onCreate(Bundle savedInstanceState) {
@@ -133,7 +156,7 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 //			if (dao.getManequimPadrao() == null) {
 ////				i.putExtra("manequimFaltando", true);
 ////				startActivity(i);
-//				Toast.makeText(this, "Nï¿½o hï¿½ manequim escolhido!", Toast.LENGTH_LONG).show();
+//				Toast.makeText(this, "Não há manequim escolhido!", Toast.LENGTH_SHORT).show();
 //			} else {
 //				i.putExtra("background", dao.getManequimPadrao());
 //				startActivity(i);
