@@ -182,6 +182,7 @@ public class VerRoupasActivity extends Activity {
 				i.putExtra("roupa", visualizadorRoupa.getRoupaAtual());
 				startActivity(i);
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
 				Toast.makeText(visualizadorRoupa.getContext(), "Não há roupas cadastradas para serem calibradas!", Toast.LENGTH_LONG).show();
 			}
 		}
