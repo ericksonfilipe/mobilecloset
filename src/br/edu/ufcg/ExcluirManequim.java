@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import br.edu.ufcg.EscolherManequimActivity.RetornoListener;
-import br.edu.ufcg.EscolherManequimActivity.VisualizadorManequim;
 
 public class ExcluirManequim extends Activity implements OnClickListener {
 

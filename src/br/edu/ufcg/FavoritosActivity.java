@@ -173,7 +173,7 @@ public class FavoritosActivity extends Activity {
 			listaLooks.remove(posicao);
 			
 			if (listaLooks.size() == 0) {
-				Toast.makeText(getContext(), "N√£o h√° mais looks salvos", Toast.LENGTH_LONG).show();
+				Toast.makeText(getContext(), "N„o h· mais looks salvos", Toast.LENGTH_SHORT).show();
 				finish();
 				return;
 			} else {

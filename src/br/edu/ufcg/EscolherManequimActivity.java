@@ -79,10 +79,10 @@ public class EscolherManequimActivity extends Activity {
 			//Opcao "Deseja realmente excluir"
 			public void onClick(View v) {
 				if (visualizadorManequim.ehManequimPadrao()) {
-					Toast.makeText(v.getContext(), "Este manequim √© padr√£o do MobileCloset. N√£o pode ser exclu√≠do.", Toast.LENGTH_LONG).show();
+					Toast.makeText(v.getContext(), "Este manequim È padr„o do MobileCloset. N„o pode ser excluÌdo.", Toast.LENGTH_SHORT).show();
 				} else {
 					Intent i = new Intent(v.getContext(), ExcluirManequim.class);
-					//i.putExtra("listener", new RetornoListener());
+					//i.putExtra("listener", new RetornoListener()); //TODO
 					startActivity(i);
 				}
 			}
@@ -247,7 +247,7 @@ public class EscolherManequimActivity extends Activity {
 
 		public void removeImagem() {
 			if (ehManequimPadrao()) {
-				Toast.makeText(getContext(), "Este manequim √© padr√£o do MobileCloset. N√£o pode ser exclu√≠do.", Toast.LENGTH_LONG).show();
+				Toast.makeText(getContext(), "Este manequim È padr„o do MobileCloset. N„o pode ser excluÌdo.", Toast.LENGTH_SHORT).show();
 			} else {
 				if (dao.getIdManequimPadrao() == manequins.get(posicao).getId()) {
 					dao.inserirManequimPadrao(manequins.get(0));
