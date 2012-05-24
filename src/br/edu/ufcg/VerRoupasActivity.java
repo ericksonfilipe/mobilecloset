@@ -183,7 +183,7 @@ public class VerRoupasActivity extends Activity {
 				startActivity(i);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
-				Toast.makeText(visualizadorRoupa.getContext(), "N„o h· roupas cadastradas para serem calibradas!", Toast.LENGTH_LONG).show();
+				Toast.makeText(visualizadorRoupa.getContext(), "N√£o h√° roupas cadastradas para serem calibradas!", Toast.LENGTH_LONG).show();
 			}
 		}
 
@@ -274,7 +274,7 @@ public class VerRoupasActivity extends Activity {
 				roupaAtual.setBounds(0, 0, getWidth(), getHeight());
 				invalidate();				
 			} else {
-				Toast.makeText(getContext(), "N„o h· roupas cadastradas para serem excluÌdas!", Toast.LENGTH_LONG).show();
+				Toast.makeText(getContext(), "N√£o h√° roupas cadastradas para serem exclu√≠das!", Toast.LENGTH_LONG).show();
 			}
 		}
 

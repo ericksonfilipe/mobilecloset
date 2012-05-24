@@ -82,7 +82,7 @@ public class ProvadorActivity extends Activity {
 			List<Roupa> roupasInferiores = carregaRoupasInferiores();
 
 			if (roupasSuperiores.isEmpty() && roupasInferiores.isEmpty()) {
-				Toast.makeText(this, "N„o h· roupas cadastradas!", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "N√£o h√° roupas cadastradas!", Toast.LENGTH_LONG).show();
 			}
 
 			provador = new Provador(this, roupasSuperiores, roupasInferiores);
