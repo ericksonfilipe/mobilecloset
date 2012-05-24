@@ -150,7 +150,9 @@ public class BDAdapter {
 		cv.put("imagem", roupa.getImagem());
 		cv.put("categoria", roupa.getCategoria().name());
 		cv.put("codigo", roupa.getCodigo());
-		cv.put("loja", roupa.getLoja().getId());
+		if (roupa.getLoja() != null) {
+			cv.put("loja", roupa.getLoja().getId());
+		}
 		banco.insert("roupa", null, cv);
 		banco.close();
 	}
@@ -201,14 +203,16 @@ public class BDAdapter {
 		
 		Cursor c2 = banco.rawQuery("SELECT l.* FROM loja l WHERE l.id = " + cdLoja + ";", null);
 		c2.moveToFirst();
-		int idL = c2.getInt(c2.getColumnIndex("id"));
-		String nomeL = c2.getString(c2.getColumnIndex("nome"));
-		byte[] logo = c2.getBlob(c2.getColumnIndex("logo"));
-		Loja loja = new Loja(idL, nomeL, logo);
+		if (c2.getCount() != 0) {
+			int idL = c2.getInt(c2.getColumnIndex("id"));
+			String nomeL = c2.getString(c2.getColumnIndex("nome"));
+			byte[] logo = c2.getBlob(c2.getColumnIndex("logo"));
+			Loja loja = new Loja(idL, nomeL, logo);
+			roupa.setLoja(loja);
+		}
 		c2.close();
 		
 		banco.close();
-		roupa.setLoja(loja);
 		return roupa;
 	}
 

@@ -53,9 +53,6 @@ public class LojasActivity extends Activity {
 	public class RetornoListener implements Listener {
 
 		public void notifica() {
-			
-			
-			
 			List<Roupa> roupas = handler.getRoupas();
 			
 			BDAdapter dao = new BDAdapter(LojasActivity.this);
