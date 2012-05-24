@@ -55,7 +55,7 @@ public class TesteDeteccaoFace  extends Activity {
 
 		Bitmap b = null;
 		if (DEBUG) {
-			b = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+			b = BitmapFactory.decodeResource(getResources(), R.drawable.background_opcoes);
 			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		} else {
 			b = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
