@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background_opcoes"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:weightSum="0" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_closet"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignRight="@+id/linearLayout1"
+        android:layout_centerVertical="true"
+        android:background="@drawable/botao_closet" />
+
+    <Button
+        android:id="@+id/button_colecoes"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignBaseline="@+id/button_provador"
+        android:layout_alignBottom="@+id/button_provador"
+        android:layout_marginLeft="25dp"
+        android:layout_toRightOf="@+id/button_provador"
+        android:background="@drawable/botao_colecoes" />
+
+    <Button
+        android:id="@+id/button_provador"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_above="@+id/button_closet"
+        android:layout_alignLeft="@+id/button_closet"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/botao_provador" />
+
+        <Button
+            android:id="@+id/button_manequim"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignLeft="@+id/button_closet"
+            android:layout_below="@+id/button_closet"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/botao_manequim_v2" />
+
+        <Button
+            android:id="@+id/button_looks"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignLeft="@+id/button_colecoes"
+            android:layout_below="@+id/button_provador"
+            android:background="@drawable/botao_looks" />
+
+        <Button
+            android:id="@+id/button_sobre"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignBaseline="@+id/button_manequim"
+            android:layout_alignBottom="@+id/button_manequim"
+            android:layout_alignLeft="@+id/button_looks"
+            android:background="@drawable/botao_sobre" />
+
+</RelativeLayout>
