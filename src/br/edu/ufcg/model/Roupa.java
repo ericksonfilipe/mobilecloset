@@ -4,7 +4,10 @@ import java.io.Serializable;
 
 public class Roupa implements Serializable {
 
-	private static final long serialVersionUID = -1575837948040959794L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6282460613389670778L;
 	private int id;
 	private String codigo;
 	private byte[] imagem;
@@ -22,7 +25,7 @@ public class Roupa implements Serializable {
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
