@@ -3,7 +3,9 @@ package br.edu.ufcg;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -42,6 +44,7 @@ public class VerRoupasActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		final Context contexto = this;
 		dao = new BDAdapter(getApplicationContext());
 		byte[] manequim = dao.getManequimPadrao();
 
@@ -67,10 +70,20 @@ public class VerRoupasActivity extends Activity {
 		deleteButton.setImageResource(R.drawable.delete);
 		deleteButton.setBackgroundColor(Color.TRANSPARENT);
 		deleteButton.setOnClickListener(new OnClickListener() {
-			
+			//Alerta "Deseja realmente excluir"
 			public void onClick(View v) {
-				visualizadorRoupa.removeImagem();
-				
+				AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
+				builder.setMessage("Deseja realmente excluir?")
+				.setCancelable(false)
+				.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						visualizadorRoupa.removeImagem();
+					}
+				})
+				.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) { /*nada*/ }     	   
+				});
+				builder.create().show();
 			}
 		});
 		

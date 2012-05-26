@@ -45,8 +45,6 @@
         
         <activity android:name=".LojasActivity" ></activity>
         
-        <activity android:name=".ExcluirManequim" android:theme="@android:style/Theme.Dialog" android:label="@string/Excluir"></activity>
-        
         <activity android:name=".ConfirmarDownload" android:theme="@android:style/Theme.Dialog" android:label="@string/Download"></activity>
         
     </application>
