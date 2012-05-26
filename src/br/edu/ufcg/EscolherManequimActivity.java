@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -54,8 +56,10 @@ public class EscolherManequimActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		dao = new BDAdapter(this);
+		final Context contexto = this;
 
+		dao = new BDAdapter(this);
+		
 		visualizadorManequim = new VisualizadorManequim(this, dao.getManequins());
 		setContentView(visualizadorManequim);
 
@@ -70,20 +74,29 @@ public class EscolherManequimActivity extends Activity {
 				startActivity(i);				
 			}
 		});
+		
 
 		deleteButton = new ImageButton(this);
 		deleteButton.setImageResource(R.drawable.delete);
 		deleteButton.setBackgroundColor(Color.TRANSPARENT);
 		deleteButton.setOnClickListener(new OnClickListener() {
-
-			//Opcao "Deseja realmente excluir"
+			//Alerta "Deseja realmente excluir"
 			public void onClick(View v) {
 				if (visualizadorManequim.ehManequimPadrao()) {
 					Toast.makeText(v.getContext(), "Este manequim é padrão do MobileCloset. Não pode ser excluído.", Toast.LENGTH_SHORT).show();
 				} else {
-					Intent i = new Intent(v.getContext(), ExcluirManequim.class);
-					//i.putExtra("listener", new RetornoListener()); //TODO
-					startActivity(i);
+			        AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
+				    builder.setMessage("Deseja realmente excluir?")
+				           .setCancelable(false)
+				           .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+				               public void onClick(DialogInterface dialog, int id) {
+				            	   visualizadorManequim.removeImagem();
+				               }
+				           })
+				           .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+				               public void onClick(DialogInterface dialog, int id) { /*nada*/ }     	   
+				           });
+				    builder.create().show();
 				}
 			}
 		});
