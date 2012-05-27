@@ -7,11 +7,17 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Bitmap.CompressFormat;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import br.edu.ufcg.BD.BDAdapter;
 
 public class MobileclosetActivity extends Activity implements OnClickListener {
@@ -48,6 +54,27 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 
 //		Button bOpcoes = (Button) findViewById(R.id.button_opcoes_v2);
 //		bOpcoes.setOnClickListener(this);
+		
+		ImageButton closeButton = new ImageButton(this);
+		closeButton.setImageResource(R.drawable.close);
+		closeButton.setBackgroundColor(Color.TRANSPARENT);
+		closeButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				moveTaskToBack(true); //esconde a aplicacao e deixa o Android decidir quando terminar.
+				//android.os.Process.killProcess(android.os.Process.myPid()); //encerra realmente.
+				//finish(); //modo "usual"; soh pega na primeira activity.
+			}
+		});
+		
+		RelativeLayout layoutClose = new RelativeLayout(this);
+		LinearLayout linearClose = new LinearLayout(this);
+		linearClose.addView(closeButton);
+		linearClose.setGravity(Gravity.LEFT);
+		linearClose.setLayoutParams(new LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		layoutClose.addView(linearClose);
+		layoutClose.setGravity(Gravity.BOTTOM);
+		addContentView(layoutClose, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}	
