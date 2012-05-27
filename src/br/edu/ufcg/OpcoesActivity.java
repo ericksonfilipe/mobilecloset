@@ -60,7 +60,6 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 		case R.id.button_colecoes:
 			i = new Intent(v.getContext(), LojasActivity.class);
 			startActivity(i);
-			Toast.makeText(this, "Falta implementar!", Toast.LENGTH_LONG).show();
 			break;
 		case R.id.button_closet:
 			if (dao.getRoupas().isEmpty()) {
