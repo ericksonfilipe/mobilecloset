@@ -1,6 +1,5 @@
 package br.edu.ufcg;
 
-import java.io.Serializable;
 import java.util.List;
 
 import android.app.Activity;
@@ -18,22 +17,15 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
-import br.edu.ufcg.async.Listener;
-import br.edu.ufcg.model.Loja;
 import br.edu.ufcg.model.Manequim;
-import br.edu.ufcg.model.Roupa;
 
 public class EscolherManequimActivity extends Activity {
 
@@ -44,13 +36,6 @@ public class EscolherManequimActivity extends Activity {
 	public ImageButton addButton;
 	public ImageButton deleteButton;
 	public ImageButton escolherButton;
-
-	public class RetornoListener implements Listener, Serializable {
-
-		public void notifica() {
-			visualizadorManequim.removeImagem();
-		}
-	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

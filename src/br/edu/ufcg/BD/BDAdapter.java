@@ -30,12 +30,14 @@ public class BDAdapter {
 	}
 
 	public void inserirLoja(Loja loja) {
-		SQLiteDatabase banco = bdHelper.getWritableDatabase();
-		ContentValues cv = new ContentValues();
-		cv.put("nome", loja.getNome());
-		cv.put("logo", loja.getLogo());
-		banco.insert("loja", null, cv);
-		banco.close();
+		if (getLoja(loja.getNome()) == null) {
+			SQLiteDatabase banco = bdHelper.getWritableDatabase();
+			ContentValues cv = new ContentValues();
+			cv.put("nome", loja.getNome());
+			cv.put("logo", loja.getLogo());
+			banco.insert("loja", null, cv);
+			banco.close();
+		}
 	}
 
 	public Loja getLoja(String nome) {

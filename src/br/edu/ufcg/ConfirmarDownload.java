@@ -1,7 +1,6 @@
 package br.edu.ufcg;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -12,11 +11,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import br.edu.ufcg.EscolherManequimActivity.RetornoListener;
 
 public class ConfirmarDownload extends Activity {
 
-	private RetornoListener listener;
 
 	/** Called when the activity is first created. */
 	@Override

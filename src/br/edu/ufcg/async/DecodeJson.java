@@ -57,6 +57,9 @@ public class DecodeJson {
 		Map<String, List<String>> mapa = extraiDados(fields, json);
 		
 		List<T> lista = new ArrayList<T>();
+		if (mapa.isEmpty()) {
+			return new ArrayList<T>();
+		}
 		int tamanhoLista = mapa.get(fields.get(0).getName()).size();
 		for (int i = 0; i < tamanhoLista; i++) {
 			T objeto = null;
