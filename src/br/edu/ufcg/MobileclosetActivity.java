@@ -60,9 +60,7 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 		closeButton.setBackgroundColor(Color.TRANSPARENT);
 		closeButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				moveTaskToBack(true); //esconde a aplicacao e deixa o Android decidir quando terminar.
-				//android.os.Process.killProcess(android.os.Process.myPid()); //encerra realmente.
-				//finish(); //modo "usual"; soh pega na primeira activity.
+				finish();
 			}
 		});
 		
