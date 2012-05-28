@@ -2,6 +2,8 @@ package br.edu.ufcg.model;
 
 import java.io.Serializable;
 
+import br.edu.ufcg.async.dto.RoupaDTO;
+
 public class Roupa implements Serializable {
 
 	/**
@@ -20,6 +22,12 @@ public class Roupa implements Serializable {
 		this.id = id;
 		this.imagem = imagem;
 		this.categoria = categoria;
+	}
+
+	public Roupa(RoupaDTO r) {
+		this.codigo = r.getCodigo();
+		this.imagem = r.getImagem();
+		this.categoria = Categoria.valueOf(r.getCategoria());
 	}
 
 	public int getId() {
