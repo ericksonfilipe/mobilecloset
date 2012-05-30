@@ -72,18 +72,23 @@ public class VerRoupasActivity extends Activity {
 		deleteButton.setOnClickListener(new OnClickListener() {
 			//Alerta "Deseja realmente excluir"
 			public void onClick(View v) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
-				builder.setMessage("Deseja realmente excluir?")
-				.setCancelable(false)
-				.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						visualizadorRoupa.removeImagem();
-					}
-				})
-				.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) { /*nada*/ }     	   
-				});
-				builder.create().show();
+				if (visualizadorRoupa.posicaoRoupa <= 6) {
+					Toast.makeText(v.getContext(), "Esta é uma roupa padrão do MobileCloset e não pode ser excluída.", Toast.LENGTH_SHORT).show();
+				} else {
+					AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
+					builder.setMessage("Deseja realmente excluir?")
+					.setCancelable(false)
+					.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							visualizadorRoupa.removeImagem();
+						}
+					})
+					.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) { /*nada*/ }     	   
+					});
+					builder.create().show();					
+				}
+				
 			}
 		});
 		
@@ -241,7 +246,7 @@ public class VerRoupasActivity extends Activity {
 
 		private List<Roupa> roupas;
 
-		private int posicaoRoupa;
+		public int posicaoRoupa;
 		private Drawable roupaAtual;
 
 		public VisualizadorRoupa(Context context, List<Roupa> roupas) {
@@ -273,22 +278,26 @@ public class VerRoupasActivity extends Activity {
 		}
 
 		public void removeImagem() {
-			if (!roupas.isEmpty()) {
-				dao.removeRoupa(roupas.get(posicaoRoupa));
-				roupas.remove(posicaoRoupa);
-				if (roupas.isEmpty()) {
-					atualizaImagensBotoes();
-					return;
-				} else if (posicaoRoupa == roupas.size()) {
-					posicaoRoupa--;
-				}
-				Roupa roupa = roupas.get(posicaoRoupa);
-				roupaAtual = carregaDrawable(roupa.getImagem());
-				roupaAtual.setBounds(0, 0, getWidth(), getHeight());
-				invalidate();				
-			} else {
-				Toast.makeText(getContext(), "Não há roupas cadastradas para serem excluídas!", Toast.LENGTH_SHORT).show();
-			}
+//			if (posicaoRoupa <= 6) {
+//				Toast.makeText(getContext(), "Esta é uma roupa padrão do MobileCloset e não pode ser excluída.", Toast.LENGTH_SHORT).show();
+//			} else {
+				if (!roupas.isEmpty()) {
+					dao.removeRoupa(roupas.get(posicaoRoupa));
+					roupas.remove(posicaoRoupa);
+					if (roupas.isEmpty()) {
+						atualizaImagensBotoes();
+						return;
+					} else if (posicaoRoupa == roupas.size()) {
+						posicaoRoupa--;
+					}
+					Roupa roupa = roupas.get(posicaoRoupa);
+					roupaAtual = carregaDrawable(roupa.getImagem());
+					roupaAtual.setBounds(0, 0, getWidth(), getHeight());
+					invalidate();				
+				} else {
+					Toast.makeText(getContext(), "Não há roupas cadastradas para serem excluídas!", Toast.LENGTH_SHORT).show();
+				}				
+//			}
 		}
 
 		@Override

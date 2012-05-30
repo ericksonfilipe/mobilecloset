@@ -243,7 +243,7 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 		roupaSemBackground.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos); 
 		byte[] bitmapdata = bos.toByteArray();
 		
-		Roupa roupa = new Roupa(0, bitmapdata, categorias[indice]);
+		Roupa roupa = new Roupa(dao.getRoupas().size(), bitmapdata, categorias[indice]);
 		dao.inserirRoupa(roupa);
 
 		this.finish();

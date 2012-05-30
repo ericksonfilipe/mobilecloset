@@ -1,6 +1,7 @@
 package br.edu.ufcg;
 
 import java.util.List;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -25,6 +26,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
+import br.edu.ufcg.model.Calibragem;
+import br.edu.ufcg.model.Calibragem2;
+import br.edu.ufcg.model.Categoria;
 import br.edu.ufcg.model.Manequim;
 
 public class EscolherManequimActivity extends Activity {
@@ -201,7 +205,62 @@ public class EscolherManequimActivity extends Activity {
 			Manequim manequimEscolhido = visualizadorManequim.getManequim();
 			dao.inserirManequimPadrao(manequimEscolhido);
 			finish();
-			startActivity(new Intent(arg0.getContext(), TesteDeteccaoFace.class));
+			if (visualizadorManequim.ehManequimPadrao()) {
+				Map<Categoria, Calibragem> calibragens = dao.getCalibragens();
+				
+				Calibragem c = calibragens.get(Categoria.CAMISA);
+				c.left = 37;
+				c.top = 39;
+				c.right = 197;
+				c.bottom = 159;
+				dao.atualizaCalibragem(c);
+				
+				c = calibragens.get(Categoria.CALCA);
+				c.left = 51;
+				c.top = 125;
+				c.right = 175;
+				c.bottom = 281;
+				dao.atualizaCalibragem(c);
+				
+				c = calibragens.get(Categoria.SAIA);
+				c.left = 29;
+				c.top = 122;
+				c.right = 200;
+				c.bottom = 213;
+				dao.atualizaCalibragem(c);
+				
+				c = calibragens.get(Categoria.CAMISA_MANGA_LONGA);
+				c.left = 14;
+				c.top = 37;
+				c.right = 223;
+				c.bottom = 170;
+				dao.atualizaCalibragem(c);
+				
+				c = calibragens.get(Categoria.VESTIDO);
+				c.left = 50;
+				c.top = 42;
+				c.right = 178;
+				c.bottom = 190;
+				dao.atualizaCalibragem(c);
+				
+				c = calibragens.get(Categoria.CAMISETA);
+				c.left = 65;
+				c.top = 41;
+				c.right = 165;
+				c.bottom = 157;
+				dao.atualizaCalibragem(c);
+				
+				c = calibragens.get(Categoria.SHORT);
+				c.left = 54;
+				c.top = 128;
+				c.right = 182;
+				c.bottom = 220;
+				dao.atualizaCalibragem(c);
+				
+				Toast.makeText(arg0.getContext(), "Manequim escolhido com sucesso!", Toast.LENGTH_SHORT).show();
+			} else {
+				startActivity(new Intent(arg0.getContext(), TesteDeteccaoFace.class));				
+			}
 		}
 	}
 

@@ -21,6 +21,15 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
+			<name>org.eclipse.imp.smapifier.SmapieBuilder</name>
+			<arguments>
+				<dictionary>
+					<key>exten</key>
+					<value>x10</value>
+				</dictionary>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
 			<name>com.android.ide.eclipse.adt.ApkBuilder</name>
 			<arguments>
 			</arguments>
@@ -29,5 +38,6 @@
 	<natures>
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.eclipse.imp.smapifier.smapinature</nature>
 	</natures>
 </projectDescription>
