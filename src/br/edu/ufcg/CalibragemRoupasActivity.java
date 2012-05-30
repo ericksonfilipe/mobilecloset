@@ -34,25 +34,32 @@ public class CalibragemRoupasActivity  extends Activity {
 	private MyImageView myImageView;
 	private Calibragem2 calibragemRoupa;
 	private Calibragem calibragemModelo;
+	
+	private int numeroRoupa;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		Roupa roupa = (Roupa) getIntent().getExtras().get("roupa");
+		numeroRoupa = roupa.getId();
 
 		BDAdapter dao = new BDAdapter(this);
 		byte[] imagem = dao.getManequimPadrao();
 		calibragemModelo = dao.getCalibragens().get(roupa.getCategoria());
 		
-		calibragemRoupa = dao.getCalibragens2().get(roupa.getId());
-		if(calibragemRoupa == null) {
+		calibragemRoupa = dao.getCalibragens2().get(roupa.getId());		
+			
+		if (calibragemRoupa == null) {
 			if (calibragemModelo == null) {
-				calibragemRoupa = new Calibragem2(roupa.getId(), 0, 0, 100, 100);	
+				calibragemRoupa = new Calibragem2(roupa.getId(), 0, 0, 100, 100);
 			} else {
-				calibragemRoupa = new Calibragem2(roupa.getId(), calibragemModelo.left, calibragemModelo.top, calibragemModelo.right, calibragemModelo.bottom);				
+				calibragemRoupa = new Calibragem2(roupa.getId(),
+						calibragemModelo.left, calibragemModelo.top,
+						calibragemModelo.right, calibragemModelo.bottom);
 			}
 		}
+		
 
 		Bitmap b = null;
 		if (DEBUG) {
@@ -286,13 +293,21 @@ public class CalibragemRoupasActivity  extends Activity {
 
 		public void salvarCalibragem() {
 			BDAdapter dao = new BDAdapter(getApplicationContext());
-
-			calibragemRoupa.left += (int)mPosX;
-			calibragemRoupa.top += (int)mPosY;
-			calibragemRoupa.right += (int)mPosX;
-			calibragemRoupa.bottom += (int)mPosY;
-			dao.atualizaCalibragem2(calibragemRoupa);
-
+			
+			if (numeroRoupa <= 7) {
+				calibragemModelo.left += (int)mPosX;
+				calibragemModelo.top += (int)mPosY;
+				calibragemModelo.right += (int)mPosX;
+				calibragemModelo.bottom += (int)mPosY;
+				dao.atualizaCalibragem(calibragemModelo);
+			} else {
+				calibragemRoupa.left += (int)mPosX;
+				calibragemRoupa.top += (int)mPosY;
+				calibragemRoupa.right += (int)mPosX;
+				calibragemRoupa.bottom += (int)mPosY;
+				dao.atualizaCalibragem2(calibragemRoupa);				
+			}
+			
 			finish();
 		}
 

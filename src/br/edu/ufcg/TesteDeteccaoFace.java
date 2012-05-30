@@ -191,11 +191,11 @@ public class TesteDeteccaoFace  extends Activity {
 
         private boolean zoom = false;
 
-		private int[] imagens = new int[] { R.drawable.modelo_camisa,
-				R.drawable.modelo_calca, R.drawable.modelo_saia,
-				R.drawable.modelo_camisa_manga_longa,
-				R.drawable.modelo_vestido, R.drawable.modelo_camiseta,
-				R.drawable.modelo_short };       
+		private int[] imagens = new int[] { R.drawable.camisa_calibragem,
+				R.drawable.calca_calibragem, R.drawable.saia_calibragem,
+				R.drawable.camisao_calibragem,
+				R.drawable.vestido_calibragem, R.drawable.camiseta_calibragem,
+				R.drawable.short_calibragem };       
         
         private int posicao = 0;
 
@@ -321,25 +321,25 @@ public class TesteDeteccaoFace  extends Activity {
                 Categoria[] categorias = new Categoria[] {};
                 switch (posicao) {
                 case 0:
-                	categorias = new Categoria[] {Categoria.SHORT};
+                	categorias = new Categoria[] {Categoria.CAMISA};
                 	break;
                 case 1:
                 	categorias = new Categoria[] {Categoria.CALCA};
                 	break;
                 case 2:
-                	categorias = new Categoria[] {Categoria.CAMISA};
+                	categorias = new Categoria[] {Categoria.SAIA};
                 	break;
                 case 3:
                 	categorias = new Categoria[] {Categoria.CAMISA_MANGA_LONGA};
                 	break;
                 case 4:
-                	categorias = new Categoria[] {Categoria.CAMISETA};
+                	categorias = new Categoria[] {Categoria.VESTIDO};
                 	break;
                 case 5:
-                	categorias = new Categoria[] {Categoria.SAIA};
+                	categorias = new Categoria[] {Categoria.CAMISETA};
                 	break;
                 case 6:
-                	categorias = new Categoria[] {Categoria.VESTIDO};
+                	categorias = new Categoria[] {Categoria.SHORT};
                     break;
                 }
                 

@@ -19,6 +19,9 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import br.edu.ufcg.BD.BDAdapter;
+import br.edu.ufcg.model.Calibragem;
+import br.edu.ufcg.model.Categoria;
+import br.edu.ufcg.model.Roupa;
 
 public class MobileclosetActivity extends Activity implements OnClickListener {
 	/** Called when the activity is first created. */
@@ -37,6 +40,13 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 		dao = new BDAdapter(this);
 		
 		Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.manequim_padrao);
+		Bitmap camisa_padrao = BitmapFactory.decodeResource(getResources(), R.drawable.camisa_padrao);
+		Bitmap calca_padrao = BitmapFactory.decodeResource(getResources(), R.drawable.calca_padrao);
+		Bitmap saia_padrao = BitmapFactory.decodeResource(getResources(), R.drawable.saia_padrao);
+		Bitmap camisao_padrao = BitmapFactory.decodeResource(getResources(), R.drawable.camisao_padrao);
+		Bitmap vestido_padrao = BitmapFactory.decodeResource(getResources(), R.drawable.vestido_padrao);
+		Bitmap camiseta_padrao = BitmapFactory.decodeResource(getResources(), R.drawable.camiseta_padrao);
+		Bitmap short_padrao = BitmapFactory.decodeResource(getResources(), R.drawable.short_padrao);
 		
 		ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
 		b.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos); 
@@ -49,6 +59,53 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 			if (dao.getManequimPadrao() == null) {
 				dao.inserirManequimPadrao(dao.getManequins().get(0));
 			}
+		}
+		
+		if (dao.getRoupas().isEmpty()) {
+			ByteArrayOutputStream bos_camisa = new ByteArrayOutputStream(); 
+			camisa_padrao.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos_camisa); 
+			byte[] bitmapCamisa = bos_camisa.toByteArray();
+			
+			ByteArrayOutputStream bos_calca = new ByteArrayOutputStream(); 
+			calca_padrao.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos_calca); 
+			byte[] bitmapCalca = bos_calca.toByteArray();
+			
+			ByteArrayOutputStream bos_saia = new ByteArrayOutputStream(); 
+			saia_padrao.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos_saia); 
+			byte[] bitmapsaia = bos_saia.toByteArray();
+			
+			ByteArrayOutputStream bos_camisao = new ByteArrayOutputStream(); 
+			camisao_padrao.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos_camisao); 
+			byte[] bitmapcamisao = bos_camisao.toByteArray();
+			
+			ByteArrayOutputStream bos_vestido = new ByteArrayOutputStream(); 
+			vestido_padrao.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos_vestido); 
+			byte[] bitmapvestido = bos_vestido.toByteArray();
+			
+			ByteArrayOutputStream bos_camiseta = new ByteArrayOutputStream(); 
+			camiseta_padrao.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos_camiseta); 
+			byte[] bitmapcamiseta = bos_camiseta.toByteArray();
+			
+			ByteArrayOutputStream bos_short = new ByteArrayOutputStream(); 
+			short_padrao.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos_short); 
+			byte[] bitmapshort = bos_short.toByteArray();
+			
+			dao.inserirRoupa(new Roupa(0, bitmapCamisa, Categoria.CAMISA));
+			dao.inserirRoupa(new Roupa(1, bitmapCalca, Categoria.CALCA));
+			dao.inserirRoupa(new Roupa(2, bitmapsaia, Categoria.SAIA));
+			dao.inserirRoupa(new Roupa(3, bitmapcamisao, Categoria.CAMISA_MANGA_LONGA));
+			dao.inserirRoupa(new Roupa(4, bitmapvestido, Categoria.VESTIDO));
+			dao.inserirRoupa(new Roupa(5, bitmapcamiseta, Categoria.CAMISETA));
+			dao.inserirRoupa(new Roupa(6, bitmapshort, Categoria.SHORT));
+			
+			dao.insertCalibragem(new Calibragem(Categoria.CAMISA, 37, 39, 197, 159));
+			dao.insertCalibragem(new Calibragem(Categoria.CALCA, 51, 125, 175, 281));
+			dao.insertCalibragem(new Calibragem(Categoria.SAIA, 29, 122, 200, 213));
+			dao.insertCalibragem(new Calibragem(Categoria.CAMISA_MANGA_LONGA, 14, 37, 223, 170));
+			dao.insertCalibragem(new Calibragem(Categoria.VESTIDO, 50, 42, 178, 190));
+			dao.insertCalibragem(new Calibragem(Categoria.CAMISETA, 65, 41, 165, 157));
+			dao.insertCalibragem(new Calibragem(Categoria.SHORT, 54, 128, 182, 220));
+
 		}
 		
 
