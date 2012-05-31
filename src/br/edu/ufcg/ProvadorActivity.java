@@ -20,13 +20,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -54,6 +52,14 @@ public class ProvadorActivity extends Activity {
 	public ImageButton favoritoButton, menuButton;
 
 	private Map<Integer, Calibragem2> calibragens2;
+
+	private LinearLayout informacaoCima;
+
+	private ImageView logoLojaCima;
+
+	private LinearLayout informacaoBaixo;
+
+	private ImageView logoLojaBaixo;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -126,6 +132,9 @@ public class ProvadorActivity extends Activity {
 			layoutEsquerda.addView(linearEsq);
 			layoutEsquerda.setGravity(Gravity.BOTTOM);
 			
+			infoRoupaSuperior();
+			infoRoupaInferior();
+			
 			addContentView(getLayoutBotoesEsquerda(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 			addContentView(getLayoutBotoesDireita(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 			addContentView(layoutEsquerda, new LayoutParams(
@@ -134,6 +143,33 @@ public class ProvadorActivity extends Activity {
 					LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 
 			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+	}
+
+	private void infoRoupaSuperior() {
+		informacaoCima = new LinearLayout(ProvadorActivity.this);
+		informacaoCima.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		informacaoCima.setOrientation(LinearLayout.VERTICAL);
+		informacaoCima.setGravity(Gravity.RIGHT);
+		LinearLayout imagem = new LinearLayout(ProvadorActivity.this);
+		imagem.setLayoutParams(new LayoutParams(50, 50));
+		
+		logoLojaCima = new ImageView(ProvadorActivity.this);
+		imagem.addView(logoLojaCima);
+		informacaoCima.addView(imagem);
+		addContentView(informacaoCima, informacaoCima.getLayoutParams());
+	}
+
+	private void infoRoupaInferior() {
+		informacaoBaixo = new LinearLayout(ProvadorActivity.this);
+		informacaoBaixo.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		informacaoBaixo.setOrientation(LinearLayout.VERTICAL);
+		LinearLayout imagem = new LinearLayout(ProvadorActivity.this);
+		imagem.setLayoutParams(new LayoutParams(50, 50));
+		
+		logoLojaBaixo = new ImageView(ProvadorActivity.this);
+		imagem.addView(logoLojaBaixo);
+		informacaoBaixo.addView(imagem);
+		addContentView(informacaoBaixo, informacaoBaixo.getLayoutParams());
 	}
 	
 	private void salvaLookBanco(Bitmap bitmap) {
@@ -262,6 +298,11 @@ public class ProvadorActivity extends Activity {
 		return new BitmapDrawable(girado);
 	}
 
+	/*private void setLayout(LinearLayout l) {
+		addContentView(l, l.getLayoutParams());
+		
+	}*/
+
 	public class Provador extends View {
 
 		private List<Roupa> roupasSuperiores;
@@ -279,12 +320,13 @@ public class ProvadorActivity extends Activity {
 			this.roupasInferiores = roupasInferiores;
 
 			if (!roupasSuperiores.isEmpty()) {
-				Calibragem2 cS = calibragens2.get(roupasSuperiores.get(posicaoRoupaSuperior).getId());
-				roupaSuperior = carregaDrawable(roupasSuperiores.get(posicaoRoupaSuperior).getImagem());
+				Roupa roupa = roupasSuperiores.get(posicaoRoupaSuperior);
+				Calibragem2 cS = calibragens2.get(roupa.getId());
+				roupaSuperior = carregaDrawable(roupa.getImagem());
 				if(cS != null) {
 					roupaSuperior.setBounds(cS.left, cS.top, cS.right, cS.bottom);
 				} else {
-					Calibragem calibragemS = calibragens.get(roupasSuperiores.get(posicaoRoupaSuperior).getCategoria());
+					Calibragem calibragemS = calibragens.get(roupa.getCategoria());
 					if (calibragemS == null) {
 						roupaSuperior.setBounds(0, 0,  100, 100);					
 					} else {
@@ -295,12 +337,13 @@ public class ProvadorActivity extends Activity {
 			}
 
 			if (!roupasInferiores.isEmpty()) {
-				Calibragem2 cI = calibragens2.get(roupasInferiores.get(posicaoRoupaInferior).getId());
-				roupaInferior = carregaDrawable(roupasInferiores.get(posicaoRoupaInferior).getImagem());
+				Roupa roupa = roupasInferiores.get(posicaoRoupaInferior);
+				Calibragem2 cI = calibragens2.get(roupa.getId());
+				roupaInferior = carregaDrawable(roupa.getImagem());
 				if(cI != null) {
 					roupaInferior.setBounds(cI.left, cI.top, cI.right, cI.bottom);
 				} else {
-					Calibragem calibragemI = calibragens.get(roupasInferiores.get(posicaoRoupaInferior).getCategoria());
+					Calibragem calibragemI = calibragens.get(roupa.getCategoria());
 					if (calibragemI == null) {
 						roupaInferior.setBounds(0, 0,  100, 100);
 					} else {
@@ -319,11 +362,31 @@ public class ProvadorActivity extends Activity {
 			super.onDraw(canvas);
 			if (roupaInferior != null) {
 				roupaInferior.draw(canvas);
+				modificaInfoRoupa(roupasInferiores.get(posicaoRoupaInferior));
 			}
 			if (roupaSuperior != null) {
 				roupaSuperior.draw(canvas);
+				modificaInfoRoupa(roupasSuperiores.get(posicaoRoupaSuperior));
 			}
 		}
+
+		private void modificaInfoRoupa(Roupa roupa) {
+			if (roupa.getLoja() != null) {
+				BitmapDrawable logo = new BitmapDrawable(BitmapFactory.decodeByteArray(roupa.getLoja().getLogo(), 0, roupa.getLoja().getLogo().length));
+				if (roupa.isInferior()) {
+					logoLojaBaixo.setBackgroundDrawable(logo);
+				} else {
+					logoLojaCima.setBackgroundDrawable(logo);
+				}
+			} else { 
+				if (roupa.isInferior()) {
+					logoLojaBaixo.setBackgroundDrawable(null);
+				} else {
+					logoLojaCima.setBackgroundDrawable(null);
+				}
+			}
+		}
+
 		
 		public void proximaRoupaSuperior() {
 			if (posicaoRoupaSuperior < roupasSuperiores.size()-1) {

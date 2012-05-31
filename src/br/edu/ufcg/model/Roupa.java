@@ -70,6 +70,15 @@ public class Roupa implements Serializable {
 		this.loja = loja;
 	}
 
+	public boolean isSuperior() {
+		return categoria.equals(Categoria.CAMISA) || categoria.equals(Categoria.CAMISA_MANGA_LONGA) ||
+				categoria.equals(Categoria.CAMISETA) || categoria.equals(Categoria.VESTIDO);
+	}
+
+	public boolean isInferior() {
+		return !isSuperior();
+	}
+
 	@Override
 	public String toString() {
 		return String.format("Roupa [id = %d, categoria = %s]", this.id, this.categoria);
