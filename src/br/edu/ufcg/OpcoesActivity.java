@@ -47,10 +47,9 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		BDAdapter dao = new BDAdapter(this);
 		Intent i;
-		switch (v.getId()) {
-		case R.id.button_provador:
+		if (v.getId() == R.id.button_provador) {
 			i = new Intent(v.getContext(), ProvadorActivity.class);
-//			if (dao.getManequimPadrao() == null) {
+			//			if (dao.getManequimPadrao() == null) {
 //				Toast.makeText(this, "Não há manequim escolhido!", Toast.LENGTH_SHORT).show();
 //			} else {
 //				i.putExtra("background", dao.getManequimPadrao());
@@ -58,38 +57,32 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 //			}
 			i.putExtra("background", dao.getManequimPadrao());
 			startActivity(i);
-			break;
-		case R.id.button_colecoes:
+		} else if (v.getId() == R.id.button_colecoes) {
 			if(temConexao()){
 				i = new Intent(v.getContext(), LojasActivity.class);
 				startActivity(i);
 			}else{
 				Toast.makeText (getApplicationContext(), "Sem conexão com a Internet!", Toast.LENGTH_SHORT).show();
 			}
-			break;
-		case R.id.button_closet:
+		} else if (v.getId() == R.id.button_closet) {
 			if (dao.getRoupas().isEmpty()) {
 				Toast.makeText(this, "Não há roupas cadastradas", Toast.LENGTH_SHORT).show();
 			}
 			i = new Intent(v.getContext(), VerRoupasActivity.class);
 			startActivity(i);
-			break;
-		case R.id.button_looks:
+		} else if (v.getId() == R.id.button_looks) {
 			if (dao.getLooks().isEmpty()) {
 				Toast.makeText(this, "Não há looks cadastrados", Toast.LENGTH_SHORT).show();
 			} else {
 				i = new Intent(v.getContext(), FavoritosActivity.class);
 				startActivity(i);				
 			}
-			break;
-		case R.id.button_manequim:
+		} else if (v.getId() == R.id.button_manequim) {
 			i = new Intent(v.getContext(), EscolherManequimActivity.class);
 			startActivity(i);
-			break;
-		case R.id.button_sobre:
+		} else if (v.getId() == R.id.button_sobre) {
 			i = new Intent(v.getContext(), SobreActivity.class);
 			startActivity(i);
-			break;
 		}
 	}
 	
