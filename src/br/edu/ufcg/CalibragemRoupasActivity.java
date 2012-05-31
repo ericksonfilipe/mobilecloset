@@ -108,36 +108,105 @@ public class CalibragemRoupasActivity  extends Activity {
 			}
 		});
 
-		RelativeLayout layoutDireito = new RelativeLayout(this);
-		LinearLayout linearDireito = new LinearLayout(this);
-		linearDireito.addView(zoomOutLargura);
-		linearDireito.addView(zoomInLargura);
-		linearDireito.setGravity(Gravity.RIGHT);
-		linearDireito.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-		layoutDireito.addView(linearDireito);
-		layoutDireito.setGravity(Gravity.TOP);
+		//Matriz para fazer a "cruz" da Calibragem
 		
-		RelativeLayout layoutEsquerdo = new RelativeLayout(this);
-		LinearLayout linearEsquerdo = new LinearLayout(this);
-		linearEsquerdo.addView(zoomInAltura);
-		linearEsquerdo.addView(zoomOutAltura);
-		linearEsquerdo.setGravity(Gravity.LEFT);
-		linearEsquerdo.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-		linearEsquerdo.setOrientation(LinearLayout.VERTICAL);
-		layoutEsquerdo.addView(linearEsquerdo);
-		layoutEsquerdo.setGravity(Gravity.TOP);
+		final int ESPACO_DA_BORDA = 3; //valor para deixar em branco do canto inferior esquerdo
 		
-		RelativeLayout layoutCentral = new RelativeLayout(this);
-		LinearLayout linearCentral = new LinearLayout(this);
-		linearCentral.addView(salvaButton);
-		linearCentral.setGravity(Gravity.RIGHT);
-		linearCentral.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-		layoutCentral.addView(linearCentral);
-		layoutCentral.setGravity(Gravity.BOTTOM);
+		ImageButton linha1_coluna1 = new ImageButton(this);
+		linha1_coluna1.setBackgroundColor(Color.TRANSPARENT);
+		linha1_coluna1.setImageDrawable(getResources().getDrawable(R.drawable.blank));
+		linha1_coluna1.setPadding(ESPACO_DA_BORDA, 0, 0, 0);
+		
+		ImageButton linha1_coluna2 = new ImageButton(this);
+		linha1_coluna2.setImageDrawable(getResources().getDrawable(R.drawable.plus));
+		linha1_coluna2.setBackgroundColor(Color.TRANSPARENT);
+		linha1_coluna2.setOnClickListener(new AumentarListener(myImageView, false));
+		linha1_coluna2.setPadding(0, 0, 0, 0);
+		
+		ImageButton linha1_coluna3 = new ImageButton(this);
+		linha1_coluna3.setBackgroundColor(Color.TRANSPARENT);
+		linha1_coluna3.setImageDrawable(getResources().getDrawable(R.drawable.blank));
+		linha1_coluna3.setPadding(0, 0, 0, 0);
+		
+		ImageButton linha2_coluna1 = new ImageButton(this);
+		linha2_coluna1.setImageDrawable(getResources().getDrawable(R.drawable.minus));
+		linha2_coluna1.setBackgroundColor(Color.TRANSPARENT);
+		linha2_coluna1.setOnClickListener(new DiminuirListener(myImageView, true));
+		linha2_coluna1.setPadding(ESPACO_DA_BORDA, 0, 0, 0);
+		
+		ImageButton linha2_coluna2 = new ImageButton(this);
+		linha2_coluna2.setBackgroundColor(Color.TRANSPARENT);
+		linha2_coluna2.setImageDrawable(getResources().getDrawable(R.drawable.blank));
+		linha2_coluna2.setPadding(0, 0, 0, 0);
+		
+		ImageButton linha2_coluna3 = new ImageButton(this);
+		linha2_coluna3.setImageDrawable(getResources().getDrawable(R.drawable.plus));
+		linha2_coluna3.setBackgroundColor(Color.TRANSPARENT);
+		linha2_coluna3.setOnClickListener(new AumentarListener(myImageView, true));
+		linha2_coluna3.setPadding(0, 0, 0, 0);
+		
+		ImageButton linha3_coluna1 = new ImageButton(this);
+		linha3_coluna1.setBackgroundColor(Color.TRANSPARENT);
+		linha3_coluna1.setImageDrawable(getResources().getDrawable(R.drawable.blank));
+		linha3_coluna1.setPadding(ESPACO_DA_BORDA, 0, 0, ESPACO_DA_BORDA);
+		
+		ImageButton linha3_coluna2 = new ImageButton(this);
+		linha3_coluna2.setImageDrawable(getResources().getDrawable(R.drawable.minus));
+		linha3_coluna2.setBackgroundColor(Color.TRANSPARENT);
+		linha3_coluna2.setOnClickListener(new DiminuirListener(myImageView, false));
+		linha3_coluna2.setPadding(0, 0, 0, ESPACO_DA_BORDA);
+		
+		ImageButton linha3_coluna3 = new ImageButton(this);
+		linha3_coluna3.setBackgroundColor(Color.TRANSPARENT);
+		linha3_coluna3.setImageDrawable(getResources().getDrawable(R.drawable.blank));
+		linha3_coluna3.setPadding(0, 0, 0, ESPACO_DA_BORDA);
+		
+		RelativeLayout layoutMatriz = new RelativeLayout(this);
+		layoutMatriz.setPadding(ESPACO_DA_BORDA, 0, 0, ESPACO_DA_BORDA);
+		layoutMatriz.setGravity(Gravity.LEFT);
+		
+		LinearLayout linearMatriz = new LinearLayout(this);
+		linearMatriz.setGravity(Gravity.LEFT);
+		linearMatriz.setOrientation(LinearLayout.VERTICAL);
+		
+		LinearLayout linearMatriz_linha1 = new LinearLayout(this);
+		linearMatriz_linha1.setGravity(Gravity.LEFT);
+		linearMatriz_linha1.addView(linha1_coluna1);
+		linearMatriz_linha1.addView(linha1_coluna2);
+		linearMatriz_linha1.addView(linha1_coluna3);
+		
+		LinearLayout linearMatriz_linha2 = new LinearLayout(this);
+		linearMatriz_linha2.setGravity(Gravity.LEFT);
+		linearMatriz_linha2.addView(linha2_coluna1);
+		linearMatriz_linha2.addView(linha2_coluna2);
+		linearMatriz_linha2.addView(linha2_coluna3);
+		
+		LinearLayout linearMatriz_linha3 = new LinearLayout(this);
+		linearMatriz_linha3.setGravity(Gravity.LEFT);
+		linearMatriz_linha3.addView(linha3_coluna1);
+		linearMatriz_linha3.addView(linha3_coluna2);
+		linearMatriz_linha3.addView(linha3_coluna3);
+		
+		linearMatriz.addView(linearMatriz_linha1);
+		linearMatriz.addView(linearMatriz_linha2);
+		linearMatriz.addView(linearMatriz_linha3);
+		
+		linearMatriz.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		layoutMatriz.addView(linearMatriz);
+		layoutMatriz.setGravity(Gravity.BOTTOM);
+		
+		//Fim da Matriz
+		
+		RelativeLayout layoutSalvar = new RelativeLayout(this);
+		LinearLayout linearSalvar = new LinearLayout(this);
+		linearSalvar.addView(salvaButton);
+		linearSalvar.setGravity(Gravity.RIGHT);
+		linearSalvar.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		layoutSalvar.addView(linearSalvar);
+		layoutSalvar.setGravity(Gravity.BOTTOM);
 
-		addContentView(layoutDireito, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-		addContentView(layoutEsquerdo, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-		addContentView(layoutCentral, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		addContentView(layoutMatriz, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		addContentView(layoutSalvar, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 	}
 
 	@Override

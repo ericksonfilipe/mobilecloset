@@ -138,8 +138,7 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 	//@Override
 	public void onClick(View v) {
 		Intent i;
-		switch (v.getId()) {
-		case R.id.button_iniciar:
+		if (v.getId() == R.id.button_iniciar) {
 			if (dao.getRoupas().isEmpty()) {
 				i = new Intent(v.getContext(), OpcoesActivity.class);
 				startActivity(i);
@@ -148,7 +147,6 @@ public class MobileclosetActivity extends Activity implements OnClickListener {
 				i.putExtra("background", dao.getManequimPadrao());				
 				startActivity(i);
 			}
-			break;
 		}
 	}	
 
