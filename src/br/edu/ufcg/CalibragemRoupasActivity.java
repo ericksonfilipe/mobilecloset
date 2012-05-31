@@ -77,26 +77,6 @@ public class CalibragemRoupasActivity  extends Activity {
 		myImageView = new MyImageView(this, roupa);
 		myImageView.setBackgroundDrawable(bd);
 		setContentView(myImageView);
-
-		ImageButton zoomInAltura = new ImageButton(this);
-		zoomInAltura.setImageDrawable(getResources().getDrawable(R.drawable.up));
-		zoomInAltura.setBackgroundColor(Color.TRANSPARENT);
-		zoomInAltura.setOnClickListener(new AumentarListener(myImageView, false));
-
-		ImageButton zoomOutAltura = new ImageButton(this);
-		zoomOutAltura.setImageDrawable(getResources().getDrawable(R.drawable.bottom));
-		zoomOutAltura.setBackgroundColor(Color.TRANSPARENT);
-		zoomOutAltura.setOnClickListener(new DiminuirListener(myImageView, false));
-		
-		ImageButton zoomInLargura = new ImageButton(this);
-		zoomInLargura.setImageDrawable(getResources().getDrawable(R.drawable.right));
-		zoomInLargura.setBackgroundColor(Color.TRANSPARENT);
-		zoomInLargura.setOnClickListener(new AumentarListener(myImageView, true));
-
-		ImageButton zoomOutLargura = new ImageButton(this);
-		zoomOutLargura.setImageDrawable(getResources().getDrawable(R.drawable.left));
-		zoomOutLargura.setBackgroundColor(Color.TRANSPARENT);
-		zoomOutLargura.setOnClickListener(new DiminuirListener(myImageView, true));
 		
 		ImageButton salvaButton = new ImageButton(this);
 		salvaButton.setImageDrawable(getResources().getDrawable(R.drawable.save));
@@ -416,7 +396,7 @@ public class CalibragemRoupasActivity  extends Activity {
 
 	}
 
-	private class AumentarListener implements OnClickListener {
+	public class AumentarListener implements OnClickListener {
 		private MyImageView view;
 		private boolean modificarLargura;
 		
@@ -434,7 +414,7 @@ public class CalibragemRoupasActivity  extends Activity {
 		}
 	}
 
-	private class DiminuirListener implements OnClickListener {
+	public class DiminuirListener implements OnClickListener {
 		private MyImageView view;
 		private boolean modificarLargura;
 		

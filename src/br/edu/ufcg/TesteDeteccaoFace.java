@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
-//import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -18,9 +17,6 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -31,9 +27,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
-//import br.edu.ufcg.CalibragemRoupasActivity.AumentarListener;
-//import br.edu.ufcg.CalibragemRoupasActivity.DiminuirListener;
-import br.edu.ufcg.CalibragemRoupasActivity.MyImageView;
 import br.edu.ufcg.model.Calibragem;
 import br.edu.ufcg.model.Categoria;
 //import br.edu.ufcg.model.Roupa;
@@ -73,26 +66,6 @@ public class TesteDeteccaoFace  extends Activity {
 		myImageView.setBackgroundDrawable(bd);
 		setContentView(myImageView);
 
-		ImageButton zoomInAltura = new ImageButton(this);
-		zoomInAltura.setImageDrawable(getResources().getDrawable(R.drawable.up));
-		zoomInAltura.setBackgroundColor(Color.TRANSPARENT);
-		zoomInAltura.setOnClickListener(new AumentarListener(myImageView, false));
-
-		ImageButton zoomOutAltura = new ImageButton(this);
-		zoomOutAltura.setImageDrawable(getResources().getDrawable(R.drawable.bottom));
-		zoomOutAltura.setBackgroundColor(Color.TRANSPARENT);
-		zoomOutAltura.setOnClickListener(new DiminuirListener(myImageView, false));
-		
-		ImageButton zoomInLargura = new ImageButton(this);
-		zoomInLargura.setImageDrawable(getResources().getDrawable(R.drawable.right));
-		zoomInLargura.setBackgroundColor(Color.TRANSPARENT);
-		zoomInLargura.setOnClickListener(new AumentarListener(myImageView, true));
-
-		ImageButton zoomOutLargura = new ImageButton(this);
-		zoomOutLargura.setImageDrawable(getResources().getDrawable(R.drawable.left));
-		zoomOutLargura.setBackgroundColor(Color.TRANSPARENT);
-		zoomOutLargura.setOnClickListener(new DiminuirListener(myImageView, true));
-		
 		ImageButton salvaButton = new ImageButton(this);
 		salvaButton.setImageDrawable(getResources().getDrawable(R.drawable.save));
 		salvaButton.setBackgroundColor(Color.TRANSPARENT);
@@ -103,36 +76,105 @@ public class TesteDeteccaoFace  extends Activity {
 			}
 		});
 
-		RelativeLayout layoutDireito = new RelativeLayout(this);
-		LinearLayout linearDireito = new LinearLayout(this);
-		linearDireito.addView(zoomOutLargura);
-		linearDireito.addView(zoomInLargura);
-		linearDireito.setGravity(Gravity.RIGHT);
-		linearDireito.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-		layoutDireito.addView(linearDireito);
-		layoutDireito.setGravity(Gravity.TOP);
+		//Matriz para fazer a "cruz" da Calibragem
 		
-		RelativeLayout layoutEsquerdo = new RelativeLayout(this);
-		LinearLayout linearEsquerdo = new LinearLayout(this);
-		linearEsquerdo.addView(zoomInAltura);
-		linearEsquerdo.addView(zoomOutAltura);
-		linearEsquerdo.setGravity(Gravity.LEFT);
-		linearEsquerdo.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-		linearEsquerdo.setOrientation(LinearLayout.VERTICAL);
-		layoutEsquerdo.addView(linearEsquerdo);
-		layoutEsquerdo.setGravity(Gravity.TOP);
+		final int ESPACO_DA_BORDA = 3; //valor para deixar em branco do canto inferior esquerdo
 		
-		RelativeLayout layoutCentral = new RelativeLayout(this);
-		LinearLayout linearCentral = new LinearLayout(this);
-		linearCentral.addView(salvaButton);
-		linearCentral.setGravity(Gravity.RIGHT);
-		linearCentral.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-		layoutCentral.addView(linearCentral);
-		layoutCentral.setGravity(Gravity.BOTTOM);
+		ImageButton linha1_coluna1 = new ImageButton(this);
+		linha1_coluna1.setBackgroundColor(Color.TRANSPARENT);
+		linha1_coluna1.setImageDrawable(getResources().getDrawable(R.drawable.blank));
+		linha1_coluna1.setPadding(ESPACO_DA_BORDA, 0, 0, 0);
+		
+		ImageButton linha1_coluna2 = new ImageButton(this);
+		linha1_coluna2.setImageDrawable(getResources().getDrawable(R.drawable.plus));
+		linha1_coluna2.setBackgroundColor(Color.TRANSPARENT);
+		linha1_coluna2.setOnClickListener(new AumentarListener(myImageView, false));
+		linha1_coluna2.setPadding(0, 0, 0, 0);
+		
+		ImageButton linha1_coluna3 = new ImageButton(this);
+		linha1_coluna3.setBackgroundColor(Color.TRANSPARENT);
+		linha1_coluna3.setImageDrawable(getResources().getDrawable(R.drawable.blank));
+		linha1_coluna3.setPadding(0, 0, 0, 0);
+		
+		ImageButton linha2_coluna1 = new ImageButton(this);
+		linha2_coluna1.setImageDrawable(getResources().getDrawable(R.drawable.minus));
+		linha2_coluna1.setBackgroundColor(Color.TRANSPARENT);
+		linha2_coluna1.setOnClickListener(new DiminuirListener(myImageView, true));
+		linha2_coluna1.setPadding(ESPACO_DA_BORDA, 0, 0, 0);
+		
+		ImageButton linha2_coluna2 = new ImageButton(this);
+		linha2_coluna2.setBackgroundColor(Color.TRANSPARENT);
+		linha2_coluna2.setImageDrawable(getResources().getDrawable(R.drawable.blank));
+		linha2_coluna2.setPadding(0, 0, 0, 0);
+		
+		ImageButton linha2_coluna3 = new ImageButton(this);
+		linha2_coluna3.setImageDrawable(getResources().getDrawable(R.drawable.plus));
+		linha2_coluna3.setBackgroundColor(Color.TRANSPARENT);
+		linha2_coluna3.setOnClickListener(new AumentarListener(myImageView, true));
+		linha2_coluna3.setPadding(0, 0, 0, 0);
+		
+		ImageButton linha3_coluna1 = new ImageButton(this);
+		linha3_coluna1.setBackgroundColor(Color.TRANSPARENT);
+		linha3_coluna1.setImageDrawable(getResources().getDrawable(R.drawable.blank));
+		linha3_coluna1.setPadding(ESPACO_DA_BORDA, 0, 0, ESPACO_DA_BORDA);
+		
+		ImageButton linha3_coluna2 = new ImageButton(this);
+		linha3_coluna2.setImageDrawable(getResources().getDrawable(R.drawable.minus));
+		linha3_coluna2.setBackgroundColor(Color.TRANSPARENT);
+		linha3_coluna2.setOnClickListener(new DiminuirListener(myImageView, false));
+		linha3_coluna2.setPadding(0, 0, 0, ESPACO_DA_BORDA);
+		
+		ImageButton linha3_coluna3 = new ImageButton(this);
+		linha3_coluna3.setBackgroundColor(Color.TRANSPARENT);
+		linha3_coluna3.setImageDrawable(getResources().getDrawable(R.drawable.blank));
+		linha3_coluna3.setPadding(0, 0, 0, ESPACO_DA_BORDA);
+		
+		RelativeLayout layoutMatriz = new RelativeLayout(this);
+		layoutMatriz.setPadding(ESPACO_DA_BORDA, 0, 0, ESPACO_DA_BORDA);
+		layoutMatriz.setGravity(Gravity.LEFT);
+		
+		LinearLayout linearMatriz = new LinearLayout(this);
+		linearMatriz.setGravity(Gravity.LEFT);
+		linearMatriz.setOrientation(LinearLayout.VERTICAL);
+		
+		LinearLayout linearMatriz_linha1 = new LinearLayout(this);
+		linearMatriz_linha1.setGravity(Gravity.LEFT);
+		linearMatriz_linha1.addView(linha1_coluna1);
+		linearMatriz_linha1.addView(linha1_coluna2);
+		linearMatriz_linha1.addView(linha1_coluna3);
+		
+		LinearLayout linearMatriz_linha2 = new LinearLayout(this);
+		linearMatriz_linha2.setGravity(Gravity.LEFT);
+		linearMatriz_linha2.addView(linha2_coluna1);
+		linearMatriz_linha2.addView(linha2_coluna2);
+		linearMatriz_linha2.addView(linha2_coluna3);
+		
+		LinearLayout linearMatriz_linha3 = new LinearLayout(this);
+		linearMatriz_linha3.setGravity(Gravity.LEFT);
+		linearMatriz_linha3.addView(linha3_coluna1);
+		linearMatriz_linha3.addView(linha3_coluna2);
+		linearMatriz_linha3.addView(linha3_coluna3);
+		
+		linearMatriz.addView(linearMatriz_linha1);
+		linearMatriz.addView(linearMatriz_linha2);
+		linearMatriz.addView(linearMatriz_linha3);
+		
+		linearMatriz.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		layoutMatriz.addView(linearMatriz);
+		layoutMatriz.setGravity(Gravity.BOTTOM);
+		
+		//Fim da Matriz
+		
+		RelativeLayout layoutSalvar = new RelativeLayout(this);
+		LinearLayout linearSalvar = new LinearLayout(this);
+		linearSalvar.addView(salvaButton);
+		linearSalvar.setGravity(Gravity.RIGHT);
+		linearSalvar.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		layoutSalvar.addView(linearSalvar);
+		layoutSalvar.setGravity(Gravity.BOTTOM);
 
-		addContentView(layoutDireito, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-		addContentView(layoutEsquerdo, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-		addContentView(layoutCentral, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		addContentView(layoutMatriz, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		addContentView(layoutSalvar, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 	}
 	
 //	public void cadastrarModelosRoupas() {
