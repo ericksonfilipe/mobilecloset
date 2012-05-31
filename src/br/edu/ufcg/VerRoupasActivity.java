@@ -39,6 +39,9 @@ public class VerRoupasActivity extends Activity {
 	public ImageButton addButton;
 	public ImageButton deleteButton;
 	public ImageButton calibrarButton;
+	
+//	public boolean calibrando = false;
+	public boolean adicionando = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -61,7 +64,8 @@ public class VerRoupasActivity extends Activity {
 			
 			public void onClick(View v) {
 				Intent i = new Intent(v.getContext(), TirarFotoRoupaActivity.class);
-				startActivity(i);				
+				startActivity(i);
+				adicionando = true;
 			}
 		});
 		
@@ -199,6 +203,7 @@ public class VerRoupasActivity extends Activity {
 						CalibragemRoupasActivity.class);
 				i.putExtra("roupa", visualizadorRoupa.getRoupaAtual());
 				startActivity(i);
+//				calibrando = true;
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 				Toast.makeText(visualizadorRoupa.getContext(), "Não há roupas cadastradas para serem calibradas!", Toast.LENGTH_SHORT).show();
@@ -230,14 +235,15 @@ public class VerRoupasActivity extends Activity {
 //		}
 //		return true;
 //	}
-
-
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
 		visualizadorRoupa.setRoupas(dao.getRoupas());
-		visualizadorRoupa.setPosicaoRoupa(dao.getRoupas().size() - 1);
+		if (adicionando) {
+			visualizadorRoupa.setPosicaoRoupa(dao.getRoupas().size() - 1);			
+			adicionando = false;
+		} 
 		visualizadorRoupa.atualizaImagensBotoes();
 	}
 
