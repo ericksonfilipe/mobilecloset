@@ -11,7 +11,25 @@ android:oneshot="false">
   android:duration="250" />  
 <item   
   android:drawable="@drawable/gif_img4"  
+  android:duration="250" />
+<item   
+  android:drawable="@drawable/gif_img5"  
+  android:duration="250" /> 
+<item   
+  android:drawable="@drawable/gif_img6"  
+  android:duration="250" /> 
+ <item   
+  android:drawable="@drawable/gif_img7"  
   android:duration="250" />  
+ <item   
+  android:drawable="@drawable/gif_img6"  
+  android:duration="250" />   
+<item   
+  android:drawable="@drawable/gif_img5"  
+  android:duration="250" /> 
+<item   
+  android:drawable="@drawable/gif_img4"  
+  android:duration="250" /> 
  <item   
   android:drawable="@drawable/gif_img3"  
   android:duration="250" />  
