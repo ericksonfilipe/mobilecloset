@@ -41,6 +41,9 @@ public class EscolherManequimActivity extends Activity {
 	public ImageButton deleteButton;
 	public ImageButton escolherButton;
 
+	//Gambiarra feiaaaaaaaaaaaa  =x
+	public View viewArg0;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -203,8 +206,9 @@ public class EscolherManequimActivity extends Activity {
 
 		public void onClick(View arg0) {
 			Manequim manequimEscolhido = visualizadorManequim.getManequim();
+			viewArg0 = arg0;
+			boolean jaEhManequimEscolhido = manequimEscolhido.getId() == dao.getIdManequimPadrao();
 			dao.inserirManequimPadrao(manequimEscolhido);
-			finish();
 			if (visualizadorManequim.ehManequimPadrao()) {
 				Map<Categoria, Calibragem> calibragens = dao.getCalibragens();
 				
@@ -256,10 +260,32 @@ public class EscolherManequimActivity extends Activity {
 				c.right = 182;
 				c.bottom = 220;
 				dao.atualizaCalibragem(c);
-				
+				finish();
+
 				Toast.makeText(arg0.getContext(), "Manequim escolhido com sucesso!", Toast.LENGTH_SHORT).show();
 			} else {
-				startActivity(new Intent(arg0.getContext(), TesteDeteccaoFace.class));				
+				if (jaEhManequimEscolhido) {
+					AlertDialog.Builder builderTeste = new AlertDialog.Builder(arg0.getContext());
+					builderTeste.setMessage("Este já é seu manequim escolhido. Deseja refazer a calibragem?")
+				           .setCancelable(false)
+				           .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+				               public void onClick(DialogInterface dialog, int id) {
+				            	   finish();
+				            	   startActivity(new Intent(viewArg0.getContext(), TesteDeteccaoFace.class));
+				               }
+				           })
+				           .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+				               public void onClick(DialogInterface dialog, int id) {
+				            	   finish();
+				            	   Toast.makeText(viewArg0.getContext(), "Manequim escolhido com sucesso!", Toast.LENGTH_SHORT).show();
+				               }     	   
+				           });
+					builderTeste.create().show();
+					
+				} else {
+					finish();
+					startActivity(new Intent(arg0.getContext(), TesteDeteccaoFace.class));									
+				}
 			}
 		}
 	}
