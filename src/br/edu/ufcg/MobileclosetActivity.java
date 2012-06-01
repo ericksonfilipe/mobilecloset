@@ -133,14 +133,7 @@ public class MobileclosetActivity extends Activity {
 					i = new Intent(v.getContext(), OpcoesActivity.class);
 				} else {
 					i = new Intent(v.getContext(), ProvadorActivity.class);
-					//			if (dao.getManequimPadrao() == null) {
-//						Toast.makeText(this, "Não há manequim escolhido!", Toast.LENGTH_SHORT).show();
-//					} else {
-//						i.putExtra("background", dao.getManequimPadrao());
-//						startActivity(i);
-//					}
 					i.putExtra("background", dao.getManequimPadrao());
-					startActivity(i);
 				}
 				startActivity(i);
 			}
