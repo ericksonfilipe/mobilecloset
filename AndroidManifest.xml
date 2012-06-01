@@ -13,13 +13,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SobreActivity" />
         
         <activity android:name=".EscolherManequimActivity" />
         
         <activity android:name=".OpcoesActivity" />
         
-        <activity android:name=".SobreActivity" />
+        <activity android:name=".SobreActivity" android:theme="@android:style/Theme.Dialog"/>
         
         <activity android:name=".Creditos" />
         
@@ -44,6 +43,8 @@
         <activity android:name=".FavoritosActivity" ></activity>
         
         <activity android:name=".LojasActivity" ></activity>
+        
+        <activity android:name=".InformacoesActivity" android:theme="@android:style/Theme.Dialog"></activity>
         
         <activity android:name=".ConfirmarDownload" android:theme="@android:style/Theme.Dialog" android:label="@string/Download"></activity>
         
