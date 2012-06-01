@@ -85,7 +85,7 @@ public class LojasActivity extends ListActivity {
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		Loja lojaSelecionada = (Loja) getListAdapter().getItem(position);
-		InputStream is = Connection.getStreamFor(GET_ROUPAS + lojaSelecionada.getNome());
+		InputStream is = Connection.getStreamFor(GET_ROUPAS + processaNome(lojaSelecionada));
 		String response = new Scanner(is).useDelimiter("\\A").next();
 		List<RoupaDTO> roupas = DecodeJson.decode(RoupaDTO.class, response);
 
@@ -98,7 +98,10 @@ public class LojasActivity extends ListActivity {
 		System.out.println(roupas);
 
 		Toast.makeText(this, "Coleção baixada com sucesso!", Toast.LENGTH_SHORT).show();
+	}
 
+	private String processaNome(Loja l) {
+		return l.getNome().replace(" ", "%20");
 	}
 
 }
