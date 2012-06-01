@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="br.edu.ufcg"
+      android:versionCode="1"
+      android:versionName="1.0">
+    <uses-sdk android:minSdkVersion="8" />
+
+    <application android:icon="@drawable/cabide" android:label="@string/app_name" android:debuggable="true">
+        <activity android:name=".MobileclosetActivity"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".SobreActivity" />
+        
+        <activity android:name=".EscolherManequimActivity" />
+        
+        <activity android:name=".OpcoesActivity" />
+        
+        <activity android:name=".SobreActivity" />
+        
+        <activity android:name=".Creditos" />
+        
+        <activity android:name=".TirarFotoManequimActivity" ></activity>
+        
+        <activity android:name=".Provar" ></activity>
+        
+        <activity android:name=".RoupasActivity" ></activity>
+        
+        <activity android:name=".TirarFotoRoupaActivity" ></activity>
+        
+        <activity android:name=".ManequimActivity" ></activity>
+        
+        <activity android:name=".CalibragemRoupasActivity" ></activity>
+        
+        <activity android:name=".VerRoupasActivity" ></activity>
+        
+        <activity android:name=".ProvadorActivity" ></activity>
+        
+        <activity android:name=".TesteDeteccaoFace" ></activity>
+        
+        <activity android:name=".FavoritosActivity" ></activity>
+        
+        <activity android:name=".LojasActivity" ></activity>
+        
+        <activity android:name=".ConfirmarDownload" android:theme="@android:style/Theme.Dialog" android:label="@string/Download"></activity>
+        
+    </application>
+    
+	<uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-feature android:name="android.hardware.camera" />
+	
+       
+</manifest>
