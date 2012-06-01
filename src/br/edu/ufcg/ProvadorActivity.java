@@ -90,7 +90,17 @@ public class ProvadorActivity extends Activity {
 			if (roupasSuperiores.isEmpty() && roupasInferiores.isEmpty()) {
 				Toast.makeText(this, "Não há roupas cadastradas!", Toast.LENGTH_SHORT).show();
 			}
-
+			
+			Bitmap roupaTransparente = BitmapFactory.decodeResource(getResources(), R.drawable.blank);
+			
+			ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
+			roupaTransparente.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos); 
+			byte[] bitmapRoupaTransparente = bos.toByteArray();
+			
+			Roupa rTransparente = new Roupa(-1, bitmapRoupaTransparente, Categoria.VESTIDO);
+			roupasSuperiores.add(rTransparente);
+			roupasInferiores.add(rTransparente);
+			
 			provador = new Provador(this, roupasSuperiores, roupasInferiores);
 			provador.setBackgroundDrawable(bd);
 			setContentView(provador);
