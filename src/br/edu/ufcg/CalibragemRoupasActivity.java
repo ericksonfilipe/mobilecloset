@@ -369,11 +369,19 @@ public class CalibragemRoupasActivity  extends Activity {
 			canvas.scale(mScaleFactor, mScaleFactor);
 
 			if (zoom) {
-				calibragemRoupa.left = mImage.getBounds().left - zoomControler_w;
-				calibragemRoupa.top = mImage.getBounds().top - zoomControler_h;
-				calibragemRoupa.right = mImage.getBounds().right + zoomControler_w;
-				calibragemRoupa.bottom = mImage.getBounds().bottom + zoomControler_h;
-				mImage.setBounds(calibragemRoupa.left, calibragemRoupa.top, calibragemRoupa.right, calibragemRoupa.bottom);
+				if (numeroRoupa <= 7) {
+					calibragemModelo.left = mImage.getBounds().left - zoomControler_w;;
+					calibragemModelo.top = mImage.getBounds().top - zoomControler_h;
+					calibragemModelo.right = mImage.getBounds().right + zoomControler_w;
+					calibragemModelo.bottom = mImage.getBounds().bottom + zoomControler_h;
+					mImage.setBounds(calibragemModelo.left, calibragemModelo.top, calibragemModelo.right, calibragemModelo.bottom);
+				} else {
+					calibragemRoupa.left = mImage.getBounds().left - zoomControler_w;
+					calibragemRoupa.top = mImage.getBounds().top - zoomControler_h;
+					calibragemRoupa.right = mImage.getBounds().right + zoomControler_w;
+					calibragemRoupa.bottom = mImage.getBounds().bottom + zoomControler_h;
+					mImage.setBounds(calibragemRoupa.left, calibragemRoupa.top, calibragemRoupa.right, calibragemRoupa.bottom);					
+				}
 				zoom = false;
 			}
 			mImage.draw(canvas);
