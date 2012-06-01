@@ -1,5 +1,8 @@
 package br.edu.ufcg;
 
+import java.io.InputStream;
+import java.util.Scanner;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
+import br.edu.ufcg.async.Connection;
 
 public class OpcoesActivity extends Activity implements OnClickListener {
 	/** Called when the activity is first created. */
@@ -59,8 +63,13 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 			startActivity(i);
 		} else if (v.getId() == R.id.button_colecoes) {
 			if(temConexao()){
-				i = new Intent(v.getContext(), LojasActivity.class);
-				startActivity(i);
+				if (!isServidorDown()) {
+					System.out.println("entrando aqui.... ");
+					i = new Intent(v.getContext(), LojasActivity.class);
+					startActivity(i);					
+				} else {
+					Toast.makeText (getApplicationContext(), "Coleções indisponíveis no momento. Tente novamente mais tarde.", Toast.LENGTH_SHORT).show();
+				}
 			}else{
 				Toast.makeText (getApplicationContext(), "Sem conexão com a Internet!", Toast.LENGTH_SHORT).show();
 			}
@@ -102,6 +111,17 @@ public class OpcoesActivity extends Activity implements OnClickListener {
         }
         return lblnRet;
     }
+	
+	private boolean isServidorDown() {
+		try {
+			InputStream is = Connection.getStreamFor("loja/getLojas");
+			String response = new Scanner(is).useDelimiter("\\A").next();
+		} catch (Exception e) {
+			return true;
+		}
+		
+		return false;
+	}
 
 //	@Override
 //	public void onCreate(Bundle savedInstanceState) {
