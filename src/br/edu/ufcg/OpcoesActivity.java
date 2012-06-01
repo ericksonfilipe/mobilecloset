@@ -64,7 +64,6 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 		} else if (v.getId() == R.id.button_colecoes) {
 			if(temConexao()){
 				if (!isServidorDown()) {
-					System.out.println("entrando aqui.... ");
 					i = new Intent(v.getContext(), LojasActivity.class);
 					startActivity(i);					
 				} else {

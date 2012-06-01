@@ -24,7 +24,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -32,6 +31,7 @@ import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Calibragem;
 import br.edu.ufcg.model.Calibragem2;
 import br.edu.ufcg.model.Categoria;
+import br.edu.ufcg.model.Look;
 import br.edu.ufcg.model.Roupa;
 
 public class ProvadorActivity extends Activity {
@@ -55,11 +55,11 @@ public class ProvadorActivity extends Activity {
 
 	private LinearLayout informacaoCima;
 
-	private ImageView logoLojaCima;
+	private ImageButton logoLojaCima;
 
 	private LinearLayout informacaoBaixo;
 
-	private ImageView logoLojaBaixo;
+	private ImageButton logoLojaBaixo;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -149,11 +149,19 @@ public class ProvadorActivity extends Activity {
 		informacaoCima = new LinearLayout(ProvadorActivity.this);
 		informacaoCima.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		informacaoCima.setOrientation(LinearLayout.VERTICAL);
-		informacaoCima.setGravity(Gravity.RIGHT);
 		LinearLayout imagem = new LinearLayout(ProvadorActivity.this);
 		imagem.setLayoutParams(new LayoutParams(50, 50));
 		
-		logoLojaCima = new ImageView(ProvadorActivity.this);
+		logoLojaCima = new ImageButton(ProvadorActivity.this);
+		logoLojaCima.setBackgroundColor(Color.TRANSPARENT);
+		logoLojaCima.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				Intent i = new Intent(arg0.getContext(), InformacoesActivity.class);
+				i.putExtra("roupaLoja", provador.getRoupaSuperiorAtual());
+				startActivity(i);
+			}
+		});
+		
 		imagem.addView(logoLojaCima);
 		informacaoCima.addView(imagem);
 		addContentView(informacaoCima, informacaoCima.getLayoutParams());
@@ -163,10 +171,20 @@ public class ProvadorActivity extends Activity {
 		informacaoBaixo = new LinearLayout(ProvadorActivity.this);
 		informacaoBaixo.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		informacaoBaixo.setOrientation(LinearLayout.VERTICAL);
+		informacaoBaixo.setGravity(Gravity.RIGHT);
 		LinearLayout imagem = new LinearLayout(ProvadorActivity.this);
 		imagem.setLayoutParams(new LayoutParams(50, 50));
 		
-		logoLojaBaixo = new ImageView(ProvadorActivity.this);
+		logoLojaBaixo = new ImageButton(ProvadorActivity.this);
+		logoLojaBaixo.setBackgroundColor(Color.TRANSPARENT);
+		logoLojaBaixo.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				Intent i = new Intent(arg0.getContext(), InformacoesActivity.class);
+				i.putExtra("roupaLoja", provador.getRoupaInferiorAtual());
+				startActivity(i);
+			}
+		});
+		
 		imagem.addView(logoLojaBaixo);
 		informacaoBaixo.addView(imagem);
 		addContentView(informacaoBaixo, informacaoBaixo.getLayoutParams());
@@ -177,7 +195,20 @@ public class ProvadorActivity extends Activity {
 		bitmap.compress(CompressFormat.PNG, 0 /*IGNORED FOR PNG*/, bos); 
 		byte[] bitmapData = bos.toByteArray();
 		
-		dao.inserirLook(bitmapData);
+		Look look = new Look();
+		look.setImagem(bitmapData);
+		
+		if (provador.getRoupaInferiorAtual().getLoja() != null) {
+			look.setLogoLojaInferior(provador.getRoupaInferiorAtual().getLoja().getLogo());
+			look.setCodigoRoupaInferior(provador.getRoupaInferiorAtual().getCodigo());			
+		}
+		
+		if (provador.getRoupaSuperiorAtual().getLoja() != null) {
+			look.setLogoLojaSuperior(provador.getRoupaSuperiorAtual().getLoja().getLogo());
+			look.setCodigoRoupaSuperior(provador.getRoupaSuperiorAtual().getCodigo());			
+		}
+		
+		dao.inserirLook(look);
 		
 		Toast.makeText(this, "Look salvo com sucesso!", Toast.LENGTH_SHORT).show();
 	}
@@ -503,6 +534,15 @@ public class ProvadorActivity extends Activity {
 				proximaSuperiorButton.setImageResource(R.drawable.next_cinza);
 			}
 		}
+		
+		public Roupa getRoupaSuperiorAtual() {
+			return roupasSuperiores.get(posicaoRoupaSuperior);
+		}
+		
+		public Roupa getRoupaInferiorAtual() {
+			return roupasInferiores.get(posicaoRoupaInferior);
+		}
+		
 	}
 	
 //	@Override

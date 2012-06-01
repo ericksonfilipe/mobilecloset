@@ -88,10 +88,14 @@ public class BDAdapter {
 		return manequins;
 	}
 	
-	public void inserirLook(byte[] imagem) {
+	public void inserirLook(Look look) {
 		SQLiteDatabase banco = bdHelper.getWritableDatabase();
 		ContentValues cv = new ContentValues();
-		cv.put("imagem", imagem);
+		cv.put("imagem", look.getImagem());
+		cv.put("logoLojaSuperior", look.getLogoLojaSuperior());
+		cv.put("codigoRoupaSuperior", look.getCodigoRoupaSuperior());
+		cv.put("logoLojaInferior", look.getLogoLojaInferior());
+		cv.put("codigoRoupaInferior", look.getCodigoRoupaInferior());
 		banco.insert("look", null, cv);
 		banco.close();
 	}

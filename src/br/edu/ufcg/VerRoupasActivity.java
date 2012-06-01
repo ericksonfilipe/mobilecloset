@@ -39,6 +39,9 @@ public class VerRoupasActivity extends Activity {
 	public ImageButton deleteButton;
 	public ImageButton calibrarButton;
 	
+	private LinearLayout informacaoRoupa;
+	private ImageButton logoLoja;
+	
 //	public boolean calibrando = false;
 	public boolean adicionando = false;
 
@@ -161,6 +164,7 @@ public class VerRoupasActivity extends Activity {
 		layoutDelete.addView(linearDelete);
 		layoutDelete.setGravity(Gravity.BOTTOM);
 		
+		infoRoupa();
 		
 		addContentView(layoutMeio, new LayoutParams(LayoutParams.FILL_PARENT,
 				LayoutParams.FILL_PARENT));
@@ -174,6 +178,29 @@ public class VerRoupasActivity extends Activity {
 				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+	}
+	
+	private void infoRoupa() {
+		informacaoRoupa = new LinearLayout(VerRoupasActivity.this);
+		informacaoRoupa.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		informacaoRoupa.setOrientation(LinearLayout.VERTICAL);
+		informacaoRoupa.setGravity(Gravity.RIGHT);
+		LinearLayout imagem = new LinearLayout(VerRoupasActivity.this);
+		imagem.setLayoutParams(new LayoutParams(50, 50));
+		
+		logoLoja = new ImageButton(VerRoupasActivity.this);
+		logoLoja.setBackgroundColor(Color.TRANSPARENT);
+		logoLoja.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				Intent i = new Intent(arg0.getContext(), InformacoesActivity.class);
+				i.putExtra("roupaLoja", visualizadorRoupa.getRoupaAtual());
+				startActivity(i);
+			}
+		});
+		
+		imagem.addView(logoLoja);
+		informacaoRoupa.addView(imagem);
+		addContentView(informacaoRoupa, informacaoRoupa.getLayoutParams());
 	}
 
 	private Drawable carregaDrawable(byte[] imagem) {
@@ -310,6 +337,7 @@ public class VerRoupasActivity extends Activity {
 			super.onDraw(canvas);
 			if (!roupas.isEmpty()) {
 				Roupa roupa = roupas.get(posicaoRoupa);
+				modificaInfoRoupa(roupa);
 				roupaAtual = carregaDrawable(roupa.getImagem());
 				Calibragem calibragemModelo = dao.getCalibragens().get(getRoupaAtual().getCategoria());
 				Calibragem2 calibragemRoupa = dao.getCalibragens2().get(
@@ -324,6 +352,15 @@ public class VerRoupasActivity extends Activity {
 					roupaAtual.setBounds(0, 0, 100, 100);
 				}
 				roupaAtual.draw(canvas);				
+			}
+		}
+		
+		private void modificaInfoRoupa(Roupa roupa) {
+			if (roupa.getLoja() != null) {
+				BitmapDrawable logo = new BitmapDrawable(BitmapFactory.decodeByteArray(roupa.getLoja().getLogo(), 0, roupa.getLoja().getLogo().length));
+				logoLoja.setBackgroundDrawable(logo);
+			} else { 
+				logoLoja.setBackgroundDrawable(null);
 			}
 		}
 
