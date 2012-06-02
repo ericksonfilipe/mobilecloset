@@ -61,8 +61,7 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 			startActivity(i);
 		} else if (v.getId() == R.id.button_colecoes) {
 			
-			//Verificar se o processo demora para realmente colocar isto!
-			dialogoAguarde = ProgressDialog.show(OpcoesActivity.this,"","Acessando Coleções Disponíveis.\nPor favor, aguarde...");
+			dialogoAguarde = ProgressDialog.show(OpcoesActivity.this,"","Aguarde...");
 			new Thread() {
 				public void run() {
 					try { Thread.sleep(50); }
