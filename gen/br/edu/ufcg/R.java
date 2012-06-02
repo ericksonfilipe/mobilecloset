@@ -115,8 +115,7 @@ public final class R {
         public static final int opcoes_v2=0x7f030005;
         public static final int provador_botoes=0x7f030006;
         public static final int sobre=0x7f030007;
-        public static final int sobre_v2=0x7f030008;
-        public static final int visualizacao_roupas=0x7f030009;
+        public static final int visualizacao_roupas=0x7f030008;
     }
     public static final class menu {
         public static final int calibragem_menu=0x7f060000;

@@ -28,22 +28,24 @@ import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Calibragem;
 import br.edu.ufcg.model.Calibragem2;
 import br.edu.ufcg.model.Roupa;
+import br.edu.ufcg.model.ToastComTextoCentralizado;
 
 public class VerRoupasActivity extends Activity {
 
 	private BDAdapter dao;
 	private VisualizadorRoupa visualizadorRoupa;
+	private LinearLayout informacaoRoupa;
+	private ImageButton logoLoja;
+	
+	private final int QTD_ROUPAS_PADROES = 6;
+	
 	public ImageButton anteriorButton;
 	public ImageButton proximaButton;
 	public ImageButton addButton;
 	public ImageButton deleteButton;
 	public ImageButton calibrarButton;
-	
-	private LinearLayout informacaoRoupa;
-	private ImageButton logoLoja;
-	
-//	public boolean calibrando = false;
 	public boolean adicionando = false;
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -76,10 +78,12 @@ public class VerRoupasActivity extends Activity {
 		deleteButton.setImageResource(R.drawable.delete);
 		deleteButton.setBackgroundColor(Color.TRANSPARENT);
 		deleteButton.setOnClickListener(new OnClickListener() {
+			
 			//Alerta "Deseja realmente excluir"
 			public void onClick(View v) {
-				if (visualizadorRoupa.posicaoRoupa <= 6) {
-					Toast.makeText(v.getContext(), "Esta é uma roupa padrão do MobileCloset e não pode ser excluída.", Toast.LENGTH_SHORT).show();
+				if (visualizadorRoupa.posicaoRoupa <= QTD_ROUPAS_PADROES) {
+					new ToastComTextoCentralizado(v.getContext(), Toast.LENGTH_SHORT, 
+							"Esta é uma roupa padrão do MobileCloset e não pode ser excluída.").show();
 				} else {
 					AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
 					builder.setMessage("Deseja realmente excluir?")
@@ -94,8 +98,8 @@ public class VerRoupasActivity extends Activity {
 					});
 					builder.create().show();					
 				}
-				
 			}
+			
 		});
 		
 		proximaButton = new ImageButton(this);
@@ -229,10 +233,10 @@ public class VerRoupasActivity extends Activity {
 						CalibragemRoupasActivity.class);
 				i.putExtra("roupa", visualizadorRoupa.getRoupaAtual());
 				startActivity(i);
-//				calibrando = true;
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
-				Toast.makeText(visualizadorRoupa.getContext(), "Não há roupas cadastradas para serem calibradas!", Toast.LENGTH_SHORT).show();
+				new ToastComTextoCentralizado(visualizadorRoupa.getContext(), Toast.LENGTH_SHORT, 
+						"Não há roupas cadastradas para serem calibradas!").show();
 			}
 		}
 
@@ -244,23 +248,6 @@ public class VerRoupasActivity extends Activity {
 			visualizadorRoupa.proximaRoupa();
 		}
 	}
-
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		MenuInflater inflate = new MenuInflater(this);
-//		inflate.inflate(R.menu.ver_roupa_menu, menu);
-//		return true;
-//	}
-
-//	@Override
-//	public boolean onOptionsItemSelected(MenuItem item) {
-//		switch (item.getItemId()) {
-//		case R.id.removerRoupa:
-//			visualizadorRoupa.removeImagem();
-//			break;
-//		}
-//		return true;
-//	}
 	
 	@Override
 	protected void onResume() {
@@ -310,26 +297,23 @@ public class VerRoupasActivity extends Activity {
 		}
 
 		public void removeImagem() {
-//			if (posicaoRoupa <= 6) {
-//				Toast.makeText(getContext(), "Esta é uma roupa padrão do MobileCloset e não pode ser excluída.", Toast.LENGTH_SHORT).show();
-//			} else {
-				if (!roupas.isEmpty()) {
-					dao.removeRoupa(roupas.get(posicaoRoupa));
-					roupas.remove(posicaoRoupa);
-					if (roupas.isEmpty()) {
-						atualizaImagensBotoes();
-						return;
-					} else if (posicaoRoupa == roupas.size()) {
-						posicaoRoupa--;
-					}
-					Roupa roupa = roupas.get(posicaoRoupa);
-					roupaAtual = carregaDrawable(roupa.getImagem());
-					roupaAtual.setBounds(0, 0, getWidth(), getHeight());
-					invalidate();				
-				} else {
-					Toast.makeText(getContext(), "Não há roupas cadastradas para serem excluídas!", Toast.LENGTH_SHORT).show();
-				}				
-//			}
+			if (!roupas.isEmpty()) {
+				dao.removeRoupa(roupas.get(posicaoRoupa));
+				roupas.remove(posicaoRoupa);
+				if (roupas.isEmpty()) {
+					atualizaImagensBotoes();
+					return;
+				} else if (posicaoRoupa == roupas.size()) {
+					posicaoRoupa--;
+				}
+				Roupa roupa = roupas.get(posicaoRoupa);
+				roupaAtual = carregaDrawable(roupa.getImagem());
+				roupaAtual.setBounds(0, 0, getWidth(), getHeight());
+				invalidate();				
+			} else {
+				new ToastComTextoCentralizado(getContext(), Toast.LENGTH_SHORT, 
+						"Não há roupas cadastradas para serem excluídas!").show();
+			}				
 		}
 
 		@Override

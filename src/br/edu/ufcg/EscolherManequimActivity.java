@@ -271,7 +271,7 @@ public class EscolherManequimActivity extends Activity {
 				           .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
 				               public void onClick(DialogInterface dialog, int id) {
 				            	   finish();
-				            	   startActivity(new Intent(viewArg0.getContext(), TesteDeteccaoFace.class));
+				            	   startActivity(new Intent(viewArg0.getContext(), TesteDeteccaoFaceActivity.class));
 				               }
 				           })
 				           .setNegativeButton("Não", new DialogInterface.OnClickListener() {
@@ -284,7 +284,7 @@ public class EscolherManequimActivity extends Activity {
 					
 				} else {
 					finish();
-					startActivity(new Intent(arg0.getContext(), TesteDeteccaoFace.class));									
+					startActivity(new Intent(arg0.getContext(), TesteDeteccaoFaceActivity.class));									
 				}
 			}
 		}

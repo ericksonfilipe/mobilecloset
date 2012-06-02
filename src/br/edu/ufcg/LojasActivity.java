@@ -28,6 +28,7 @@ import br.edu.ufcg.async.DecodeJson;
 import br.edu.ufcg.async.dto.RoupaDTO;
 import br.edu.ufcg.model.Loja;
 import br.edu.ufcg.model.Roupa;
+import br.edu.ufcg.model.ToastComTextoCentralizado;
 
 public class LojasActivity extends ListActivity {
 
@@ -80,10 +81,13 @@ public class LojasActivity extends ListActivity {
 		}
 
 		setListAdapter(new MobileArrayAdapter(this, lojas));
-		Toast.makeText(this, "Selecione a loja e aguarde o download das roupas.", Toast.LENGTH_LONG).show();
+		new ToastComTextoCentralizado(this, Toast.LENGTH_LONG, 
+				"Selecione a loja e\naguarde o download das roupas.").show();
 		
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}
+
+
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -117,5 +121,6 @@ public class LojasActivity extends ListActivity {
 	private String processaNome(Loja l) {
 		return l.getNome().replace(" ", "%20");
 	}
+	
 
 }

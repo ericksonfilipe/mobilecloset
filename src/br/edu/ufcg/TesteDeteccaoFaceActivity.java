@@ -29,12 +29,12 @@ import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Calibragem;
 import br.edu.ufcg.model.Categoria;
+import br.edu.ufcg.model.ToastComTextoCentralizado;
 //import br.edu.ufcg.model.Roupa;
 
-public class TesteDeteccaoFace  extends Activity {
+public class TesteDeteccaoFaceActivity  extends Activity {
 
 	private boolean DEBUG = false;
-	private boolean modificarLargura = true;
 	private MyImageView myImageView;
 	private BDAdapter dao;
 //	private Roupa roupa;
@@ -191,26 +191,6 @@ public class TesteDeteccaoFace  extends Activity {
 //		
 //	}
 
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		MenuInflater inflate = new MenuInflater(this);
-//		inflate.inflate(R.menu.calibragem_menu, menu);
-//		return true;
-//	}
-//
-//	@Override
-//	public boolean onOptionsItemSelected(MenuItem item) {
-//		switch (item.getItemId()) {
-//		case R.id.salvarCalibragem:
-//			myImageView.salvarCalibragem();
-//			break;
-//		case R.id.alterarDimensoes:
-//			modificarLargura = !modificarLargura;
-//			item.setTitle(modificarLargura ? "Alterar Altura" : "Alterar Largura");
-//			break;
-//		}
-//		return true;
-//	}
 
 	public class MyImageView extends View {
 
@@ -397,7 +377,8 @@ public class TesteDeteccaoFace  extends Activity {
 
                 posicao++;
                 if (posicao >= imagens.length) {
-                	Toast.makeText(getContext(), "Manequim escolhido com sucesso!", Toast.LENGTH_SHORT).show();
+                	new ToastComTextoCentralizado(getContext(), Toast.LENGTH_SHORT, 
+                			"Manequim escolhido com sucesso!").show();
                     finish();
                     return;
                 }

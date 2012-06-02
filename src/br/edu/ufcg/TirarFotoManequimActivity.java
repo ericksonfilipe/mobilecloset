@@ -5,16 +5,11 @@ import java.io.ByteArrayOutputStream;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
-import android.media.FaceDetector;
-import android.media.FaceDetector.Face;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -23,7 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import br.edu.ufcg.BD.BDAdapter;
 
-public class TirarFotoManequimActivity extends Activity implements ImageListener, OnClickListener {
+public class TirarFotoManequimActivity extends Activity implements ImageListenerIF, OnClickListener {
 
 	private CameraView mPreview;
 	private BDAdapter dao;
@@ -36,10 +31,6 @@ public class TirarFotoManequimActivity extends Activity implements ImageListener
 		setContentView(R.layout.camera_preview);
 		mPreview = (CameraView) findViewById(R.id.imagem_camera);
 		mPreview.addImageListener(this);
-		
-//		LinearLayout layout = new LinearLayout(this);
-//		layout.setBackgroundResource(R.drawable.tracejado2);
-//		addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		
 		fotografarButton = new ImageButton(this);
 		fotografarButton.setImageResource(R.drawable.camera);
@@ -66,18 +57,6 @@ public class TirarFotoManequimActivity extends Activity implements ImageListener
 		this.dao = new BDAdapter(this);
 	}
 
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		MenuInflater inflate = new MenuInflater(this);
-//		inflate.inflate(R.menu.tirar_foto_menu, menu);
-//		return true;
-//	}
-
-//	@Override
-//	public boolean onOptionsItemSelected(MenuItem item) {
-//		mPreview.takePicture();
-//		return true;
-//	}
 
 	public void takeImage(byte[] image) { 
 		// Cleaning memory 
