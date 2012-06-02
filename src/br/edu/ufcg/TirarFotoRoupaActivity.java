@@ -7,7 +7,6 @@ import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -18,9 +17,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -32,7 +28,7 @@ import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Categoria;
 import br.edu.ufcg.model.Roupa;
 
-public class TirarFotoRoupaActivity extends Activity implements ImageListener {
+public class TirarFotoRoupaActivity extends Activity implements ImageListenerIF {
 
 	private BDAdapter dao;
 	
@@ -108,12 +104,6 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 		layout.addView(linear);
 		layout.setGravity(Gravity.TOP);
 
-		
-		
-//		RelativeLayout layoutEsquerda = new RelativeLayout(this);
-//		LinearLayout esquerda = new LinearLayout(this);
-//		esquerda.setOrientation(LinearLayout.VERTICAL);
-//		esquerda.setGravity(Gravity.CENTER);
 
 		fundo = new ImageButton(this);
 		fundo.setImageResource(R.drawable.botao2);
@@ -132,12 +122,6 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListener {
 			}
 		});
 		
-		
-//		esquerda.setGravity(Gravity.LEFT);
-//		esquerda.addView(fundo);
-//		
-//		layoutEsquerda.addView(esquerda, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
-//		layoutEsquerda.setGravity(Gravity.BOTTOM);
 		
 		RelativeLayout layoutEsquerda = new RelativeLayout(this);
 		LinearLayout linearEsq = new LinearLayout(this);

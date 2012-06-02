@@ -1,6 +1,6 @@
 package br.edu.ufcg;
 
-public interface ImageListener {
+public interface ImageListenerIF {
 	
 	public void takeImage(byte[] image);
 

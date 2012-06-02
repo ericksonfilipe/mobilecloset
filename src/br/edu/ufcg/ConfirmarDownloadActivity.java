@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class ConfirmarDownload extends Activity {
+public class ConfirmarDownloadActivity extends Activity {
 
 
 	/** Called when the activity is first created. */
