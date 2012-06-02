@@ -97,9 +97,10 @@ public class ProvadorActivity extends Activity {
 			roupaTransparente.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos); 
 			byte[] bitmapRoupaTransparente = bos.toByteArray();
 			
-			Roupa rTransparente = new Roupa(-1, bitmapRoupaTransparente, Categoria.VESTIDO);
-			roupasSuperiores.add(rTransparente);
-			roupasInferiores.add(rTransparente);
+			Roupa rTransparenteCima = new Roupa(-1, bitmapRoupaTransparente, Categoria.CAMISA);
+			Roupa rTransparenteBaixo = new Roupa(-1, bitmapRoupaTransparente, Categoria.CALCA);
+			roupasSuperiores.add(rTransparenteCima);
+			roupasInferiores.add(rTransparenteBaixo);
 			
 			provador = new Provador(this, roupasSuperiores, roupasInferiores);
 			provador.setBackgroundDrawable(bd);
@@ -342,11 +343,6 @@ public class ProvadorActivity extends Activity {
 		Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
 		return new BitmapDrawable(girado);
 	}
-
-	/*private void setLayout(LinearLayout l) {
-		addContentView(l, l.getLayoutParams());
-		
-	}*/
 
 	public class Provador extends View {
 
