@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.provider.Contacts.Intents;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -57,6 +58,7 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 		Intent i;
 		if (v.getId() == R.id.button_provador) {
 			i = new Intent(v.getContext(), ProvadorActivity.class);
+			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			i.putExtra("background", dao.getManequimPadrao());
 			startActivity(i);
 		} else if (v.getId() == R.id.button_colecoes) {
