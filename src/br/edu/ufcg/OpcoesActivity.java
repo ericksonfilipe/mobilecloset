@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -19,6 +20,8 @@ import br.edu.ufcg.async.Connection;
 public class OpcoesActivity extends Activity implements OnClickListener {
 	/** Called when the activity is first created. */
 
+	private ProgressDialog dialogoAguarde;
+	
 	//criado para a v2
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,7 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}	
 
+	
 	//criado para v2
 	//@Override
 	public void onClick(View v) {
@@ -53,15 +57,20 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 		Intent i;
 		if (v.getId() == R.id.button_provador) {
 			i = new Intent(v.getContext(), ProvadorActivity.class);
-			//			if (dao.getManequimPadrao() == null) {
-//				Toast.makeText(this, "Não há manequim escolhido!", Toast.LENGTH_SHORT).show();
-//			} else {
-//				i.putExtra("background", dao.getManequimPadrao());
-//				startActivity(i);
-//			}
 			i.putExtra("background", dao.getManequimPadrao());
 			startActivity(i);
 		} else if (v.getId() == R.id.button_colecoes) {
+			
+			//Verificar se o processo demora para realmente colocar isto!
+			dialogoAguarde = ProgressDialog.show(OpcoesActivity.this,"","Acessando Coleções Disponíveis.\nPor favor, aguarde...");
+			new Thread() {
+				public void run() {
+					try { Thread.sleep(50); }
+					catch (Exception e) { }
+					dialogoAguarde.dismiss();
+				}
+			}.start();	
+			
 			if(temConexao()){
 				if (!isServidorDown()) {
 					i = new Intent(v.getContext(), LojasActivity.class);
@@ -69,6 +78,7 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 				} else {
 					Toast.makeText (getApplicationContext(), "Coleções indisponíveis no momento. Tente novamente mais tarde.", Toast.LENGTH_SHORT).show();
 				}
+				
 			}else{
 				Toast.makeText (getApplicationContext(), "Sem conexão com a Internet!", Toast.LENGTH_SHORT).show();
 			}
