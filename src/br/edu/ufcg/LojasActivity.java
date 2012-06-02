@@ -101,7 +101,7 @@ public class LojasActivity extends ListActivity {
 		}
 		System.out.println(roupas);
 
-		Toast.makeText(this, "Download da Coleção concluído!\n("+qtdDeRoupas+" peças da loja"+lojaSelecionada.getNome()+")", Toast.LENGTH_LONG).show();
+		Toast.makeText(this, "Download da Coleção concluído!\n("+qtdDeRoupas+" peças da loja "+lojaSelecionada.getNome()+")", Toast.LENGTH_LONG).show();
 	}
 
 	private String processaNome(Loja l) {
