@@ -116,8 +116,8 @@ public class FavoritosActivity extends Activity {
 			public void onClick(View arg0) {
 				Intent i = new Intent(arg0.getContext(), InformacoesActivity.class);
 				i.putExtra("logoLojaSuperior", favorito.getLookAtual().getLogoLojaSuperior());
-				i.putExtra("nomeLojaSuperior", "nome de teste");
-				i.putExtra("categoriaRoupaSuperior", "categoria de teste");
+				i.putExtra("nomeLojaSuperior", favorito.getLookAtual().getNomeLojaSuperior());
+				i.putExtra("categoriaRoupaSuperior", favorito.getLookAtual().getCategoriaRoupaSuperior());
 				i.putExtra("codigoRoupaSuperior", favorito.getLookAtual().getCodigoRoupaSuperior());
 				startActivity(i);
 			}
@@ -142,8 +142,8 @@ public class FavoritosActivity extends Activity {
 			public void onClick(View arg0) {
 				Intent i = new Intent(arg0.getContext(), InformacoesActivity.class);
 				i.putExtra("logoLojaInferior", favorito.getLookAtual().getLogoLojaInferior());
-				i.putExtra("nomeLojaInferior", "nome de teste");
-				i.putExtra("categoriaRoupaInferior", "categoria de teste");
+				i.putExtra("nomeLojaInferior", favorito.getLookAtual().getNomeLojaInferior());
+				i.putExtra("categoriaRoupaInferior", favorito.getLookAtual().getCategoriaRoupaInferior());
 				i.putExtra("codigoRoupaInferior", favorito.getLookAtual().getCodigoRoupaInferior());
 				startActivity(i);
 			}
