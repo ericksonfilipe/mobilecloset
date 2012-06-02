@@ -72,9 +72,8 @@ public class InformacoesActivity extends Activity {
 		infoCategoria.setTextSize(TypedValue.COMPLEX_UNIT_PX, 14);
 		
 		LinearLayout maior = new LinearLayout(this);
-		maior.setWeightSum(1);
+		maior.setPadding(5, 5, 5, 5);
 		LinearLayout info = new LinearLayout(this);
-		info.setWeightSum(1);
 		info.setOrientation(LinearLayout.VERTICAL);
 		info.addView(infoCategoria);
 		info.addView(infoCodigo);
