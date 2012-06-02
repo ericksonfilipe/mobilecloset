@@ -114,9 +114,15 @@ public class BDAdapter {
 		SQLiteDatabase banco = bdHelper.getReadableDatabase();
 		List<Look> looks = new ArrayList<Look>();
 		Cursor c = banco.query("look", 
-				new String[] {"id", "imagem"}, null, null, null, null, "id");
+				new String[] {"id", "imagem", "logoLojaSuperior", "codigoRoupaSuperior", "logoLojaInferior", "codigoRoupaInferior"}, null, null, null, null, "id");
 		while(c.moveToNext()) {
-			looks.add(new Look(c.getInt(c.getColumnIndex("id")), c.getBlob(c.getColumnIndex("imagem"))));
+			Look look = new Look(c.getInt(c.getColumnIndex("id")), c.getBlob(c.getColumnIndex("imagem")));
+			look.setLogoLojaSuperior(c.getBlob(c.getColumnIndex("logoLojaSuperior")));
+			look.setLogoLojaInferior(c.getBlob(c.getColumnIndex("logoLojaInferior")));
+			look.setCodigoRoupaInferior(c.getString(c.getColumnIndex("codigoRoupaInferior")));
+			look.setCodigoRoupaSuperior(c.getString(c.getColumnIndex("codigoRoupaSuperior")));
+			
+			looks.add(look);
 		}
 		c.close();
 		banco.close();

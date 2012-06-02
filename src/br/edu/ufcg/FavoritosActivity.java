@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,12 +19,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Look;
-import br.edu.ufcg.model.Manequim;
+import br.edu.ufcg.model.Roupa;
 
 public class FavoritosActivity extends Activity {
 
@@ -37,6 +39,14 @@ public class FavoritosActivity extends Activity {
 	private ImageButton proximaButton;
 	
 	public ImageButton deleteButton;
+	
+	private LinearLayout informacaoCima;
+
+	private ImageButton logoLojaCima;
+
+	private LinearLayout informacaoBaixo;
+
+	private ImageButton logoLojaBaixo;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -82,12 +92,60 @@ public class FavoritosActivity extends Activity {
 			layoutDelete.addView(linearDelete);
 			layoutDelete.setGravity(Gravity.BOTTOM);
 			
+			infoRoupaInferior();
+			infoRoupaSuperior();
+			
 			addContentView(getLayoutBotoesEsquerda(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 			addContentView(getLayoutBotoesDireita(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 			addContentView(layoutDelete, new LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 
 			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+	}
+	
+	private void infoRoupaSuperior() {
+		informacaoCima = new LinearLayout(FavoritosActivity.this);
+		informacaoCima.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		informacaoCima.setOrientation(LinearLayout.VERTICAL);
+		LinearLayout imagem = new LinearLayout(FavoritosActivity.this);
+		imagem.setLayoutParams(new LayoutParams(50, 50));
+		
+		logoLojaCima = new ImageButton(FavoritosActivity.this);
+		logoLojaCima.setBackgroundColor(Color.TRANSPARENT);
+		logoLojaCima.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				Intent i = new Intent(arg0.getContext(), InformacoesActivity.class);
+//				i.putExtra("look", favorito.getLookAtual());
+				startActivity(i);
+			}
+		});
+		
+		imagem.addView(logoLojaCima);
+		informacaoCima.addView(imagem);
+		addContentView(informacaoCima, informacaoCima.getLayoutParams());
+	}
+
+	private void infoRoupaInferior() {
+		informacaoBaixo = new LinearLayout(FavoritosActivity.this);
+		informacaoBaixo.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		informacaoBaixo.setOrientation(LinearLayout.VERTICAL);
+		informacaoBaixo.setGravity(Gravity.RIGHT);
+		LinearLayout imagem = new LinearLayout(FavoritosActivity.this);
+		imagem.setLayoutParams(new LayoutParams(50, 50));
+		
+		logoLojaBaixo = new ImageButton(FavoritosActivity.this);
+		logoLojaBaixo.setBackgroundColor(Color.TRANSPARENT);
+		logoLojaBaixo.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				Intent i = new Intent(arg0.getContext(), InformacoesActivity.class);
+//				i.putExtra("look", favorito.getLookAtual());
+				startActivity(i);
+			}
+		});
+		
+		imagem.addView(logoLojaBaixo);
+		informacaoBaixo.addView(imagem);
+		addContentView(informacaoBaixo, informacaoBaixo.getLayoutParams());
 	}
 
 	private RelativeLayout getLayoutBotoesEsquerda() {
@@ -193,7 +251,26 @@ public class FavoritosActivity extends Activity {
 		@Override
 		protected void onDraw(Canvas canvas) {
 			super.onDraw(canvas);
+			modificaInfoRoupa();
 			look.draw(canvas);
+		}
+		
+		private void modificaInfoRoupa() {
+			Look lookAtual = getLookAtual();
+
+			if (lookAtual.getLogoLojaInferior() != null) {
+				BitmapDrawable logo = new BitmapDrawable(BitmapFactory.decodeByteArray(lookAtual.getLogoLojaInferior(), 0, lookAtual.getLogoLojaInferior().length));
+				logoLojaBaixo.setBackgroundDrawable(logo);
+			} else {
+				logoLojaBaixo.setBackgroundDrawable(null);
+			}
+			
+			if (lookAtual.getLogoLojaSuperior() != null) {
+				BitmapDrawable logo = new BitmapDrawable(BitmapFactory.decodeByteArray(lookAtual.getLogoLojaSuperior(), 0, lookAtual.getLogoLojaSuperior().length));
+				logoLojaCima.setBackgroundDrawable(logo);
+			} else {
+				logoLojaCima.setBackgroundDrawable(null);
+			}
 		}
 
 		public void proximoLook() {
@@ -216,6 +293,10 @@ public class FavoritosActivity extends Activity {
 				invalidate();
 			}
 			atualizaImagensBotoes();
+		}
+		
+		public Look getLookAtual() {
+			return listaLooks.get(posicao);
 		}
 
 		private void atualizaImagensBotoes() {
