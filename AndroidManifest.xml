@@ -48,6 +48,8 @@
         
         <activity android:name=".ConfirmarDownload" android:theme="@android:style/Theme.Dialog" android:label="@string/Download"></activity>
         
+        <activity android:name=".DownloadRoupasActivity" android:theme="@android:style/Theme.Dialog" android:label="@string/DownloadRoupas"/>
+        
     </application>
     
 	<uses-permission android:name="android.permission.INTERNET" />

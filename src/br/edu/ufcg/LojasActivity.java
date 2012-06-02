@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Scanner;
 
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -78,7 +80,6 @@ public class LojasActivity extends ListActivity {
 		}
 
 		setListAdapter(new MobileArrayAdapter(this, lojas));
-
 		Toast.makeText(this, "Selecione a loja e aguarde o download das roupas.", Toast.LENGTH_LONG).show();
 		
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -86,22 +87,31 @@ public class LojasActivity extends ListActivity {
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		Loja lojaSelecionada = (Loja) getListAdapter().getItem(position);
-		InputStream is = Connection.getStreamFor(GET_ROUPAS + processaNome(lojaSelecionada));
-		String response = new Scanner(is).useDelimiter("\\A").next();
-		List<RoupaDTO> roupas = DecodeJson.decode(RoupaDTO.class, response);
-		Loja loja = dao.getLoja(lojaSelecionada.getNome());
-		
-		int qtdDeRoupas = 0;
-		for (RoupaDTO r : roupas) {
-			Roupa roupa = new Roupa(r);
-			roupa.setLoja(loja);
-			dao.inserirRoupa(roupa);
-			qtdDeRoupas++;
-		}
-		System.out.println(roupas);
-
-		Toast.makeText(this, "Download da Coleção concluído!\n("+qtdDeRoupas+" peças da loja "+lojaSelecionada.getNome()+")", Toast.LENGTH_LONG).show();
+		final Loja lojaSelecionada = (Loja) getListAdapter().getItem(position);
+		final ProgressDialog dialogoAguarde = ProgressDialog.show(this,"","Aguarde...");
+		new Thread() {
+			public void run() {
+				InputStream is = Connection.getStreamFor(GET_ROUPAS + processaNome(lojaSelecionada));
+				String response = new Scanner(is).useDelimiter("\\A").next();
+				List<RoupaDTO> roupas = DecodeJson.decode(RoupaDTO.class, response);
+				Loja loja = dao.getLoja(lojaSelecionada.getNome());
+				
+				int qtdRoupas = 0;
+				for (RoupaDTO r : roupas) {
+					Roupa roupa = new Roupa(r);
+					roupa.setLoja(loja);
+					dao.inserirRoupa(roupa);
+					qtdRoupas++;
+				}
+				System.out.println(roupas);
+				dialogoAguarde.dismiss();
+				
+				Intent i = new Intent(LojasActivity.this, DownloadRoupasActivity.class);
+				i.putExtra("qtdeRoupas", qtdRoupas);
+				i.putExtra("nomeLoja", lojaSelecionada.getNome());
+				startActivity(i);
+			}
+		}.start();
 	}
 
 	private String processaNome(Loja l) {

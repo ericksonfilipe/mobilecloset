@@ -129,6 +129,7 @@ public final class R {
         public static final int CadastrarRoupas=0x7f050007;
         public static final int Download=0x7f050009;
         public static final int DownloadColecoes=0x7f050004;
+        public static final int DownloadRoupas=0x7f05000b;
         public static final int EscolherManequim=0x7f050003;
         public static final int Excluir=0x7f050008;
         public static final int InfoLoja=0x7f05000a;
