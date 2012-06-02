@@ -28,7 +28,7 @@ import br.edu.ufcg.async.DecodeJson;
 import br.edu.ufcg.async.dto.RoupaDTO;
 import br.edu.ufcg.model.Loja;
 import br.edu.ufcg.model.Roupa;
-import br.edu.ufcg.model.ToastComTextoCentralizado;
+import br.edu.ufcg.model.ToastPersonalizado;
 
 public class LojasActivity extends ListActivity {
 
@@ -81,7 +81,7 @@ public class LojasActivity extends ListActivity {
 		}
 
 		setListAdapter(new MobileArrayAdapter(this, lojas));
-		new ToastComTextoCentralizado(this, Toast.LENGTH_LONG, 
+		new ToastPersonalizado(this, Toast.LENGTH_LONG, 
 				"Selecione a loja e\naguarde o download das roupas.").show();
 		
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -92,7 +92,7 @@ public class LojasActivity extends ListActivity {
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		final Loja lojaSelecionada = (Loja) getListAdapter().getItem(position);
-		final ProgressDialog dialogoAguarde = ProgressDialog.show(this,"","Aguarde...");
+		final ProgressDialog dialogoAguarde = ProgressDialog.show(this,"","Realizando download.\nPor favor, aguarde...");
 		new Thread() {
 			public void run() {
 				InputStream is = Connection.getStreamFor(GET_ROUPAS + processaNome(lojaSelecionada));

@@ -198,19 +198,7 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListenerIF 
 		}
 	}
 
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		MenuInflater inflate = new MenuInflater(this);
-//		inflate.inflate(R.menu.tirar_foto_menu, menu);
-//		return true;
-//	}
-//
-//	@Override
-//	public boolean onOptionsItemSelected(MenuItem item) {
-//		mPreview.takePicture();
-//		return true;
-//	}
-
+	
 	public void takeImage(byte[] image) { 
 		// Cleaning memory 
 		System.gc(); 

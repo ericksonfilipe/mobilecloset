@@ -1,8 +1,5 @@
 package br.edu.ufcg;
 
-import java.io.InputStream;
-import java.util.Scanner;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -16,7 +13,7 @@ import android.widget.Button;
 import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.async.Connection;
-import br.edu.ufcg.model.ToastComTextoCentralizado;
+import br.edu.ufcg.model.ToastPersonalizado;
 
 public class OpcoesActivity extends Activity implements OnClickListener {
 	/** Called when the activity is first created. */
@@ -26,7 +23,7 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.opcoes_v2);
+		setContentView(R.layout.opcoes);
 
 		Button bVisualizadorRoupas = (Button) findViewById(R.id.button_provador);
 		bVisualizadorRoupas.setOnClickListener(this);
@@ -75,7 +72,7 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 					i = new Intent(v.getContext(), LojasActivity.class);
 					startActivity(i);					
 				} else {
-					new ToastComTextoCentralizado(getApplicationContext(), Toast.LENGTH_SHORT, 
+					new ToastPersonalizado(getApplicationContext(), Toast.LENGTH_SHORT, 
 							"Coleções indisponíveis no momento.\nTente novamente mais tarde.").show();
 				}
 				
@@ -84,14 +81,14 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 			}
 		} else if (v.getId() == R.id.button_closet) {
 			if (dao.getRoupas().isEmpty()) {
-				new ToastComTextoCentralizado(this, Toast.LENGTH_SHORT, 
+				new ToastPersonalizado(this, Toast.LENGTH_SHORT, 
 						"Não há roupas cadastradas").show();
 			}
 			i = new Intent(v.getContext(), VerRoupasActivity.class);
 			startActivity(i);
 		} else if (v.getId() == R.id.button_looks) {
 			if (dao.getLooks().isEmpty()) {
-				new ToastComTextoCentralizado(this, Toast.LENGTH_SHORT, 
+				new ToastPersonalizado(this, Toast.LENGTH_SHORT, 
 						"Não há looks cadastrados").show();
 			} else {
 				i = new Intent(v.getContext(), FavoritosActivity.class);
@@ -125,12 +122,10 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 	
 	private boolean isServidorDown() {
 		try {
-			InputStream is = Connection.getStreamFor("loja/getLojas");
-			String response = new Scanner(is).useDelimiter("\\A").next();
+			Connection.getStreamFor("loja/getLojas");
 		} catch (Exception e) {
 			return true;
 		}
-		
 		return false;
 	}
 	

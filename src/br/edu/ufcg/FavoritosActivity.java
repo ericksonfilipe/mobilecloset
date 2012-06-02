@@ -19,17 +19,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Look;
-import br.edu.ufcg.model.Roupa;
+import br.edu.ufcg.model.ToastPersonalizado;
 
 public class FavoritosActivity extends Activity {
-
-	private boolean DEBUG = false;
 
 	private BDAdapter dao;
 
@@ -54,21 +51,6 @@ public class FavoritosActivity extends Activity {
 		
 			dao = new BDAdapter(this);
 
-//			byte[] imagem = (byte[]) getIntent().getExtras().get("background");
-
-//			Bitmap b = null;
-//			//if (DEBUG) {
-//			if (imagem == null) {
-//				b = BitmapFactory.decodeResource(getResources(), R.drawable.manequim_padrao);
-//			} else {
-//				b = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
-//			}
-//
-//			Matrix matrix = new Matrix();
-//			matrix.setRotate(90);
-//			Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
-//			BitmapDrawable bd = new BitmapDrawable(girado);
-//
 			favorito = new Favoritos(this);
 			favorito.setBackgroundDrawable(carregaDrawable(dao.getLooks().get(0).getImagem()));
 			setContentView(favorito);
@@ -237,7 +219,8 @@ public class FavoritosActivity extends Activity {
 			listaLooks.remove(posicao);
 			
 			if (listaLooks.size() == 0) {
-				Toast.makeText(getContext(), "Não há mais looks salvos", Toast.LENGTH_SHORT).show();
+				new ToastPersonalizado(getContext(), Toast.LENGTH_SHORT, 
+						"Não há mais looks salvos").show();
 				finish();
 				return;
 			} else {

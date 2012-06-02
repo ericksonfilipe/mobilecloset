@@ -22,8 +22,9 @@ public class DownloadRoupasActivity extends Activity {
 		int qtdeRoupas = (Integer) getIntent().getExtras().get("qtdeRoupas");
 
 		TextView infoCategoria = new TextView(this);
-		infoCategoria.setText("Download da Coleção concluído!\n(" + qtdeRoupas + " peças da loja "+nomeLoja + ")");
+		infoCategoria.setText("Download da coleção concluído!\n(" + qtdeRoupas + " peças da loja "+nomeLoja + ")");
 		infoCategoria.setTextSize(TypedValue.COMPLEX_UNIT_PX, 14);
+		infoCategoria.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
 
 		LinearLayout maior = new LinearLayout(this);
 		maior.setOrientation(LinearLayout.VERTICAL);

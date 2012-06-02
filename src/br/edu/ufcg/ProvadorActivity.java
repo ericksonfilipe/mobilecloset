@@ -33,7 +33,7 @@ import br.edu.ufcg.model.Calibragem2;
 import br.edu.ufcg.model.Categoria;
 import br.edu.ufcg.model.Look;
 import br.edu.ufcg.model.Roupa;
-import br.edu.ufcg.model.ToastComTextoCentralizado;
+import br.edu.ufcg.model.ToastPersonalizado;
 
 public class ProvadorActivity extends Activity {
 
@@ -82,11 +82,11 @@ public class ProvadorActivity extends Activity {
 			List<Roupa> roupasInferiores = carregaRoupasInferiores();
 
 			if (roupasSuperiores.isEmpty() && roupasInferiores.isEmpty()) {
-				new ToastComTextoCentralizado(this, Toast.LENGTH_SHORT, 
+				new ToastPersonalizado(this, Toast.LENGTH_SHORT, 
 						"Não há roupas cadastradas!").show();
 			}
 			
-			Bitmap roupaTransparente = BitmapFactory.decodeResource(getResources(), R.drawable.blank);
+			Bitmap roupaTransparente = BitmapFactory.decodeResource(getResources(), R.drawable.transparente);
 			
 			ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
 			roupaTransparente.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos); 
@@ -220,7 +220,7 @@ public class ProvadorActivity extends Activity {
 		
 		dao.inserirLook(look);
 		
-		new ToastComTextoCentralizado(this, Toast.LENGTH_SHORT, 
+		new ToastPersonalizado(this, Toast.LENGTH_SHORT, 
 				"Look salvo com sucesso!").show();
 	}
 	

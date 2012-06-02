@@ -20,17 +20,9 @@
         
         <activity android:name=".SobreActivity" android:theme="@android:style/Theme.Dialog"/>
         
-        <activity android:name=".Creditos" />
-        
         <activity android:name=".TirarFotoManequimActivity" ></activity>
         
-        <activity android:name=".Provar" ></activity>
-        
-        <activity android:name=".RoupasActivity" ></activity>
-        
         <activity android:name=".TirarFotoRoupaActivity" ></activity>
-        
-        <activity android:name=".ManequimActivity" ></activity>
         
         <activity android:name=".CalibragemRoupasActivity" ></activity>
         
@@ -45,8 +37,6 @@
         <activity android:name=".LojasActivity" ></activity>
         
         <activity android:name=".InformacoesActivity" android:theme="@android:style/Theme.Dialog" android:label="@string/InfoLoja" />
-        
-        <activity android:name=".ConfirmarDownloadActivity" android:theme="@android:style/Theme.Dialog" android:label="@string/Download"></activity>
         
         <activity android:name=".DownloadRoupasActivity" android:theme="@android:style/Theme.Dialog" android:label="@string/DownloadRoupas"/>
         

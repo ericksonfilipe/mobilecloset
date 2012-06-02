@@ -13,8 +13,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -94,7 +92,7 @@ public class CalibragemRoupasActivity  extends Activity {
 		
 		ImageButton linha1_coluna1 = new ImageButton(this);
 		linha1_coluna1.setBackgroundColor(Color.TRANSPARENT);
-		linha1_coluna1.setImageDrawable(getResources().getDrawable(R.drawable.blank));
+		linha1_coluna1.setImageDrawable(getResources().getDrawable(R.drawable.transparente));
 		linha1_coluna1.setPadding(ESPACO_DA_BORDA, 0, 0, 0);
 		
 		ImageButton linha1_coluna2 = new ImageButton(this);
@@ -105,7 +103,7 @@ public class CalibragemRoupasActivity  extends Activity {
 		
 		ImageButton linha1_coluna3 = new ImageButton(this);
 		linha1_coluna3.setBackgroundColor(Color.TRANSPARENT);
-		linha1_coluna3.setImageDrawable(getResources().getDrawable(R.drawable.blank));
+		linha1_coluna3.setImageDrawable(getResources().getDrawable(R.drawable.transparente));
 		linha1_coluna3.setPadding(0, 0, 0, 0);
 		
 		ImageButton linha2_coluna1 = new ImageButton(this);
@@ -116,7 +114,7 @@ public class CalibragemRoupasActivity  extends Activity {
 		
 		ImageButton linha2_coluna2 = new ImageButton(this);
 		linha2_coluna2.setBackgroundColor(Color.TRANSPARENT);
-		linha2_coluna2.setImageDrawable(getResources().getDrawable(R.drawable.blank));
+		linha2_coluna2.setImageDrawable(getResources().getDrawable(R.drawable.transparente));
 		linha2_coluna2.setPadding(0, 0, 0, 0);
 		
 		ImageButton linha2_coluna3 = new ImageButton(this);
@@ -127,7 +125,7 @@ public class CalibragemRoupasActivity  extends Activity {
 		
 		ImageButton linha3_coluna1 = new ImageButton(this);
 		linha3_coluna1.setBackgroundColor(Color.TRANSPARENT);
-		linha3_coluna1.setImageDrawable(getResources().getDrawable(R.drawable.blank));
+		linha3_coluna1.setImageDrawable(getResources().getDrawable(R.drawable.transparente));
 		linha3_coluna1.setPadding(ESPACO_DA_BORDA, 0, 0, ESPACO_DA_BORDA);
 		
 		ImageButton linha3_coluna2 = new ImageButton(this);
@@ -138,7 +136,7 @@ public class CalibragemRoupasActivity  extends Activity {
 		
 		ImageButton linha3_coluna3 = new ImageButton(this);
 		linha3_coluna3.setBackgroundColor(Color.TRANSPARENT);
-		linha3_coluna3.setImageDrawable(getResources().getDrawable(R.drawable.blank));
+		linha3_coluna3.setImageDrawable(getResources().getDrawable(R.drawable.transparente));
 		linha3_coluna3.setPadding(0, 0, 0, ESPACO_DA_BORDA);
 		
 		RelativeLayout layoutMatriz = new RelativeLayout(this);
@@ -189,12 +187,6 @@ public class CalibragemRoupasActivity  extends Activity {
 		addContentView(layoutSalvar, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflate = new MenuInflater(this);
-		inflate.inflate(R.menu.calibragem_menu, menu);
-		return true;
-	}
 
 	public class MyImageView extends View {
 
