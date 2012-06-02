@@ -38,7 +38,7 @@
         
         <activity android:name=".ProvadorActivity" ></activity>
         
-        <activity android:name=".TesteDeteccaoFace" ></activity>
+        <activity android:name=".TesteDeteccaoFaceActivity" ></activity>
         
         <activity android:name=".FavoritosActivity" ></activity>
         
@@ -46,7 +46,7 @@
         
         <activity android:name=".InformacoesActivity" android:theme="@android:style/Theme.Dialog" android:label="@string/InfoLoja" />
         
-        <activity android:name=".ConfirmarDownload" android:theme="@android:style/Theme.Dialog" android:label="@string/Download"></activity>
+        <activity android:name=".ConfirmarDownloadActivity" android:theme="@android:style/Theme.Dialog" android:label="@string/Download"></activity>
         
     </application>
     

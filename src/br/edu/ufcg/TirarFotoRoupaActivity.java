@@ -28,7 +28,7 @@ import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Categoria;
 import br.edu.ufcg.model.Roupa;
 
-public class TirarFotoRoupaActivity extends Activity implements ImageListener {
+public class TirarFotoRoupaActivity extends Activity implements ImageListenerIF {
 
 	private BDAdapter dao;
 	

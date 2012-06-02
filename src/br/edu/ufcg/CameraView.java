@@ -24,7 +24,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 
     private Camera.PictureCallback mPictureCallback;
 
-    private List<ImageListener> listeners;
+    private List<ImageListenerIF> listeners;
     private byte[] imageData;
 
     public CameraView(Context context) {
@@ -52,7 +52,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
      * Inicialisa os atributos
      */
     public void init() {
-        listeners = new ArrayList<ImageListener>();
+        listeners = new ArrayList<ImageListenerIF>();
         mHolder = getHolder();
         mHolder.addCallback(this);
         mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -197,7 +197,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
      * Adds a image listener
      * @param listener a image listener
      */
-    public void addImageListener(ImageListener listener) {
+    public void addImageListener(ImageListenerIF listener) {
         listeners.add(listener);
     }
 
@@ -205,7 +205,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
      * Removes a image listener
      * @param listener the listener to be deleted
      */
-    public void removeImageListener(ImageListener listener) {
+    public void removeImageListener(ImageListenerIF listener) {
     	listeners.remove(listener);
     }
 
@@ -213,7 +213,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
      * Notifies listeners
      */
     public void notifyListeners() {
-        for (ImageListener listener : listeners) {
+        for (ImageListenerIF listener : listeners) {
             listener.takeImage(imageData);
         }
     }
