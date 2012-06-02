@@ -68,16 +68,18 @@ public class InformacoesActivity extends Activity {
 		infoCodigo.setTextSize(TypedValue.COMPLEX_UNIT_PX, 14);
 		
 		TextView infoCategoria = new TextView(this);
-		infoCodigo.setText("Categoria: " + categoriaDaRoupa);
-		infoCodigo.setTextSize(TypedValue.COMPLEX_UNIT_PX, 14);
+		infoCategoria.setText(categoriaDaRoupa);
+		infoCategoria.setTextSize(TypedValue.COMPLEX_UNIT_PX, 14);
 		
 		LinearLayout maior = new LinearLayout(this);
+		maior.setWeightSum(1);
 		LinearLayout info = new LinearLayout(this);
+		info.setWeightSum(1);
 		info.setOrientation(LinearLayout.VERTICAL);
-		info.addView(nomeLoja);
 		info.addView(infoCategoria);
 		info.addView(infoCodigo);
-		info.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		info.addView(nomeLoja);
+		info.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		
 		maior.addView(logo);
 		maior.addView(info);
