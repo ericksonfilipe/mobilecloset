@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,9 +28,11 @@ public class InformacoesActivity extends Activity {
 		
 		TextView nomeLoja = new TextView(this);
 		nomeLoja.setText("Loja: " + loja.getNome());
+		nomeLoja.setTextSize(TypedValue.COMPLEX_UNIT_PX, 14);
 		
 		TextView infoCodigo = new TextView(this);
 		infoCodigo.setText("Codigo da roupa: " + roupa.getCodigo());
+		infoCodigo.setTextSize(TypedValue.COMPLEX_UNIT_PX, 14);
 		
 		LinearLayout maior = new LinearLayout(this);
 		LinearLayout info = new LinearLayout(this);

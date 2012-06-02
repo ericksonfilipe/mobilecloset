@@ -44,7 +44,7 @@
         
         <activity android:name=".LojasActivity" ></activity>
         
-        <activity android:name=".InformacoesActivity" android:theme="@android:style/Theme.Dialog"></activity>
+        <activity android:name=".InformacoesActivity" android:theme="@android:style/Theme.Dialog" android:label="@string/InfoLoja" />
         
         <activity android:name=".ConfirmarDownload" android:theme="@android:style/Theme.Dialog" android:label="@string/Download"></activity>
         
