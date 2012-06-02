@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.async.Connection;
+import br.edu.ufcg.model.ToastComTextoCentralizado;
 
 public class OpcoesActivity extends Activity implements OnClickListener {
 	/** Called when the activity is first created. */
@@ -77,7 +78,8 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 					i = new Intent(v.getContext(), LojasActivity.class);
 					startActivity(i);					
 				} else {
-					Toast.makeText (getApplicationContext(), "Coleções indisponíveis no momento. Tente novamente mais tarde.", Toast.LENGTH_SHORT).show();
+					new ToastComTextoCentralizado(getApplicationContext(), Toast.LENGTH_SHORT, 
+							"Coleções indisponíveis no momento.\nTente novamente mais tarde.").show();
 				}
 				
 			}else{
