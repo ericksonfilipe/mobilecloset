@@ -79,6 +79,8 @@ public class LojasActivity extends ListActivity {
 
 		setListAdapter(new MobileArrayAdapter(this, lojas));
 
+		Toast.makeText(this, "Selecione a loja e aguarde o download das roupas.", Toast.LENGTH_LONG).show();
+		
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}
 
@@ -88,16 +90,18 @@ public class LojasActivity extends ListActivity {
 		InputStream is = Connection.getStreamFor(GET_ROUPAS + processaNome(lojaSelecionada));
 		String response = new Scanner(is).useDelimiter("\\A").next();
 		List<RoupaDTO> roupas = DecodeJson.decode(RoupaDTO.class, response);
-
 		Loja loja = dao.getLoja(lojaSelecionada.getNome());
+		
+		int qtdDeRoupas = 0;
 		for (RoupaDTO r : roupas) {
 			Roupa roupa = new Roupa(r);
 			roupa.setLoja(loja);
 			dao.inserirRoupa(roupa);
+			qtdDeRoupas++;
 		}
 		System.out.println(roupas);
 
-		Toast.makeText(this, "Coleção baixada com sucesso!", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "Download da Coleção concluído!\n("+qtdDeRoupas+" peças da loja"+lojaSelecionada.getNome()+")", Toast.LENGTH_LONG).show();
 	}
 
 	private String processaNome(Loja l) {
