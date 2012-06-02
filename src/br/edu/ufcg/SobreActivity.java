@@ -16,7 +16,7 @@ public class SobreActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.sobre);//anteriormente: sobre_v2
+		setContentView(R.layout.sobre);
 		
 		TextView textoSuperior = new TextView(this);
 		textoSuperior.setBackgroundColor(Color.TRANSPARENT);
