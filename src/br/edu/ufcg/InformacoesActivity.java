@@ -2,17 +2,12 @@ package br.edu.ufcg;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import br.edu.ufcg.model.Loja;
 import br.edu.ufcg.model.Roupa;
@@ -27,8 +22,8 @@ public class InformacoesActivity extends Activity {
 		Loja loja = roupa.getLoja();
 		
 		
-		ImageView infoLoja = new ImageView(this);
-		infoLoja.setBackgroundDrawable(carregaDrawable(loja.getLogo()));
+		ImageView logo = new ImageView(this);
+		logo.setBackgroundDrawable(new BitmapDrawable(BitmapFactory.decodeByteArray(loja.getLogo(), 0, loja.getLogo().length)));
 		
 		TextView nomeLoja = new TextView(this);
 		nomeLoja.setText("Loja: " + loja.getNome());
@@ -36,28 +31,20 @@ public class InformacoesActivity extends Activity {
 		TextView infoCodigo = new TextView(this);
 		infoCodigo.setText("Codigo da roupa: " + roupa.getCodigo());
 		
-		RelativeLayout layoutCentral = new RelativeLayout(this);
-		LinearLayout linearCentral = new LinearLayout(this);
-		linearCentral.addView(infoLoja);
-		linearCentral.addView(nomeLoja);
-		linearCentral.addView(infoCodigo);
-		linearCentral.setGravity(Gravity.RIGHT);
-		linearCentral.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-		layoutCentral.addView(linearCentral);
-		layoutCentral.setGravity(Gravity.BOTTOM);
+		LinearLayout maior = new LinearLayout(this);
+		LinearLayout info = new LinearLayout(this);
+		info.setOrientation(LinearLayout.VERTICAL);
+		info.addView(nomeLoja);
+		info.addView(infoCodigo);
+		info.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		
-		addContentView(layoutCentral, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		maior.addView(logo);
+		maior.addView(info);
+		
+		addContentView(maior, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	
 	}
 	
-	private Drawable carregaDrawable(byte[] imagem) {
-		Bitmap b = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
-		Matrix matrix = new Matrix();
-		matrix.setRotate(90);
-		Bitmap girado = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
-		return new BitmapDrawable(girado);
-	}
-
 }
