@@ -50,7 +50,7 @@
             android:layout_alignLeft="@+id/button_closet"
             android:layout_below="@+id/button_closet"
             android:layout_marginTop="25dp"
-            android:background="@drawable/botao_manequim_v2" />
+            android:background="@drawable/botao_manequim" />
 
         <Button
             android:id="@+id/button_looks"

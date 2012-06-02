@@ -29,7 +29,7 @@ import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Calibragem;
 import br.edu.ufcg.model.Categoria;
-import br.edu.ufcg.model.ToastComTextoCentralizado;
+import br.edu.ufcg.model.ToastPersonalizado;
 //import br.edu.ufcg.model.Roupa;
 
 public class TesteDeteccaoFaceActivity  extends Activity {
@@ -82,7 +82,7 @@ public class TesteDeteccaoFaceActivity  extends Activity {
 		
 		ImageButton linha1_coluna1 = new ImageButton(this);
 		linha1_coluna1.setBackgroundColor(Color.TRANSPARENT);
-		linha1_coluna1.setImageDrawable(getResources().getDrawable(R.drawable.blank));
+		linha1_coluna1.setImageDrawable(getResources().getDrawable(R.drawable.transparente));
 		linha1_coluna1.setPadding(ESPACO_DA_BORDA, 0, 0, 0);
 		
 		ImageButton linha1_coluna2 = new ImageButton(this);
@@ -93,7 +93,7 @@ public class TesteDeteccaoFaceActivity  extends Activity {
 		
 		ImageButton linha1_coluna3 = new ImageButton(this);
 		linha1_coluna3.setBackgroundColor(Color.TRANSPARENT);
-		linha1_coluna3.setImageDrawable(getResources().getDrawable(R.drawable.blank));
+		linha1_coluna3.setImageDrawable(getResources().getDrawable(R.drawable.transparente));
 		linha1_coluna3.setPadding(0, 0, 0, 0);
 		
 		ImageButton linha2_coluna1 = new ImageButton(this);
@@ -104,7 +104,7 @@ public class TesteDeteccaoFaceActivity  extends Activity {
 		
 		ImageButton linha2_coluna2 = new ImageButton(this);
 		linha2_coluna2.setBackgroundColor(Color.TRANSPARENT);
-		linha2_coluna2.setImageDrawable(getResources().getDrawable(R.drawable.blank));
+		linha2_coluna2.setImageDrawable(getResources().getDrawable(R.drawable.transparente));
 		linha2_coluna2.setPadding(0, 0, 0, 0);
 		
 		ImageButton linha2_coluna3 = new ImageButton(this);
@@ -115,7 +115,7 @@ public class TesteDeteccaoFaceActivity  extends Activity {
 		
 		ImageButton linha3_coluna1 = new ImageButton(this);
 		linha3_coluna1.setBackgroundColor(Color.TRANSPARENT);
-		linha3_coluna1.setImageDrawable(getResources().getDrawable(R.drawable.blank));
+		linha3_coluna1.setImageDrawable(getResources().getDrawable(R.drawable.transparente));
 		linha3_coluna1.setPadding(ESPACO_DA_BORDA, 0, 0, ESPACO_DA_BORDA);
 		
 		ImageButton linha3_coluna2 = new ImageButton(this);
@@ -126,7 +126,7 @@ public class TesteDeteccaoFaceActivity  extends Activity {
 		
 		ImageButton linha3_coluna3 = new ImageButton(this);
 		linha3_coluna3.setBackgroundColor(Color.TRANSPARENT);
-		linha3_coluna3.setImageDrawable(getResources().getDrawable(R.drawable.blank));
+		linha3_coluna3.setImageDrawable(getResources().getDrawable(R.drawable.transparente));
 		linha3_coluna3.setPadding(0, 0, 0, ESPACO_DA_BORDA);
 		
 		RelativeLayout layoutMatriz = new RelativeLayout(this);
@@ -377,7 +377,7 @@ public class TesteDeteccaoFaceActivity  extends Activity {
 
                 posicao++;
                 if (posicao >= imagens.length) {
-                	new ToastComTextoCentralizado(getContext(), Toast.LENGTH_SHORT, 
+                	new ToastPersonalizado(getContext(), Toast.LENGTH_SHORT, 
                 			"Manequim escolhido com sucesso!").show();
                     finish();
                     return;

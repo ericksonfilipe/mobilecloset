@@ -2,7 +2,7 @@
 android:oneshot="false">
 
 <item   
-  android:drawable="@drawable/gif_img0"   
+  android:drawable="@drawable/gif_img0"
   android:duration="200" />  
 <item   
   android:drawable="@drawable/gif_img1"   

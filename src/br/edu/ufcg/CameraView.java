@@ -16,7 +16,6 @@ import android.view.SurfaceView;
 
 /**
  * A camera view
- *
  */
 public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder mHolder;
@@ -49,7 +48,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     /**
-     * Inicialisa os atributos
+     * Inicializa os atributos
      */
     public void init() {
         listeners = new ArrayList<ImageListenerIF>();

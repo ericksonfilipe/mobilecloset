@@ -20,13 +20,10 @@ import br.edu.ufcg.model.Roupa;
 
 public class BDAdapter {
 
-	private Context context;
 	private BDHelper bdHelper;
 
 	public BDAdapter(Context context) {
-		this.context = context;
 		this.bdHelper = new BDHelper(context);
-		
 	}
 
 	public void inserirLoja(Loja loja) {

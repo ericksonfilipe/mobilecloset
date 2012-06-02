@@ -27,9 +27,9 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Calibragem;
-import br.edu.ufcg.model.Calibragem2;
 import br.edu.ufcg.model.Categoria;
 import br.edu.ufcg.model.Manequim;
+import br.edu.ufcg.model.ToastPersonalizado;
 
 public class EscolherManequimActivity extends Activity {
 
@@ -75,7 +75,8 @@ public class EscolherManequimActivity extends Activity {
 			//Alerta "Deseja realmente excluir"
 			public void onClick(View v) {
 				if (visualizadorManequim.ehManequimPadrao()) {
-					Toast.makeText(v.getContext(), "Este manequim é padrão do MobileCloset. Não pode ser excluído.", Toast.LENGTH_SHORT).show();
+					new ToastPersonalizado(v.getContext(), Toast.LENGTH_SHORT, 
+							"Este manequim é padrão do MobileCloset. Não pode ser excluído.").show();
 				} else {
 			        AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
 				    builder.setMessage("Deseja realmente excluir?")
@@ -106,10 +107,6 @@ public class EscolherManequimActivity extends Activity {
 		anteriorButton.setImageResource(R.drawable.previous_cinza);
 		anteriorButton.setBackgroundColor(Color.TRANSPARENT);
 		anteriorButton.setOnClickListener(new VoltaListener());
-
-		//		Button meioButton = new Button(this);
-		//		meioButton.setText("Escolher!");
-		//		meioButton.setOnClickListener(new CalibrarListener());
 
 		RelativeLayout layoutAdd = new RelativeLayout(this);
 		LinearLayout linearAdd = new LinearLayout(this);
@@ -144,14 +141,6 @@ public class EscolherManequimActivity extends Activity {
 		linearAnterior.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		layoutAnterior.addView(linearAnterior);
 		layoutAnterior.setGravity(Gravity.CENTER);
-
-		//		RelativeLayout layoutMeio = new RelativeLayout(this);
-		//		LinearLayout linearMeio = new LinearLayout(this);
-		//		linearMeio.addView(meioButton);
-		//		linearMeio.setGravity(Gravity.CENTER);
-		//		linearMeio.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-		//		layoutMeio.addView(linearMeio);
-		//		layoutMeio.setGravity(Gravity.BOTTOM);
 
 		escolherButton = new ImageButton(this);
 		escolherButton.setImageResource(R.drawable.escolher);
@@ -262,7 +251,8 @@ public class EscolherManequimActivity extends Activity {
 				dao.atualizaCalibragem(c);
 				finish();
 
-				Toast.makeText(arg0.getContext(), "Manequim escolhido com sucesso!", Toast.LENGTH_SHORT).show();
+				new ToastPersonalizado(arg0.getContext(), Toast.LENGTH_SHORT, 
+						"Manequim escolhido com sucesso!").show();
 			} else {
 				if (jaEhManequimEscolhido) {
 					AlertDialog.Builder builderTeste = new AlertDialog.Builder(arg0.getContext());
@@ -277,7 +267,8 @@ public class EscolherManequimActivity extends Activity {
 				           .setNegativeButton("Não", new DialogInterface.OnClickListener() {
 				               public void onClick(DialogInterface dialog, int id) {
 				            	   finish();
-				            	   Toast.makeText(viewArg0.getContext(), "Manequim escolhido com sucesso!", Toast.LENGTH_SHORT).show();
+				            	   new ToastPersonalizado(viewArg0.getContext(), Toast.LENGTH_SHORT, 
+				           				"Manequim escolhido com sucesso!").show();
 				               }     	   
 				           });
 					builderTeste.create().show();
@@ -290,18 +281,6 @@ public class EscolherManequimActivity extends Activity {
 		}
 	}
 
-	//	@Override
-	//	public boolean onCreateOptionsMenu(Menu menu) {
-	//		MenuInflater inflate = new MenuInflater(this);
-	//		inflate.inflate(R.menu.escolher_manequim_menu, menu);
-	//		return true;
-	//	}
-	//
-	//	@Override
-	//	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-	//		visualizadorManequim.removeImagem();
-	//		return true;
-	//	}
 
 	public class VisualizadorManequim extends View {
 
@@ -330,7 +309,8 @@ public class EscolherManequimActivity extends Activity {
 
 		public void removeImagem() {
 			if (ehManequimPadrao()) {
-				Toast.makeText(getContext(), "Este manequim é padrão do MobileCloset. Não pode ser excluído.", Toast.LENGTH_SHORT).show();
+				new ToastPersonalizado(getContext(), Toast.LENGTH_SHORT, 
+						"Este manequim é padrão do MobileCloset. Não pode ser excluído.").show();
 			} else {
 				if (dao.getIdManequimPadrao() == manequins.get(posicao).getId()) {
 					dao.inserirManequimPadrao(manequins.get(0));
@@ -352,13 +332,6 @@ public class EscolherManequimActivity extends Activity {
 			}
 		}
 
-		//		@Override
-		//		protected void onDraw(Canvas canvas) {
-		//			super.onDraw(canvas);
-		//			if (manequimAtual != null) {
-		//				manequimAtual.draw(canvas);
-		//			}
-		//		}
 
 		public Manequim getManequim() {
 			return manequins.get(posicao);
@@ -394,9 +367,6 @@ public class EscolherManequimActivity extends Activity {
 		public void proximoManequim() {
 			if (posicao < manequins.size()-1) {
 				posicao++;
-				//				Manequim manequim = manequins.get(posicao);
-				//				manequimAtual = carregaDrawable(manequim.getImagem());
-				//				manequimAtual.setBounds(0, 0, getWidth(), getHeight());
 				invalidate();
 			}
 			atualizaImagensBotoes();

@@ -28,7 +28,7 @@ import br.edu.ufcg.BD.BDAdapter;
 import br.edu.ufcg.model.Calibragem;
 import br.edu.ufcg.model.Calibragem2;
 import br.edu.ufcg.model.Roupa;
-import br.edu.ufcg.model.ToastComTextoCentralizado;
+import br.edu.ufcg.model.ToastPersonalizado;
 
 public class VerRoupasActivity extends Activity {
 
@@ -82,7 +82,7 @@ public class VerRoupasActivity extends Activity {
 			//Alerta "Deseja realmente excluir"
 			public void onClick(View v) {
 				if (visualizadorRoupa.posicaoRoupa <= QTD_ROUPAS_PADROES) {
-					new ToastComTextoCentralizado(v.getContext(), Toast.LENGTH_SHORT, 
+					new ToastPersonalizado(v.getContext(), Toast.LENGTH_SHORT, 
 							"Esta é uma roupa padrão do MobileCloset e não pode ser excluída.").show();
 				} else {
 					AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
@@ -235,7 +235,7 @@ public class VerRoupasActivity extends Activity {
 				startActivity(i);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
-				new ToastComTextoCentralizado(visualizadorRoupa.getContext(), Toast.LENGTH_SHORT, 
+				new ToastPersonalizado(visualizadorRoupa.getContext(), Toast.LENGTH_SHORT, 
 						"Não há roupas cadastradas para serem calibradas!").show();
 			}
 		}
@@ -311,7 +311,7 @@ public class VerRoupasActivity extends Activity {
 				roupaAtual.setBounds(0, 0, getWidth(), getHeight());
 				invalidate();				
 			} else {
-				new ToastComTextoCentralizado(getContext(), Toast.LENGTH_SHORT, 
+				new ToastPersonalizado(getContext(), Toast.LENGTH_SHORT, 
 						"Não há roupas cadastradas para serem excluídas!").show();
 			}				
 		}
