@@ -8,9 +8,13 @@ public class Look {
 	//Estou salvando isso, pois se salvasse a Roupa, corria o risco do 
 	//usuário deletar a roupa e ai ela não estaria mais no bd
 	private byte[] logoLojaSuperior;
+	private String nomeLojaSuperior;
+	private String categoriaRoupaSuperior;
 	private String codigoRoupaSuperior;
 	
 	private byte[] logoLojaInferior;
+	private String nomeLojaInferior;
+	private String categoriaRoupaInferior;
 	private String codigoRoupaInferior;
 
 	public Look() {}
@@ -66,6 +70,38 @@ public class Look {
 
 	public void setCodigoRoupaInferior(String codigoRoupaInferior) {
 		this.codigoRoupaInferior = codigoRoupaInferior;
+	}
+
+	public String getNomeLojaSuperior() {
+		return nomeLojaSuperior;
+	}
+
+	public void setNomeLojaSuperior(String nomeLojaSuperior) {
+		this.nomeLojaSuperior = nomeLojaSuperior;
+	}
+
+	public String getCategoriaRoupaSuperior() {
+		return categoriaRoupaSuperior;
+	}
+
+	public void setCategoriaRoupaSuperior(String categoriaRoupaSuperior) {
+		this.categoriaRoupaSuperior = categoriaRoupaSuperior;
+	}
+
+	public String getNomeLojaInferior() {
+		return nomeLojaInferior;
+	}
+
+	public void setNomeLojaInferior(String nomeLojaInferior) {
+		this.nomeLojaInferior = nomeLojaInferior;
+	}
+
+	public String getCategoriaRoupaInferior() {
+		return categoriaRoupaInferior;
+	}
+
+	public void setCategoriaRoupaInferior(String categoriaRoupaInferior) {
+		this.categoriaRoupaInferior = categoriaRoupaInferior;
 	}
 
 	@Override

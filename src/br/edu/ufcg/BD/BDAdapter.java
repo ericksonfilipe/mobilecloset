@@ -93,9 +93,14 @@ public class BDAdapter {
 		ContentValues cv = new ContentValues();
 		cv.put("imagem", look.getImagem());
 		cv.put("logoLojaSuperior", look.getLogoLojaSuperior());
+		cv.put("nomeLojaSuperior", look.getNomeLojaSuperior());
+		cv.put("categoriaRoupaSuperior", look.getCategoriaRoupaSuperior());
 		cv.put("codigoRoupaSuperior", look.getCodigoRoupaSuperior());
 		cv.put("logoLojaInferior", look.getLogoLojaInferior());
+		cv.put("nomeLojaInferior", look.getNomeLojaInferior());
+		cv.put("categoriaRoupaInferior", look.getCategoriaRoupaInferior());
 		cv.put("codigoRoupaInferior", look.getCodigoRoupaInferior());
+		
 		banco.insert("look", null, cv);
 		banco.close();
 	}
@@ -114,14 +119,17 @@ public class BDAdapter {
 		SQLiteDatabase banco = bdHelper.getReadableDatabase();
 		List<Look> looks = new ArrayList<Look>();
 		Cursor c = banco.query("look", 
-				new String[] {"id", "imagem", "logoLojaSuperior", "codigoRoupaSuperior", "logoLojaInferior", "codigoRoupaInferior"}, null, null, null, null, "id");
+				new String[] {"id", "imagem", "logoLojaSuperior", "nomeLojaSuperior", "categoriaRoupaSuperior", "codigoRoupaSuperior", "logoLojaInferior", "nomeLojaInferior", "categoriaRoupaInferior", "codigoRoupaInferior"}, null, null, null, null, "id");
 		while(c.moveToNext()) {
 			Look look = new Look(c.getInt(c.getColumnIndex("id")), c.getBlob(c.getColumnIndex("imagem")));
 			look.setLogoLojaSuperior(c.getBlob(c.getColumnIndex("logoLojaSuperior")));
 			look.setLogoLojaInferior(c.getBlob(c.getColumnIndex("logoLojaInferior")));
 			look.setCodigoRoupaInferior(c.getString(c.getColumnIndex("codigoRoupaInferior")));
 			look.setCodigoRoupaSuperior(c.getString(c.getColumnIndex("codigoRoupaSuperior")));
-			
+			look.setNomeLojaInferior(c.getString(c.getColumnIndex("nomeLojaInferior")));
+			look.setNomeLojaSuperior(c.getString(c.getColumnIndex("nomeLojaSuperior")));
+			look.setCategoriaRoupaInferior(c.getString(c.getColumnIndex("categoriaRoupaInferior")));
+			look.setCategoriaRoupaSuperior(c.getString(c.getColumnIndex("categoriaRoupaSuperior")));
 			looks.add(look);
 		}
 		c.close();

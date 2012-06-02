@@ -210,11 +210,15 @@ public class ProvadorActivity extends Activity {
 		
 		if (provador.getRoupaInferiorAtual().getLoja() != null) {
 			look.setLogoLojaInferior(provador.getRoupaInferiorAtual().getLoja().getLogo());
+			look.setNomeLojaInferior(provador.getRoupaInferiorAtual().getLoja().getNome());
+			look.setCategoriaRoupaInferior(provador.getRoupaInferiorAtual().getCategoria().getNome());	
 			look.setCodigoRoupaInferior(provador.getRoupaInferiorAtual().getCodigo());			
 		}
 		
 		if (provador.getRoupaSuperiorAtual().getLoja() != null) {
 			look.setLogoLojaSuperior(provador.getRoupaSuperiorAtual().getLoja().getLogo());
+			look.setNomeLojaSuperior(provador.getRoupaSuperiorAtual().getLoja().getNome());
+			look.setCategoriaRoupaSuperior(provador.getRoupaSuperiorAtual().getCategoria().getNome());
 			look.setCodigoRoupaSuperior(provador.getRoupaSuperiorAtual().getCodigo());			
 		}
 		
