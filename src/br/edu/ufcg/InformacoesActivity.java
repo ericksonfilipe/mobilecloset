@@ -15,29 +15,67 @@ import br.edu.ufcg.model.Roupa;
 
 public class InformacoesActivity extends Activity {
 	
+	private byte[] logoDaLoja;
+	private String nomeDaLoja;
+	private String categoriaDaRoupa;
+	private String codigoDaRoupa;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		Roupa roupa = (Roupa) getIntent().getExtras().get("roupaLoja");
-		Loja loja = roupa.getLoja();
 		
+		byte[] logoLojaSuperior = (byte[]) getIntent().getExtras().get("logoLojaSuperior");
+		byte[] logoLojaInferior = (byte[]) getIntent().getExtras().get("logoLojaInferior");
+		String codigoRoupaSuperior = (String) getIntent().getExtras().get("codigoRoupaSuperior");
+		String codigoRoupaInferior = (String) getIntent().getExtras().get("codigoRoupaInferior");
+		String nomeLojaSuperior = (String) getIntent().getExtras().get("nomeLojaSuperior");
+		String nomeLojaInferior = (String) getIntent().getExtras().get("nomeLojaInferior");
+		String categoriaRoupaSuperior = (String) getIntent().getExtras().get("categoriaRoupaSuperior");
+		String categoriaRoupaInferior = (String) getIntent().getExtras().get("categoriaRoupaInferior");
 		
+		if (roupa != null) {
+			Loja loja = roupa.getLoja();
+			logoDaLoja = loja.getLogo();
+			nomeDaLoja = loja.getNome();
+			categoriaDaRoupa = roupa.getCategoria().getNome();
+			codigoDaRoupa = roupa.getCodigo();
+		} else {
+			if (logoLojaInferior != null) {
+				logoDaLoja = logoLojaInferior;
+				nomeDaLoja = nomeLojaInferior;
+				categoriaDaRoupa = categoriaRoupaInferior;
+				codigoDaRoupa = codigoRoupaInferior;
+			} else {
+				logoDaLoja = logoLojaSuperior;
+				nomeDaLoja = nomeLojaSuperior;
+				categoriaDaRoupa = categoriaRoupaSuperior;
+				codigoDaRoupa = codigoRoupaSuperior;
+			}
+			
+		}
+	
 		ImageView logo = new ImageView(this);
-		logo.setBackgroundDrawable(new BitmapDrawable(BitmapFactory.decodeByteArray(loja.getLogo(), 0, loja.getLogo().length)));
+		logo.setBackgroundDrawable(new BitmapDrawable(BitmapFactory.decodeByteArray(logoDaLoja, 0, logoDaLoja.length)));
 		
 		TextView nomeLoja = new TextView(this);
-		nomeLoja.setText("Loja: " + loja.getNome());
+		nomeLoja.setText("Loja: " + nomeDaLoja);
 		nomeLoja.setTextSize(TypedValue.COMPLEX_UNIT_PX, 14);
 		
 		TextView infoCodigo = new TextView(this);
-		infoCodigo.setText("Codigo da roupa: " + roupa.getCodigo());
+		infoCodigo.setText("Código: " + codigoDaRoupa);
 		infoCodigo.setTextSize(TypedValue.COMPLEX_UNIT_PX, 14);
+		
+//		TextView infoCategoria = new TextView(this);
+//		infoCodigo.setText("Categoria: " + categoriaDaRoupa);
+//		infoCodigo.setTextSize(TypedValue.COMPLEX_UNIT_PX, 14);
 		
 		LinearLayout maior = new LinearLayout(this);
 		LinearLayout info = new LinearLayout(this);
 		info.setOrientation(LinearLayout.VERTICAL);
 		info.addView(nomeLoja);
+//		info.addView(infoCategoria);
 		info.addView(infoCodigo);
 		info.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		
