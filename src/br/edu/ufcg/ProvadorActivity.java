@@ -33,33 +33,28 @@ import br.edu.ufcg.model.Calibragem2;
 import br.edu.ufcg.model.Categoria;
 import br.edu.ufcg.model.Look;
 import br.edu.ufcg.model.Roupa;
+import br.edu.ufcg.model.ToastComTextoCentralizado;
 
 public class ProvadorActivity extends Activity {
 
-	private boolean DEBUG = false;
-
 	private BDAdapter dao;
+	private Provador provador;
 
 	private Map<Categoria, Calibragem> calibragens;
-
-	private Provador provador;
+	private Map<Integer, Calibragem2> calibragens2;
 
 	private ImageButton voltaSuperiorButton;
 	private ImageButton voltaInferiorButton;
 	private ImageButton proximaSuperiorButton;
 	private ImageButton proximaInferiorButton;
 	
-	public ImageButton favoritoButton, menuButton;
-
-	private Map<Integer, Calibragem2> calibragens2;
+	private ImageButton logoLojaCima;
+	private ImageButton logoLojaBaixo;
 
 	private LinearLayout informacaoCima;
-
-	private ImageButton logoLojaCima;
-
 	private LinearLayout informacaoBaixo;
 
-	private ImageButton logoLojaBaixo;
+	public ImageButton favoritoButton, menuButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -72,7 +67,6 @@ public class ProvadorActivity extends Activity {
 			byte[] imagem = (byte[]) getIntent().getExtras().get("background");
 
 			Bitmap b = null;
-			//if (DEBUG) {
 			if (imagem == null) {
 				b = BitmapFactory.decodeResource(getResources(), R.drawable.manequim_padrao);
 			} else {
@@ -88,7 +82,8 @@ public class ProvadorActivity extends Activity {
 			List<Roupa> roupasInferiores = carregaRoupasInferiores();
 
 			if (roupasSuperiores.isEmpty() && roupasInferiores.isEmpty()) {
-				Toast.makeText(this, "Não há roupas cadastradas!", Toast.LENGTH_SHORT).show();
+				new ToastComTextoCentralizado(this, Toast.LENGTH_SHORT, 
+						"Não há roupas cadastradas!").show();
 			}
 			
 			Bitmap roupaTransparente = BitmapFactory.decodeResource(getResources(), R.drawable.blank);
@@ -131,7 +126,7 @@ public class ProvadorActivity extends Activity {
 			menuButton.setBackgroundColor(Color.TRANSPARENT);
 			menuButton.setOnClickListener(new OnClickListener() {
 				public void onClick(View arg0) {
-					startActivity(new Intent(arg0.getContext(), OpcoesActivity.class));//TODO
+					startActivity(new Intent(arg0.getContext(), OpcoesActivity.class));
 				}
 			});
 			
@@ -225,10 +220,11 @@ public class ProvadorActivity extends Activity {
 		
 		dao.inserirLook(look);
 		
-		Toast.makeText(this, "Look salvo com sucesso!", Toast.LENGTH_SHORT).show();
+		new ToastComTextoCentralizado(this, Toast.LENGTH_SHORT, 
+				"Look salvo com sucesso!").show();
 	}
 	
-//	Metodo que Ed disse que salvava o canvas
+	//Metodo que Ed disse que salvava o canvas
 	public static Bitmap loadBitmapFromView(View v) {
 		Bitmap b = Bitmap.createBitmap(v.getWidth(),
 				v.getHeight(), Bitmap.Config.ARGB_8888);
@@ -554,26 +550,5 @@ public class ProvadorActivity extends Activity {
 		}
 		
 	}
-	
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		MenuInflater inflate = new MenuInflater(this);
-//		inflate.inflate(R.menu.provador_menu, menu);
-//		return true;
-//	}
-//
-//	@Override
-//	public boolean onOptionsItemSelected(MenuItem item) {
-//		switch (item.getItemId()) {
-//		case R.id.colecoes:
-//			startActivity(new Intent(this, LojasActivity.class));
-//			Toast.makeText(this, "Falta implementar!", Toast.LENGTH_LONG).show();
-//			break;
-//		case R.id.opcoes:
-//			startActivity(new Intent(this, OpcoesActivity.class));
-//			break;
-//		}
-//		return true;
-//	}
 	
 }

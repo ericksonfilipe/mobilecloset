@@ -32,7 +32,7 @@ import br.edu.ufcg.model.Categoria;
 import br.edu.ufcg.model.ToastComTextoCentralizado;
 //import br.edu.ufcg.model.Roupa;
 
-public class TesteDeteccaoFace  extends Activity {
+public class TesteDeteccaoFaceActivity  extends Activity {
 
 	private boolean DEBUG = false;
 	private MyImageView myImageView;
