@@ -58,16 +58,15 @@ public final class R {
         public static final int plus=0x7f020029;
         public static final int previous=0x7f02002a;
         public static final int previous_cinza=0x7f02002b;
-        public static final int quadro=0x7f02002c;
-        public static final int saia_calibragem=0x7f02002d;
-        public static final int saia_padrao=0x7f02002e;
-        public static final int save=0x7f02002f;
-        public static final int short_calibragem=0x7f020030;
-        public static final int short_padrao=0x7f020031;
-        public static final int toast=0x7f020032;
-        public static final int transparente=0x7f020033;
-        public static final int vestido_calibragem=0x7f020034;
-        public static final int vestido_padrao=0x7f020035;
+        public static final int saia_calibragem=0x7f02002c;
+        public static final int saia_padrao=0x7f02002d;
+        public static final int save=0x7f02002e;
+        public static final int short_calibragem=0x7f02002f;
+        public static final int short_padrao=0x7f020030;
+        public static final int toast=0x7f020031;
+        public static final int transparente=0x7f020032;
+        public static final int vestido_calibragem=0x7f020033;
+        public static final int vestido_padrao=0x7f020034;
     }
     public static final class id {
         public static final int button_closet=0x7f060006;
