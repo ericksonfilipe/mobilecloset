@@ -65,7 +65,7 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListenerIF 
 //		moldes = new int[] {R.drawable.molde_short, R.drawable.molde_calca,
 //				R.drawable.molde_camisa, R.drawable.molde_camisao, R.drawable.molde_camiseta,
 //				R.drawable.molde_saia, R.drawable.molde_camiseta};
-		tipos = new String[] {"Short", "Calça", "Camisa", "Camisa Manga Comprida", "Camiseta", "Saia", "Vestido"};		
+		tipos = new String[] {"Short", "Calça", "Camisa", "Camisa Manga Longa", "Camiseta", "Saia", "Vestido"};		
 		categorias = Categoria.values();
 		
 		if (tipos.length != categorias.length) Log.e("ERRO NOSSO", "O NUMERO DE MOLDES TEM QUE SER IGUAL AO NUMERO DE CATEGORIAS! JAH PODE OLHAR NO ONCREATE DE TIRARFOTOROUPAACTIVITY");
@@ -90,9 +90,9 @@ public class TirarFotoRoupaActivity extends Activity implements ImageListenerIF 
 		tipoDeRoupa.setTextSize(18);
 		tipoDeRoupa.setTextColor(Color.WHITE);
 		tipoDeRoupa.setTypeface(Typeface.DEFAULT_BOLD);
-		tipoDeRoupa.setWidth(120);
-		tipoDeRoupa.setHeight(45);
-		tipoDeRoupa.setBackgroundColor(R.drawable.quadro);
+		tipoDeRoupa.setBackgroundDrawable(getResources().getDrawable(R.drawable.toast));
+		tipoDeRoupa.setWidth(210);
+		tipoDeRoupa.setHeight(40);
 
 		RelativeLayout layout = new RelativeLayout(this);
 		LinearLayout linear = new LinearLayout(this);

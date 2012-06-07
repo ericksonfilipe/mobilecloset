@@ -18,7 +18,7 @@
         
         <activity android:name=".OpcoesActivity" />
         
-        <activity android:name=".SobreActivity" android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".SobreActivity" />
         
         <activity android:name=".TirarFotoManequimActivity" ></activity>
         
@@ -30,7 +30,7 @@
         
         <activity android:name=".ProvadorActivity" ></activity>
         
-        <activity android:name=".TesteDeteccaoFaceActivity" ></activity>
+        <activity android:name=".CalibragemGeralActivity" ></activity>
         
         <activity android:name=".FavoritosActivity" ></activity>
         

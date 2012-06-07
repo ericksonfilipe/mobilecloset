@@ -77,7 +77,8 @@ public class OpcoesActivity extends Activity implements OnClickListener {
 				}
 				
 			}else{
-				Toast.makeText (getApplicationContext(), "Sem conexão com a Internet!", Toast.LENGTH_SHORT).show();
+				new ToastPersonalizado(getApplicationContext(), Toast.LENGTH_SHORT, 
+						"Sem conexão com a Internet!").show();
 			}
 		} else if (v.getId() == R.id.button_closet) {
 			if (dao.getRoupas().isEmpty()) {

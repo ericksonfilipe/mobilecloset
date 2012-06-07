@@ -29,7 +29,7 @@ public class SobreActivity extends Activity {
 		TextView textoInferior = new TextView(this);
 		textoInferior.setBackgroundColor(Color.TRANSPARENT);
 		textoInferior.setText("O Mobile Closet é um closet virtual em que é possível fazer o download dos closets de lojas famosas. " +
-				"Além disso, ele armazena as roupas do usuário e faz a combinação delas, facilitando, assim, a escolha da roupa.");
+				"Além disso, ele armazena as roupas do usuário e faz a combinação delas, facilitando, assim, a escolha da roupa.\n");
 		textoInferior.setTextScaleX((float) 1.2);
 		textoInferior.setTypeface(Typeface.DEFAULT_BOLD);
 		textoInferior.setTextColor(Color.BLACK);
