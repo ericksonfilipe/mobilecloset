@@ -3,45 +3,45 @@ android:oneshot="false">
 
 <item   
   android:drawable="@drawable/gif_img0"
-  android:duration="200" />  
+  android:duration="125" />  
 <item   
   android:drawable="@drawable/gif_img1"   
-  android:duration="200" />  
+  android:duration="125" />  
 <item   
   android:drawable="@drawable/gif_img2"   
-  android:duration="200" />  
+  android:duration="125" />  
 <item   
   android:drawable="@drawable/gif_img3"   
-  android:duration="200" />  
+  android:duration="125" />  
 <item   
   android:drawable="@drawable/gif_img4"  
-  android:duration="200" />
+  android:duration="125" />
 <item   
   android:drawable="@drawable/gif_img5"  
-  android:duration="200" /> 
+  android:duration="125" /> 
 <item   
   android:drawable="@drawable/gif_img6"  
-  android:duration="200" /> 
+  android:duration="125" /> 
  <item   
   android:drawable="@drawable/gif_img7"  
-  android:duration="200" />  
+  android:duration="125" />  
  <item   
   android:drawable="@drawable/gif_img6"  
-  android:duration="200" />   
+  android:duration="125" />   
 <item   
   android:drawable="@drawable/gif_img5"  
-  android:duration="200" /> 
+  android:duration="125" /> 
 <item   
   android:drawable="@drawable/gif_img4"  
-  android:duration="200" /> 
+  android:duration="125" /> 
  <item   
   android:drawable="@drawable/gif_img3"  
-  android:duration="200" />  
+  android:duration="125" />  
  <item   
   android:drawable="@drawable/gif_img2"  
-  android:duration="200" />  
+  android:duration="125" />  
 <item   
   android:drawable="@drawable/gif_img1"   
-  android:duration="200" />    
+  android:duration="125" />    
  
 </animation-list>
