@@ -1,0 +1,1 @@
+Aplicativo desenvolvido na disciplina de Projeto 1 para a plataforma Android. O MobileCloset tem por objetivo ajudar as pessoas a combinarem suas roupas diretamente dos seus celulares, sem precisar estar em casa ou desarrumar o guarda-roupa.
